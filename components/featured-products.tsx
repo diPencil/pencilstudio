@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useRef, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import Image from "next/image"
 import { Reveal } from "./reveal"
@@ -15,6 +15,7 @@ const featuredProducts = [
     name: "Brand Identity & Creative Design",
     price: "From $3,500",
     image: "/hero-section.jpg",
+    video: "/signature-capabilities/brand-identity-creative-design.mp4",
     badge: "Core" as const,
     materials: ["Brand Strategy", "Visual Identity"],
     swatches: [
@@ -33,6 +34,7 @@ const featuredProducts = [
     name: "Websites & Digital Platforms",
     price: "From $4,800",
     image: "/hero-section.jpg",
+    video: "/signature-capabilities/websites-digital-platforms.mp4",
     badge: "Core" as const,
     materials: ["Next.js", "Headless CMS"],
     swatches: [
@@ -50,7 +52,8 @@ const featuredProducts = [
     id: "3",
     name: "Mobile Apps & SaaS Products",
     price: "From $8,500",
-    image: "/signature-capabilities/Mobile-Apps-SaaS-Products.jpg",
+    image: "/hero-section.jpg",
+    video: "/signature-capabilities/mobile-apps-saas-products.mp4",
     badge: "Elite" as const,
     materials: ["React Native", "APIs"],
     swatches: [
@@ -59,8 +62,8 @@ const featuredProducts = [
       { name: "Scale & Deploy", color: "#355E3B" },
     ],
     quickLookImages: [
-      "/signature-capabilities/Mobile-Apps-SaaS-Products.jpg",
-      "/signature-capabilities/Mobile-Apps-SaaS-Products.jpg",
+      "/hero-section.jpg",
+      "/hero-section.jpg",
     ],
     dimensions: "Custom apps for iOS & Android.",
   },
@@ -69,6 +72,7 @@ const featuredProducts = [
     name: "Business Systems & Dashboards",
     price: "From $6,200",
     image: "/business-sectors/crm-automation.jpg",
+    video: "/signature-capabilities/business-systems-dashboards.mp4",
     badge: "Core" as const,
     materials: ["Dashboards", "Bookings"],
     swatches: [
@@ -86,7 +90,8 @@ const featuredProducts = [
     id: "5",
     name: "Marketing & Growth Systems",
     price: "From $2,900",
-    image: "/signature-capabilities/Marketing-Growth-Systems.jpg",
+    image: "/hero-section.jpg",
+    video: "/signature-capabilities/marketing-growth-systems.mp4",
     badge: "Core" as const,
     materials: ["Conversion Opt", "SEO Setup"],
     swatches: [
@@ -95,8 +100,8 @@ const featuredProducts = [
       { name: "Scale & Deploy", color: "#355E3B" },
     ],
     quickLookImages: [
-      "/signature-capabilities/Marketing-Growth-Systems.jpg",
-      "/signature-capabilities/Marketing-Growth-Systems.jpg",
+      "/hero-section.jpg",
+      "/hero-section.jpg",
     ],
     dimensions: "Funnels & acquiring channels.",
   },
@@ -105,6 +110,7 @@ const featuredProducts = [
     name: "Hosting, Cloud & Tech Support",
     price: "From $450/mo",
     image: "/hero-section.jpg",
+    video: "/signature-capabilities/hosting-cloud-tech-support.mp4",
     badge: "Elite" as const,
     materials: ["AWS Config", "24/7 Monitoring"],
     swatches: [
@@ -133,10 +139,10 @@ export function FeaturedProducts() {
 
   // Dynamically map translations to products
   const localizedProducts = featuredProducts.map((product) => {
-    let name = product.name
-    let materials = product.materials
-    let dimensions = product.dimensions
-    let badge = product.badge
+    let name: string = product.name
+    let materials: string[] = product.materials
+    let dimensions: string = product.dimensions
+    let badge: string = product.badge
 
     const defaultSwatches = [
       { name: t("swatch.design"), color: "#9CAF88" },
@@ -191,6 +197,7 @@ export function FeaturedProducts() {
     title: product.name,
     description: product.dimensions,
     imageSrc: product.image,
+    videoSrc: (product as any).video,
     tag: product.badge,
     rawProduct: product,
   }))
@@ -198,10 +205,42 @@ export function FeaturedProducts() {
   const activeProduct = localizedProducts[activeIndex] ?? localizedProducts[0]
   const activeSlug = activeProduct ? serviceSlugById[activeProduct.id] : undefined
 
+function CardVideo({ src, active }: { src: string; active: boolean }) {
+  const videoRef = useRef<HTMLVideoElement>(null)
+
+  useEffect(() => {
+    const video = videoRef.current
+    if (!video) return
+
+    if (active) {
+      const playPromise = video.play()
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {})
+      }
+    } else {
+      video.pause()
+    }
+  }, [active])
+
+  return (
+    <video
+      ref={videoRef}
+      src={`${src}#t=0.001`}
+      loop
+      muted
+      playsInline
+      preload="auto"
+      className="h-full w-full object-cover pointer-events-none"
+    />
+  )
+}
+
   const renderServiceCard = (item: CardStackItem, state: { active: boolean }) => (
     <div className="relative h-full w-full">
-      <div className="absolute inset-0">
-        {item.imageSrc ? (
+      <div className="absolute inset-0 overflow-hidden">
+        {item.videoSrc ? (
+          <CardVideo src={item.videoSrc} active={state.active} />
+        ) : item.imageSrc ? (
           <Image
             src={item.imageSrc}
             alt={item.title}
@@ -266,7 +305,6 @@ export function FeaturedProducts() {
               showDots
               onChangeIndex={(index) => setActiveIndex(index)}
               renderCard={renderServiceCard}
-              onActiveCardClick={(item) => handleOpenPage(item.rawProduct)}
             />
             <div className="mt-5 flex flex-col items-center gap-2 text-center">
               <button
@@ -277,7 +315,7 @@ export function FeaturedProducts() {
                 <ArrowUpRight size={16} />
               </button>
               <p className="text-xs font-semibold text-neutral-500">
-                {isRtl ? "أو دوس على الكارت اللي في النص. أول دوسة على الكروت الجانبية بتجيبها في النص" : "Or click the center card. First click on a side card brings it to center"}
+                {isRtl ? "حرّك البطاقات أو انقر بطاقة جانبية لإحضارها للوسط. فتح الخدمة من الزر فقط." : "Drag the cards or click a side card to bring it center. Use the button only to open the service."}
               </p>
             </div>
           </div>
@@ -289,7 +327,7 @@ export function FeaturedProducts() {
               onClick={() => router.push("/services")}
               className="inline-flex items-center gap-2 rounded-full border border-neutral-300 bg-white px-6 py-3 text-sm font-bold transition hover:border-neutral-900 hover:bg-neutral-900 hover:text-white"
             >
-              {t("featured.quickLook") === "View Scope" ? "View all services" : "شوف كل الخدمات"}
+              {t("featured.quickLook") === "View Scope" ? "View all services" : "عرض كل الخدمات"}
               <ArrowUpRight size={16} />
             </button>
           </div>

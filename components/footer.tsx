@@ -2,8 +2,6 @@
 
 import * as React from "react"
 import { useEffect, useRef } from "react"
-import { gsap } from "gsap"
-import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { Instagram, Facebook, Linkedin, Youtube } from "lucide-react"
 
 const TikTokIcon = (props: React.SVGProps<SVGSVGElement>) => (
@@ -35,9 +33,27 @@ import { useLanguage } from "@/components/language-context"
 import Image from "next/image"
 import { cn } from "@/lib/utils"
 
-// Register ScrollTrigger safely on client
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger)
+let gsapPromise: Promise<any> | null = null
+let gsapScrollPromise: Promise<any> | null = null
+
+function loadGsap() {
+  if (!gsapPromise) {
+    gsapPromise = import("gsap").then((mod) => mod.gsap)
+  }
+  return gsapPromise
+}
+
+function loadGsapWithScrollTrigger() {
+  if (!gsapScrollPromise) {
+    gsapScrollPromise = Promise.all([
+      loadGsap(),
+      import("gsap/ScrollTrigger"),
+    ]).then(([gsap, mod]) => {
+      gsap.registerPlugin(mod.ScrollTrigger)
+      return gsap
+    })
+  }
+  return gsapScrollPromise
 }
 
 // -------------------------------------------------------------------------
@@ -164,6 +180,42 @@ const STYLES = `
   background-clip: text;
   filter: drop-shadow(0px 0px 15px color-mix(in oklch, var(--color-neutral-900) 8%, transparent));
 }
+
+/* Dark variant: blends into dark aurora pages */
+.footer-dark {
+  --pill-bg-1: color-mix(in oklch, var(--color-white) 6%, transparent);
+  --pill-bg-2: color-mix(in oklch, var(--color-white) 2%, transparent);
+  --pill-shadow: color-mix(in oklch, var(--color-black) 60%, transparent);
+  --pill-highlight: color-mix(in oklch, var(--color-white) 14%, transparent);
+  --pill-inset-shadow: color-mix(in oklch, var(--color-black) 40%, transparent);
+  --pill-border: color-mix(in oklch, var(--color-white) 12%, transparent);
+
+  --pill-bg-1-hover: color-mix(in oklch, var(--color-white) 12%, transparent);
+  --pill-bg-2-hover: color-mix(in oklch, var(--color-white) 4%, transparent);
+  --pill-border-hover: color-mix(in oklch, var(--color-white) 25%, transparent);
+  --pill-shadow-hover: color-mix(in oklch, var(--color-black) 70%, transparent);
+  --pill-highlight-hover: color-mix(in oklch, var(--color-white) 22%, transparent);
+}
+
+.footer-dark .footer-bg-grid {
+  background-image:
+    linear-gradient(to right, color-mix(in oklch, var(--color-white) 5%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in oklch, var(--color-white) 5%, transparent) 1px, transparent 1px);
+}
+
+.footer-dark .footer-giant-bg-text {
+  -webkit-text-stroke: 1px color-mix(in oklch, var(--color-white) 8%, transparent);
+  background: linear-gradient(180deg, color-mix(in oklch, var(--color-white) 12%, transparent) 0%, transparent 70%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.footer-dark .footer-text-glow {
+  background: linear-gradient(180deg, var(--color-white) 0%, color-mix(in oklch, var(--color-white) 55%, transparent) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  filter: drop-shadow(0px 0px 15px color-mix(in oklch, var(--color-white) 12%, transparent));
+}
 `
 
 // -------------------------------------------------------------------------
@@ -183,7 +235,13 @@ const MagneticButton = React.forwardRef<HTMLElement, MagneticButtonProps>(
       const element = localRef.current
       if (!element) return
 
-      const ctx = gsap.context(() => {
+      let cancelled = false
+      let ctx: { revert: () => void } | undefined
+
+      loadGsap().then((gsap) => {
+        if (cancelled) return
+
+        ctx = gsap.context(() => {
         const handleMouseMove = (e: MouseEvent) => {
           const rect = element.getBoundingClientRect()
           const h = rect.width / 2
@@ -221,9 +279,13 @@ const MagneticButton = React.forwardRef<HTMLElement, MagneticButtonProps>(
           element.removeEventListener("mousemove", handleMouseMove as any)
           element.removeEventListener("mouseleave", handleMouseLeave)
         }
-      }, element)
+        }, element)
+      })
 
-      return () => ctx.revert()
+      return () => {
+        cancelled = true
+        ctx?.revert()
+      }
     }, [])
 
     return (
@@ -246,7 +308,7 @@ MagneticButton.displayName = "MagneticButton"
 // -------------------------------------------------------------------------
 // 3. MAIN CINEMATIC FOOTER
 // -------------------------------------------------------------------------
-export function Footer() {
+export function Footer({ dark = false }: { dark?: boolean }) {
   const currentYear = new Date().getFullYear()
   const { t, locale } = useLanguage()
   const isRtl = locale === "ar"
@@ -257,46 +319,76 @@ export function Footer() {
 
   useEffect(() => {
     if (typeof window === "undefined") return
-    if (!wrapperRef.current) return
+    const wrapper = wrapperRef.current
+    if (!wrapper) return
 
-    const ctx = gsap.context(() => {
-      // Giant background text parallax scroll entry
-      gsap.fromTo(
-        giantTextRef.current,
-        { y: "8vh", scale: 0.9, opacity: 0 },
-        {
-          y: "0vh",
-          scale: 1,
-          opacity: 1,
-          ease: "power1.out",
-          scrollTrigger: {
-            trigger: wrapperRef.current,
-            start: "top 90%",
-            end: "bottom bottom",
-            scrub: 1,
-          },
-        }
+    let cancelled = false
+    let ctx: { revert: () => void } | undefined
+    let observer: IntersectionObserver | undefined
+
+    const startAnimation = () => {
+      loadGsapWithScrollTrigger().then((gsap) => {
+        if (cancelled) return
+
+        ctx = gsap.context(() => {
+          // Giant background text parallax scroll entry
+          gsap.fromTo(
+            giantTextRef.current,
+            { y: "8vh", scale: 0.9, opacity: 0 },
+            {
+              y: "0vh",
+              scale: 1,
+              opacity: 1,
+              ease: "power1.out",
+              scrollTrigger: {
+                trigger: wrapper,
+                start: "top 90%",
+                end: "bottom bottom",
+                scrub: 1,
+              },
+            }
+          )
+
+          // Content staggered fade-in
+          gsap.fromTo(
+            contentRef.current,
+            { y: 40, opacity: 0 },
+            {
+              y: 0,
+              opacity: 1,
+              ease: "power2.out",
+              scrollTrigger: {
+                trigger: wrapper,
+                start: "top 60%",
+                end: "bottom bottom",
+                scrub: 1.2,
+              },
+            }
+          )
+        }, wrapper)
+      })
+    }
+
+    if ("IntersectionObserver" in window) {
+      observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            observer?.disconnect()
+            startAnimation()
+          }
+        },
+        { rootMargin: "320px" }
       )
+      observer.observe(wrapper)
+    } else {
+      startAnimation()
+    }
 
-      // Content staggered fade-in
-      gsap.fromTo(
-        contentRef.current,
-        { y: 40, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: wrapperRef.current,
-            start: "top 60%",
-            end: "bottom bottom",
-            scrub: 1.2,
-          },
-        }
-      )
-    }, wrapperRef)
-
-    return () => ctx.revert()
+    return () => {
+      cancelled = true
+      observer?.disconnect()
+      ctx?.revert()
+    }
   }, [])
 
   const scrollToTop = () => {
@@ -331,7 +423,7 @@ export function Footer() {
       {marqueeItems.map((item, idx) => (
         <React.Fragment key={idx}>
           <span className={cn(isRtl ? "ml-12" : "mr-0")}>{item}</span>
-          <span className="text-neutral-400 font-normal">✦</span>
+          <span className={cn("font-normal", dark ? "text-neutral-500" : "text-neutral-400")}>✦</span>
         </React.Fragment>
       ))}
     </div>
@@ -346,31 +438,31 @@ export function Footer() {
     { name: "TikTok", icon: TikTokIcon, href: "https://www.tiktok.com/@dipencilcom" },
   ]
 
-  // Dynamic lists mapping to i18n entries
+  // Dynamic lists mapping to i18n entries — real routes, work from any page
   const servicesLinks = [
-    { name: t("footer.link.branding"), href: "#featured-products" },
-    { name: t("footer.link.web"), href: "#featured-products" },
-    { name: t("footer.link.apps"), href: "#featured-products" },
-    { name: t("footer.link.ai"), href: "#featured-products" },
-    { name: t("footer.link.booking"), href: "#featured-products" },
-    { name: t("footer.link.support"), href: "#featured-products" },
+    { name: t("footer.link.branding"), href: "/services/brand-identity" },
+    { name: t("footer.link.web"), href: "/services/websites-platforms" },
+    { name: t("footer.link.apps"), href: "/services/mobile-apps-saas" },
+    { name: t("footer.link.ai"), href: "/services/business-systems" },
+    { name: t("footer.link.booking"), href: "/services/marketing-growth" },
+    { name: t("footer.link.support"), href: "/services/hosting-cloud" },
   ]
 
   const studioLinks = [
-    { name: t("footer.link.story"), href: "#about" },
-    { name: t("footer.link.materials"), href: "#about" },
-    { name: t("footer.link.projects"), href: "#featured-products" },
-    { name: t("footer.link.careers"), href: "#contact" },
-    { name: t("footer.link.contact"), href: "#contact" },
+    { name: t("footer.link.story"), href: "/work" },
+    { name: t("footer.link.materials"), href: "/#materials" },
+    { name: t("footer.link.projects"), href: "/work" },
+    { name: t("footer.link.careers"), href: "/#contact" },
+    { name: t("footer.link.contact"), href: "/#contact" },
   ]
 
   const sectorsLinks = [
-    { name: t("footer.link.tourism"), href: "#business-sectors" },
-    { name: t("footer.link.realestate"), href: "#business-sectors" },
-    { name: t("footer.link.restaurants"), href: "#business-sectors" },
-    { name: t("footer.link.medical"), href: "#business-sectors" },
-    { name: t("footer.link.education"), href: "#business-sectors" },
-    { name: t("footer.link.corporate"), href: "#business-sectors" },
+    { name: t("footer.link.tourism"), href: "/work" },
+    { name: t("footer.link.realestate"), href: "/work" },
+    { name: t("footer.link.restaurants"), href: "/work" },
+    { name: t("footer.link.medical"), href: "/work" },
+    { name: t("footer.link.education"), href: "/work" },
+    { name: t("footer.link.corporate"), href: "/work" },
   ]
 
   return (
@@ -386,7 +478,10 @@ export function Footer() {
         {/* Fixed Footer Content (Sitting underneath) */}
         <footer
           dir={isRtl ? "rtl" : "ltr"}
-          className="fixed bottom-0 left-0 flex h-[110vh] md:h-screen w-full flex-col justify-between overflow-hidden bg-neutral-50 text-neutral-900 border-t border-neutral-200 cinematic-footer-wrapper select-none z-0"
+          className={cn(
+            "fixed bottom-0 left-0 flex h-[110vh] md:h-screen w-full flex-col justify-between overflow-hidden border-t cinematic-footer-wrapper select-none z-0",
+            dark ? "footer-dark border-white/10 bg-neutral-900 text-white" : "border-neutral-200 bg-neutral-50 text-neutral-900"
+          )}
         >
           {/* Ambient Lighting & Grid Background */}
           <div className="footer-aurora absolute left-1/2 top-1/2 h-[70vh] w-[90vw] -translate-x-1/2 -translate-y-1/2 animate-footer-breathe rounded-[50%] blur-[100px] pointer-events-none z-0" />
@@ -401,10 +496,14 @@ export function Footer() {
           </div>
 
           {/* 1. Curved Sleek Marquee Banner */}
-          <div className="absolute top-10 md:top-14 left-0 w-full overflow-hidden border-y border-neutral-200 bg-white/75 backdrop-blur-md py-3.5 z-10 -rotate-1 scale-105 shadow-sm">
+          <div className={cn(
+            "absolute top-10 md:top-14 left-0 w-full overflow-hidden border-y backdrop-blur-md py-3.5 z-10 -rotate-1 scale-105 shadow-sm",
+            dark ? "border-white/10 bg-neutral-900/80" : "border-neutral-200 bg-white/75"
+          )}>
             <div
               className={cn(
-                "flex w-max text-xs font-bold tracking-[0.2em] text-neutral-500 uppercase",
+                "flex w-max text-xs font-bold tracking-[0.2em] uppercase",
+                dark ? "text-neutral-400" : "text-neutral-500",
                 isRtl ? "animate-footer-scroll-marquee-rtl" : "animate-footer-scroll-marquee-ltr"
               )}
             >
@@ -423,8 +522,8 @@ export function Footer() {
               <div className="lg:col-span-4 flex flex-col items-start">
                 <div className="mb-4">
                   <a href="/" aria-label={t("brand.logo")}>
-                    <Image
-                      src="/logoblack.png"
+                  <Image
+                    src={dark ? "/logowhite.png" : "/logoblack.png"}
                       alt={t("brand.logo")}
                       width={140}
                       height={32}
@@ -432,7 +531,7 @@ export function Footer() {
                     />
                   </a>
                 </div>
-                <p className="text-neutral-600 text-sm leading-relaxed mb-6 max-w-sm">
+                <p className={cn("text-sm leading-relaxed mb-6 max-w-sm", dark ? "text-neutral-400" : "text-neutral-600")}>
                   {t("footer.desc")}
                 </p>
                 
@@ -445,7 +544,12 @@ export function Footer() {
                       href={social.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-9 h-9 footer-glass-pill rounded-full flex items-center justify-center text-neutral-600 hover:text-neutral-900 border border-neutral-300 bg-white/40"
+                      className={cn(
+                        "w-9 h-9 footer-glass-pill rounded-full flex items-center justify-center border",
+                        dark
+                          ? "text-neutral-400 hover:text-white border-white/15 bg-white/5"
+                          : "text-neutral-600 hover:text-neutral-900 border-neutral-300 bg-white/40"
+                      )}
                       aria-label={social.name}
                     >
                       <social.icon size={16} />
@@ -456,13 +560,13 @@ export function Footer() {
 
               {/* Links Col 1: Services */}
               <div className="col-span-1 sm:col-span-3 lg:col-span-2 lg:ps-6">
-                <h4 className="font-bold text-xs uppercase tracking-wider text-neutral-900 mb-4">
+                <h4 className={cn("font-bold text-xs uppercase tracking-wider mb-4", dark ? "text-white" : "text-neutral-900")}>
                   {t("footer.sec.shop")}
                 </h4>
                 <ul className="space-y-2.5">
                   {servicesLinks.map((link, i) => (
                     <li key={i}>
-                      <a href={link.href} className="text-neutral-600 hover:text-neutral-900 text-sm transition-colors duration-200">
+                        <a href={link.href} className={cn("text-sm transition-colors duration-200", dark ? "text-neutral-400 hover:text-white" : "text-neutral-600 hover:text-neutral-900")}>
                         {link.name}
                       </a>
                     </li>
@@ -472,13 +576,13 @@ export function Footer() {
 
               {/* Links Col 2: Studio */}
               <div className="col-span-1 sm:col-span-3 lg:col-span-2">
-                <h4 className="font-bold text-xs uppercase tracking-wider text-neutral-900 mb-4">
+                <h4 className={cn("font-bold text-xs uppercase tracking-wider mb-4", dark ? "text-white" : "text-neutral-900")}>
                   {t("footer.sec.studio")}
                 </h4>
                 <ul className="space-y-2.5">
                   {studioLinks.map((link, i) => (
                     <li key={i}>
-                      <a href={link.href} className="text-neutral-600 hover:text-neutral-900 text-sm transition-colors duration-200">
+                        <a href={link.href} className={cn("text-sm transition-colors duration-200", dark ? "text-neutral-400 hover:text-white" : "text-neutral-600 hover:text-neutral-900")}>
                         {link.name}
                       </a>
                     </li>
@@ -488,13 +592,13 @@ export function Footer() {
 
               {/* Links Col 3: Sectors */}
               <div className="col-span-1 sm:col-span-3 lg:col-span-2">
-                <h4 className="font-bold text-xs uppercase tracking-wider text-neutral-900 mb-4">
+                <h4 className={cn("font-bold text-xs uppercase tracking-wider mb-4", dark ? "text-white" : "text-neutral-900")}>
                   {t("footer.sec.support")}
                 </h4>
                 <ul className="space-y-2.5">
                   {sectorsLinks.map((link, i) => (
                     <li key={i}>
-                      <a href={link.href} className="text-neutral-600 hover:text-neutral-900 text-sm transition-colors duration-200">
+                        <a href={link.href} className={cn("text-sm transition-colors duration-200", dark ? "text-neutral-400 hover:text-white" : "text-neutral-600 hover:text-neutral-900")}>
                         {link.name}
                       </a>
                     </li>
@@ -504,20 +608,26 @@ export function Footer() {
 
               {/* CTA Col */}
               <div className="lg:col-span-2 flex flex-col gap-3.5 items-stretch min-w-[160px]">
-                <h4 className="font-bold text-xs uppercase tracking-wider text-neutral-900 mb-1">
+                <h4 className={cn("font-bold text-xs uppercase tracking-wider mb-1", dark ? "text-white" : "text-neutral-900")}>
                   {t("footer.headline")}
                 </h4>
                 <MagneticButton
                   as="a"
-                  href="#contact"
-                  className="footer-glass-pill py-3 px-4 rounded-full text-center text-xs font-bold text-neutral-900 bg-white/60 border border-neutral-300"
+                  href="/#contact"
+                  className={cn(
+                    "footer-glass-pill py-3 px-4 rounded-full text-center text-xs font-bold border",
+                    dark ? "text-white border-white/15 bg-white/5" : "text-neutral-900 bg-white/60 border-neutral-300"
+                  )}
                 >
                   {t("footer.cta.project")}
                 </MagneticButton>
                 <MagneticButton
                   as="a"
-                  href="#solutions"
-                  className="footer-glass-pill py-3 px-4 rounded-full text-center text-xs font-bold text-neutral-900 bg-white/60 border border-neutral-300"
+                  href="/services"
+                  className={cn(
+                    "footer-glass-pill py-3 px-4 rounded-full text-center text-xs font-bold border",
+                    dark ? "text-white border-white/15 bg-white/5" : "text-neutral-900 bg-white/60 border-neutral-300"
+                  )}
                 >
                   {t("footer.cta.solutions")}
                 </MagneticButton>
@@ -526,9 +636,12 @@ export function Footer() {
           </div>
 
           {/* 3. Bottom Row credits */}
-          <div className="relative z-20 w-full pb-6 pt-4 border-t border-neutral-200/50 px-6 md:px-12 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className={cn(
+            "relative z-20 w-full pb-6 pt-4 border-t px-6 md:px-12 flex flex-col sm:flex-row items-center justify-between gap-4",
+            dark ? "border-white/10" : "border-neutral-200/50"
+          )}>
             {/* Copyright */}
-            <div className="text-neutral-500 text-[10px] md:text-xs font-semibold tracking-wider">
+            <div className={cn("text-[10px] md:text-xs font-semibold tracking-wider", dark ? "text-neutral-400" : "text-neutral-500")}>
               © {currentYear} {t("brand.logo")}. {t("footer.rights")}
             </div>
 
@@ -536,7 +649,7 @@ export function Footer() {
             <div className="flex items-center gap-3">
               {/* Micro heart badge */}
               <div className="footer-glass-pill px-4 py-2 rounded-full flex items-center gap-2 cursor-default border-neutral-300/40 bg-white/30 text-[10px] md:text-xs">
-                <span className="text-neutral-500 font-semibold uppercase tracking-wider">
+                <span className={cn("font-semibold uppercase tracking-wider", dark ? "text-neutral-400" : "text-neutral-500")}>
                   {t("footer.crafted_by_agent")}
                 </span>
                 <Image
@@ -546,7 +659,7 @@ export function Footer() {
                   height={16}
                   className="w-4 h-4 object-contain animate-footer-heartbeat"
                 />
-                <span className="text-neutral-900 font-black tracking-normal">
+                <span className={cn("font-black tracking-normal", dark ? "text-white" : "text-neutral-900")}>
                   {t("footer.agent_name")}
                 </span>
               </div>
@@ -555,7 +668,10 @@ export function Footer() {
               <MagneticButton
                 as="button"
                 onClick={scrollToTop}
-                className="w-10 h-10 rounded-full footer-glass-pill flex items-center justify-center text-neutral-500 hover:text-neutral-900 bg-white/40 border border-neutral-300 group"
+                className={cn(
+                  "w-10 h-10 rounded-full footer-glass-pill flex items-center justify-center border group",
+                  dark ? "text-neutral-400 hover:text-white border-white/15 bg-white/5" : "text-neutral-500 hover:text-neutral-900 bg-white/40 border-neutral-300"
+                )}
                 aria-label="Back to Top"
               >
                 <svg

@@ -1,7 +1,7 @@
 "use client"
 
 import { motion, useScroll, useTransform } from "framer-motion"
-import { useRef } from "react"
+import { useRef, memo, useMemo } from "react"
 import Image from "next/image"
 import { Reveal } from "./reveal"
 import { useLanguage } from "@/components/language-context"
@@ -10,10 +10,36 @@ import { MacOSDock } from "./ui/mac-os-dock"
 import { useState, useEffect } from "react"
 
 
+const AnimatedText = memo(function AnimatedText({ text, delay = 0 }: { text: string; delay?: number }) {
+  return (
+    <span>
+      {text.split("").map((char, index) => (
+        <motion.span
+          key={index}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{
+            duration: 0.5,
+            delay: delay + index * 0.03,
+            ease: [0.21, 0.47, 0.32, 0.98],
+          }}
+          style={{ display: char === " " ? "inline" : "inline-block" }}
+        >
+          {char === " " ? "\u00A0" : char}
+        </motion.span>
+      ))}
+    </span>
+  )
+})
+
 function TypewriterHeadline({ locale }: { locale: string }) {
-  const phrases = locale === "ar"
-    ? ["حِرفة رقمية", "حلول إبداعية", "نموّ العلامة"]
-    : ["Digital Craft", "Creative Systems", "Brand Growth"]
+  const phrases = useMemo(
+    () =>
+      locale === "ar"
+        ? ["حِرفة رقمية", "حلول إبداعية", "نموّ العلامة"]
+        : ["Digital Craft", "Creative Systems", "Brand Growth"],
+    [locale]
+  )
 
   const [currentIdx, setCurrentIdx] = useState(0)
   const [displayText, setDisplayText] = useState("")
@@ -77,43 +103,21 @@ export function HeroSection() {
   const contentY = useTransform(scrollYProgress, [0, 1], [0, 100])
   const contentOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0])
 
-  const dockItems = [
-    { label: t("dock.homepage"), icon: "/macosdock/homepage.svg", href: "/" },
-    { label: t("dock.solutions"), icon: "/macosdock/solutions.svg", href: "#solutions" },
-    { label: t("dock.sectors"), icon: "/macosdock/business-sectors.svg", href: "#business-sectors" },
-    { label: t("dock.programs"), icon: "/macosdock/programs.svg", href: "#programs" },
-    { label: t("dock.enterprise"), icon: "/macosdock/enterprise.svg", href: "#enterprise" },
-    { label: t("dock.feliz"), icon: "/macosdock/superfeliz.svg", href: "#super-feliz" },
-    { label: t("dock.pricing"), icon: "/macosdock/pricing.svg", href: "#pricing" },
-    { label: t("dock.about"), icon: "/macosdock/about.svg", href: "#about" },
-    { label: t("dock.contact"), icon: "/macosdock/contact.svg", href: "#contact" },
-  ]
-
-  const AnimatedText = ({ text, delay = 0 }: { text: string; delay?: number }) => {
-    if (locale === "ar") {
-      return <span>{text}</span>
-    }
-
-    return (
-      <span>
-        {text.split("").map((char, index) => (
-          <motion.span
-            key={index}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{
-              duration: 0.5,
-              delay: delay + index * 0.03,
-              ease: [0.21, 0.47, 0.32, 0.98],
-            }}
-            style={{ display: char === " " ? "inline" : "inline-block" }}
-          >
-            {char === " " ? "\u00A0" : char}
-          </motion.span>
-        ))}
-      </span>
-    )
-  }
+  const dockItems = useMemo(
+    () => [
+      { label: t("dock.homepage"), icon: "/macosdock/homepage.svg", href: "/" },
+      { label: t("dock.solutions"), icon: "/macosdock/solutions.svg", href: "/solutions" },
+      { label: t("dock.sectors"), icon: "/macosdock/business-sectors.svg", href: "/sectors" },
+      { label: t("dock.cloudHosting"), icon: "/macosdock/cloud-hosting.svg", href: "/cloud-hosting" },
+      { label: t("dock.enterprise"), icon: "/macosdock/enterprise.svg", href: "/enterprise" },
+      { label: t("dock.feliz"), icon: "/macosdock/superfeliz.svg", href: "/superfeliz" },
+      { label: t("dock.pricing"), icon: "/macosdock/pricing.svg", href: "/pricing" },
+      { label: t("dock.about"), icon: "/macosdock/about.svg", href: "/about" },
+      { label: t("dock.contact"), icon: "/macosdock/contact.svg", href: "/contact" },
+    ],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [locale]
+  )
 
   return (
     <section ref={containerRef} className="relative h-screen overflow-hidden">
@@ -131,6 +135,8 @@ export function HeroSection() {
           fill
           className="object-cover"
           priority
+          fetchPriority="high"
+          quality={75}
           sizes="100vw"
         />
         <div className="absolute inset-0 bg-black/20" />
@@ -147,7 +153,7 @@ export function HeroSection() {
               <TypewriterHeadline locale={locale} />
               <br />
               <span className="text-[0.74em] italic font-light">
-                <AnimatedText text={t("hero.title2")} delay={1.1} />
+                {locale === "ar" ? <span>{t("hero.title2")}</span> : <AnimatedText text={t("hero.title2")} delay={1.1} />}
               </span>
             </h1>
           </Reveal>
@@ -211,3 +217,5 @@ export function HeroSection() {
     </section>
   )
 }
+
+

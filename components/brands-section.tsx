@@ -105,6 +105,7 @@ export function BrandsSection() {
                 alt={logo.alt}
                 fill
                 sizes="112px"
+                quality={60}
                 className="object-contain"
                 loading="lazy"
               />
@@ -137,9 +138,9 @@ export function BrandsSection() {
         </p>
 
         <div className="mx-auto flex w-full flex-col gap-2 border-y border-neutral-200/80 bg-white py-6" dir="ltr">
-          <SliderRow items={row1} direction={locale === "ar" ? "rtl" : "ltr"} speed="40s" />
-          <SliderRow items={row2} direction={locale === "ar" ? "ltr" : "rtl"} speed="45s" />
-          <SliderRow items={row3} direction={locale === "ar" ? "rtl" : "ltr"} speed="38s" />
+          <SliderRow items={row1} direction={locale === "ar" ? "rtl" : "ltr"} speed="85s" />
+          <SliderRow items={row2} direction={locale === "ar" ? "ltr" : "rtl"} speed="95s" />
+          <SliderRow items={row3} direction={locale === "ar" ? "rtl" : "ltr"} speed="80s" />
         </div>
       </div>
 

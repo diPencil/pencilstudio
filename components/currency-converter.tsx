@@ -85,7 +85,7 @@ export function CurrencyConverter({
       </p>
       <p className="mt-1 text-xs font-semibold text-white/50">
         {isRtl
-          ? "يبدأ من كده. السعر النهائي بعد مكالمة التعارف."
+          ? "يبدأ من هنا. السعر النهائي بعد مكالمة التعارف."
           : "Starting from here. Final quote after the intro call."}
       </p>
 
@@ -128,7 +128,7 @@ export function CurrencyConverter({
           ) : (
             <span>
               {isRtl
-                ? "سعر استرشادي لحد ما يوصل سعر البنك"
+                ? "سعر استرشادي بانتظار سعر البنك"
                 : "Indicative rate until the bank rate loads"}
             </span>
           )}

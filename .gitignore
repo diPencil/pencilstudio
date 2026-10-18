@@ -5,6 +5,7 @@
 
 # next.js
 /.next/
+/.next-verify/
 /out/
 
 # production
@@ -33,3 +34,6 @@ __pycache__/
 # local-only tooling (separate repos / working files, not part of the site)
 ui-ux-pro-max-skill/
 scratch/
+*.log
+/.next-bak/
+

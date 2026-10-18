@@ -2,9 +2,11 @@
   "name": "pencil-studio",
   "version": "0.1.0",
   "private": true,
+  "packageManager": "pnpm@10.28.0",
   "scripts": {
     "build": "next build",
-    "dev": "next dev",
+    "dev": "next dev -H 127.0.0.1 -p 3003",
+    "verify": "set NEXT_DIST_DIR=.next-verify&& next build",
     "lint": "eslint .",
     "start": "next start"
   },

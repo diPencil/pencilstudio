@@ -166,9 +166,17 @@
 
   html[dir="rtl"],
   html[dir="rtl"] body,
-  html[dir="rtl"] body * {
+  html[dir="rtl"] body *,
+  [dir="rtl"],
+  [dir="rtl"] * {
     font-family: var(--font-arabic), var(--font-inter), sans-serif !important;
     letter-spacing: normal !important;
+  }
+
+  html[dir="ltr"],
+  html[dir="ltr"] body,
+  [dir="ltr"] {
+    font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   }
 
   html[dir="rtl"] svg {
@@ -284,4 +292,89 @@
     background: rgba(255, 255, 255, 0.9);
     border: 2px solid rgba(0, 0, 0, 0.8);
   }
+}
+
+/* Infinite gallery marquee (method pages: field notes) */
+@keyframes gallery-marquee-ltr {
+  from { transform: translateX(0); }
+  to { transform: translateX(calc(-50% - 8px)); }
+}
+
+@keyframes gallery-marquee-rtl {
+  from { transform: translateX(calc(-50% - 8px)); }
+  to { transform: translateX(0); }
+}
+
+.gallery-marquee-ltr {
+  animation: gallery-marquee-ltr 45s linear infinite;
+}
+
+.gallery-marquee-rtl {
+  animation: gallery-marquee-rtl 45s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gallery-marquee-ltr,
+  .gallery-marquee-rtl,
+  .about-work-marquee-ltr,
+  .about-work-marquee-rtl {
+    animation: none;
+  }
+}
+
+/* Seamless infinite work marquee for About curated gallery */
+@keyframes about-work-marquee-ltr {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(calc(-50% - 12px)); }
+}
+
+@keyframes about-work-marquee-rtl {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(calc(50% + 12px)); }
+}
+
+.about-work-marquee-ltr {
+  animation: about-work-marquee-ltr 50s linear infinite;
+}
+
+.about-work-marquee-rtl {
+  animation: about-work-marquee-rtl 50s linear infinite;
+}
+
+/* Living animated gradient mesh for open light sections */
+@keyframes aura-drift-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(50px, -40px) scale(1.18); }
+}
+
+@keyframes aura-drift-2 {
+  0%, 100% { transform: translate(0, 0) scale(1.1); }
+  50% { transform: translate(-60px, 50px) scale(0.95); }
+}
+
+@keyframes aura-drift-3 {
+  0%, 100% { transform: translate(0, 0) scale(0.95); }
+  50% { transform: translate(40px, 60px) scale(1.2); }
+}
+
+.animate-aura-1 {
+  animation: aura-drift-1 16s ease-in-out infinite;
+}
+
+.animate-aura-2 {
+  animation: aura-drift-2 20s ease-in-out infinite;
+}
+
+.animate-aura-3 {
+  animation: aura-drift-3 18s ease-in-out infinite;
+}
+
+/* Animated rotating border stroke for interactive cards */
+@keyframes border-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.animate-border-spin {
+  animation: border-spin 3s linear infinite;
 }

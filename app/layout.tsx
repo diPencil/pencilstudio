@@ -19,9 +19,8 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://dipencil.com"),
   title: "PENCIL Studio: Creative Digital Studio",
   description: "PENCIL Studio builds brands, websites, mobile apps, digital platforms, and business systems from scratch.",
-  generator: "v0.app",
   alternates: {
-    canonical: "https://pencil.studio/",
+    canonical: "https://dipencil.com/",
   },
   icons: {
     icon: "/favcion.png",
@@ -33,7 +32,7 @@ export const metadata: Metadata = {
     title: "PENCIL Studio: Creative Digital Studio",
     description: "PENCIL Studio builds brands, websites, mobile apps, digital platforms, and business systems from scratch.",
     type: "website",
-    url: "https://pencil.studio/",
+    url: "https://dipencil.com/",
     images: [
       {
         url: "/logoblack.png",
@@ -54,7 +53,7 @@ export const metadata: Metadata = {
         alt: "PENCIL Studio: Creative Digital Studio",
       },
     ],
-    site: "@pencil_studio",
+    site: "@dipencilcom",
   },
 }
 

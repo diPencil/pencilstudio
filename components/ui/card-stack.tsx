@@ -15,6 +15,7 @@ export type CardStackItem = {
   title: string;
   description?: string;
   imageSrc?: string;
+  videoSrc?: string;
   href?: string;
   ctaLabel?: string;
   tag?: string;
@@ -369,9 +370,18 @@ export function CardStack<T extends CardStackItem>({
 function DefaultFanCard({ item }: { item: CardStackItem; active: boolean }) {
   return (
     <div className="relative h-full w-full">
-      {/* image */}
-      <div className="absolute inset-0">
-        {item.imageSrc ? (
+      {/* image or video */}
+      <div className="absolute inset-0 overflow-hidden">
+        {item.videoSrc ? (
+          <video
+            src={item.videoSrc}
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="h-full w-full object-cover"
+          />
+        ) : item.imageSrc ? (
           <Image
             src={item.imageSrc}
             alt={item.title}

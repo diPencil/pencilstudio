@@ -1,3 +1,5 @@
+"use client"
+
 import type React from "react"
 import { useState } from "react"
 import { motion } from "framer-motion"
@@ -21,6 +23,7 @@ export function NewsletterSection() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (validateEmail(email)) {
+      // TODO(api): connect newsletter to real endpoint (e.g. /api/newsletter) — currently UI-only
       setIsSubmitted(true)
       setIsValid(true)
     } else {
@@ -29,7 +32,7 @@ export function NewsletterSection() {
   }
 
   return (
-    <section className="py-20 lg:py-32">
+    <section id="contact" className="py-20 lg:py-32 scroll-mt-24">
       <div className="container-custom">
         <Reveal>
           <div className="max-w-2xl mx-auto">
@@ -38,7 +41,7 @@ export function NewsletterSection() {
                 <h2 className={locale === "ar" ? "text-3xl lg:text-4xl font-normal text-neutral-900 mb-4 tracking-normal" : "text-3xl lg:text-4xl font-bold text-neutral-900 mb-4"}>
                   {locale === "ar" ? (
                     <>
-                      عندك فكرة؟ <span className="font-light italic text-neutral-500">خلّينا نحوّلها.</span>
+                      لديك فكرة؟ <span className="font-light italic text-neutral-500">لنحوّلها معاً.</span>
                     </>
                   ) : (
                     <>

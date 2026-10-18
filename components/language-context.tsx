@@ -8,14 +8,13 @@ export type Direction = "ltr" | "rtl"
 interface LanguageContextProps {
   locale: Locale
   direction: Direction
-  t: (key: string) => any
+  t: (key: TranslationKey) => string
   setLocale: (locale: Locale) => void
 }
 
 const LanguageContext = createContext<LanguageContextProps | undefined>(undefined)
 
-const translations = {
-  en: {
+const enTranslations = {
     // Header
     "brand.logo": "PENCIL Studio",
     "nav.featured": "Services",
@@ -188,7 +187,7 @@ const translations = {
     "dock.homepage": "Homepage",
     "dock.solutions": "Solutions",
     "dock.sectors": "Business Sectors",
-    "dock.programs": "Programs",
+    "dock.cloudHosting": "Cloud & Hosting",
     "dock.enterprise": "Enterprise",
     "dock.feliz": "Super Feliz",
     "dock.pricing": "Pricing",
@@ -251,10 +250,13 @@ const translations = {
     "superfeliz.desk.briefNote": "client's words, kept as is",
     "superfeliz.desk.plan": "The Feliz plan",
     "superfeliz.desk.stamp": "Feliz approved",
-  },
-  ar: {
+};
+
+export type TranslationKey = keyof typeof enTranslations;
+
+const arTranslations: Record<TranslationKey, string> = {
     // Header
-    "brand.logo": "PENCIL Studio",
+    "brand.logo": "ستوديو بنسل",
     "nav.featured": "الخدمات",
     "nav.collections": "القطاعات",
     "nav.materials": "حرفتنا",
@@ -282,23 +284,23 @@ const translations = {
     "product.brand.dimensions": "النطاق: أنظمة الشعارات، الخطوط، لوحة الألوان، الأصول الرسومية وكتيب الهوية.",
     
     "product.web.name": "المواقع والمنصات الرقمية",
-    "product.web.materials": "Next.js، React، Tailwind CSS، أنظمة المحتوى اللارأسية",
+    "product.web.materials": "نكست.جي إس، ريأكت، تيلويند، أنظمة المحتوى اللارأسية",
     "product.web.dimensions": "النطاق: مواقع شركات عالية الأداء، بوابات رقمية، وتطبيقات ويب متكاملة.",
 
-    "product.app.name": "تطبيقات الهواتف ومنتجات الـ SaaS",
-    "product.app.materials": "React Native، iOS، Android، خدمات السحاب المتزامنة",
+    "product.app.name": "تطبيقات الهواتف ومنتجات الـ ساس",
+    "product.app.materials": "ريأكت نيتف، آي أو إس، أندرويد، خدمات السحاب المتزامنة",
     "product.app.dimensions": "النطاق: تطبيقات مخصصة بالكامل مع مزامنة لحظية، وتخزين محلي، وواجهات برمجية.",
 
     "product.systems.name": "أنظمة تشغيل وداشبوردات",
     "product.systems.materials": "أدوات مخصصة، تدفقات عمل، داشبوردات، ومنصات حجز",
-    "product.systems.dimensions": "النطاق: أدوات تساعد الفرق تدير الشغل، العملاء، الطلبات، الحجوزات، والعمليات اليومية.",
+    "product.systems.dimensions": "النطاق: أدوات تساعد الفرق على إدارة العمل، والعملاء، والطلبات، والحجوزات، والعمليات اليومية.",
 
     "product.marketing.name": "أنظمة التسويق والنمو",
     "product.marketing.materials": "تحسين محركات البحث، ربط التحليلات، قنوات التحويل",
     "product.marketing.dimensions": "النطاق: تتبع الاستحواذ، التسويق التقني، ومراجعة أداء النظم التسويقية.",
 
     "product.hosting.name": "الاستضافة، السحاب والدعم الفني",
-    "product.hosting.materials": "بنية تحتية AWS، التخزين المؤقت CDN، مراقبة ونسخ احتياطي 24/7",
+    "product.hosting.materials": "بنية تحتية إيه دبليو إس، التخزين المؤقت سي دي إن، مراقبة ونسخ احتياطي 24/7",
     "product.hosting.dimensions": "النطاق: استضافة خادمة بدون توقف، أمان السحاب، والصيانة الدورية للمشروع.",
 
     // Tech Swatches/Pillars
@@ -323,18 +325,18 @@ const translations = {
     // Materials Section (Our Craft)
     "materials.title": "حرفتنا",
     "materials.description": "يبدأ كل نظام ببنية واضحة، مخططة بعناية للأمان والسرعة والتصميم النظيف. نركز على العمل العملي والدقيق والقابل للاستمرار.",
-    "materials.quote": "\"نؤمن ببناء أنظمة تعيش طويلًا. منصات تكبر مع البيزنس وتكمل شغلها مع تغيّر الوقت.\"",
+    "materials.quote": "\"نؤمن ببناء أنظمة تعيش طويلًا. منصات تكبر مع الأعمال وتواصل عملها مع تغيّر الوقت.\"",
     "materials.brand": "PENCIL Studio",
     "material.pistachio": "التصميم وواجهة المستخدم",
     "material.pistachio.desc": "واجهات بديهية ووضوح بصري يعزز تفاعل المستخدم ومعدلات بقائه.",
     "material.lunar": "العمليات والأتمتة",
     "material.lunar.desc": "تدفقات عمل واضحة، قواعد توجيه، وأتمتة عملية ومباشرة.",
     "material.martian": "البنية التحتية والعمليات",
-    "material.martian.desc": "خدمات مصغرة محسنة، ونشر فائق السرعة عبر شبكات CDN، واستضافة آمنة.",
+    "material.martian.desc": "خدمات مصغرة محسنة، ونشر فائق السرعة عبر شبكات سي دي إن، واستضافة آمنة.",
 
     // Methodology Section
     "method.section_title": "من الفكرة إلى المنتج الرقمي",
-    "method.badge": "منهجية PENCIL",
+    "method.badge": "منهجية بنسل",
     "method.desc": "منهجية واضحة لتحويل الأفكار إلى هويات، مواقع، تطبيقات، لوحات تحكم، وأنظمة أعمال جاهزة للإطلاق.",
     "method.tab1.label": "الاستراتيجية والاتجاه",
     "method.tab1.badge": "الخطوة 01",
@@ -373,14 +375,14 @@ const translations = {
     "business.features.card3.desc": "بناء مسارات حجز، طلبات خدمات، موافقات داخلية، وسير عمل تشغيلي يقلل الوقت والعمل اليدوي.",
 
     // Newsletter Section
-    "newsletter.title1": "عندك فكرة؟ ",
-    "newsletter.title2": "خلّينا نحولها.",
-    "newsletter.description": "اشترك في قناتنا للحصول على أفكار عملية، شروحات للتنفيذ، ووصول حصري لأدوات PENCIL Studio.",
+    "newsletter.title1": "لديك فكرة؟ ",
+    "newsletter.title2": "لنحوّلها معاً.",
+    "newsletter.description": "اشترك في قناتنا للحصول على أفكار عملية، شروحات للتنفيذ، ووصول حصري لأدوات ستوديو بنسل.",
     "newsletter.placeholder": "أدخل عنوان بريدك الإلكتروني",
     "newsletter.subscribe": "اشترك في التحديثات",
     "newsletter.invalid": "يرجى إدخال عنوان بريد إلكتروني صالح",
-    "newsletter.welcome": "مرحباً بك في PENCIL Studio",
-    "newsletter.thanks": "شكراً لاشتراكك. سنرسل لك تحليلات معمارية برمجية وإصدارات الأدوات الجديدة.",
+    "newsletter.welcome": "مرحباً بك في ستوديو بنسل",
+    "newsletter.thanks": "شكراً لاشتراكك. سنرسل لك رؤى في البنية البرمجية وإصدارات الأدوات الجديدة.",
     "newsletter.privacy1": "نحن نحترم خصوصيتك. يمكنك إلغاء الاشتراك في أي وقت. اقرأ ",
     "newsletter.privacy2": "سياسة الخصوصية",
 
@@ -390,7 +392,7 @@ const translations = {
     "modal.features": "المخرجات والملفات",
     "modal.feat1": "استضافة برمجية سحابية دون أي توقف",
     "modal.feat2": "إرشادات هوية وتصميم مخصصة بالكامل",
-    "modal.feat3": "أكواد برمجية نظيفة وقابلة للتوسع بلغة TypeScript",
+    "modal.feat3": "أكواد برمجية نظيفة وقابلة للتوسع بلغة تايب سكريبت",
     "modal.feat4": "برنامج صيانة ودعم هندسي متكامل ومستمر",
     "modal.addToCart": "طلب استشارة تقنية",
 
@@ -426,7 +428,7 @@ const translations = {
     "dock.homepage": "الرئيسية",
     "dock.solutions": "الحلول",
     "dock.sectors": "قطاعات الأعمال",
-    "dock.programs": "البرامج",
+    "dock.cloudHosting": "الاستضافة والبانل",
     "dock.enterprise": "المؤسسات",
     "dock.feliz": "سوبر فيليز",
     "dock.pricing": "الأسعار",
@@ -450,10 +452,10 @@ const translations = {
     "superfeliz.badge": "وكيل أعمال ذكي",
     "superfeliz.title": "تعرف على سوبر فيليز",
     "superfeliz.subtitle": "وكيل أعمال ذكي يساعد الأفكار والفرق والنمو الرقمي بطريقة واضحة وعملية.",
-    "superfeliz.cinematic1": "SuperFeliz يفهم عملك.",
+    "superfeliz.cinematic1": "سوبر فيليز يفهم عملك.",
     "superfeliz.cinematic2": "يخطط. ينظّم. يدعم.",
     "superfeliz.card.heading": "ذكاء عملي للأعمال.",
-    "superfeliz.card.desc": "يساعد SuperFeliz الأعمال على تنظيم الأفكار، وأتمتة المهام المتكررة، وتحسين التواصل، وتحويل العمليات اليومية إلى مسارات رقمية أوضح.",
+    "superfeliz.card.desc": "يساعد سوبر فيليز الأعمال على تنظيم الأفكار، وأتمتة المهام المتكررة، وتحسين التواصل، وتحويل العمليات اليومية إلى مسارات رقمية أوضح.",
     "superfeliz.metric.label": "دعم 24/7",
     "superfeliz.metric.value": "دعم للأعمال يبقى جاهزًا كلما احتاجه الفريق.",
     "superfeliz.task.one.title": "مهام ذكية",
@@ -464,33 +466,32 @@ const translations = {
     "superfeliz.stream.one.desc": "رؤية واضحة لما يحتاج إلى متابعة",
     "superfeliz.stream.two": "ملخص سير العمل",
     "superfeliz.stream.two.desc": "الملاحظات والمتابعات والخطوات التالية في مكان واحد",
-    "superfeliz.cta.primary": "استكشف SuperFeliz",
-    "superfeliz.cta.secondary": "تحدث مع PENCIL",
-    "superfeliz.panel.label": "SuperFeliz",
+    "superfeliz.cta.primary": "استكشف سوبر فيليز",
+    "superfeliz.cta.secondary": "تحدث مع بنسل",
+    "superfeliz.panel.label": "سوبر فيليز",
     "superfeliz.panel.status": "نشط",
     "superfeliz.panel.badge": "وكيل أعمال",
     "superfeliz.mockup.title": "مكان واحد للأفكار والعمل",
     "superfeliz.mockup.desc": "اجمع الملاحظات والطلبات والمهام والتواصل داخل مساحة عمل مركزة وواضحة.",
-    "superfeliz.mockup.heading": "مساحة SuperFeliz",
+    "superfeliz.mockup.heading": "مساحة سوبر فيليز",
     "superfeliz.mockup.support": "مسارات عمل واضحة للفرق التي تحتاج خطوات أقل وقرارات أسرع.",
-    "superfeliz.chat.user": "بفكر في موقع حجز للعيادة. عربي وإنجليزي، وحجز أونلاين، ولازم يبقى سريع. الميزانية حوالي 5000 دولار والإطلاق بعد شهرين. تنفع؟",
-    "superfeliz.chat.agent": "تنفع. وكده نخليها أقوى:",
-    "superfeliz.chat.t1": "ضيف تذكير واتساب، عدم الحضور هيقع جامد",
-    "superfeliz.chat.t2": "خد عربون صغير أونلاين، الإلغاءات هتقل",
-    "superfeliz.chat.t3": "استهدف ثانية واحدة للفتح، جوجل هيرفعك فوق",
-    "superfeliz.chat.typing": "سوبر فيليز بيفكر…",
-    "superfeliz.chat.placeholder": "اسأل سوبر فيليز أي حاجة…",
-    "superfeliz.chat.chip1": "نظم أسبوعي",
+    "superfeliz.chat.user": "أفكر في موقع حجز لعيادتي. بالعربية والإنجليزية، وحجز عبر الإنترنت، ويجب أن يكون سريعاً. الميزانية نحو 5000 دولار والإطلاق بعد شهرين. هل هذا ممكن؟",
+    "superfeliz.chat.agent": "ممكن. وهكذا نجعله أقوى:",
+    "superfeliz.chat.t1": "أضف تذكير واتساب، وستنخفض حالات عدم الحضور كثيراً",
+    "superfeliz.chat.t2": "خذ عربوناً صغيراً عبر الإنترنت، وستقل الإلغاءات",
+    "superfeliz.chat.t3": "استهدف ثانية واحدة للتحميل، وسيرفعك جوجل أعلى",
+    "superfeliz.chat.typing": "سوبر فيليز يفكر…",
+    "superfeliz.chat.placeholder": "اسأل سوبر فيليز أي شيء…",
+    "superfeliz.chat.chip1": "خطط لأسبوعي",
     "superfeliz.chat.chip2": "تابع العملاء",
     "superfeliz.chat.chip3": "ملخص اليوم",
-    "superfeliz.desk.step1": "01، اكتبها ملخبطة",
-    "superfeliz.desk.step2": "02، فيليز يحولها خطة",
-    "superfeliz.desk.brief": "المسودة الملخبطة",
-    "superfeliz.desk.briefNote": "كلام العميل زي ما هو",
+    "superfeliz.desk.step1": "01، اكتبها كما تخطر لك",
+    "superfeliz.desk.step2": "02، فيليز يحولها إلى خطة",
+    "superfeliz.desk.brief": "المسودة الأولية",
+    "superfeliz.desk.briefNote": "نص العميل كما هو دون تعديل",
     "superfeliz.desk.plan": "خطة فيليز",
     "superfeliz.desk.stamp": "اعتماد فيليز",
-  },
-}
+};
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const [locale, setLocaleState] = useState<Locale>("en")
@@ -530,8 +531,8 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     localStorage.setItem("locale", newLocale)
   }
 
-  const t = (key: string): any => {
-    return translations[locale][key as keyof typeof translations["en"]] || key
+  const t = (key: TranslationKey): string => {
+    return (locale === "ar" ? arTranslations : enTranslations)[key]
   }
 
   // Prevent flash/hydration mismatch by providing children immediately but handling document updates in client effects
@@ -549,3 +550,5 @@ export function useLanguage() {
   }
   return context
 }
+
+

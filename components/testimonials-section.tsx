@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { Star } from "lucide-react"
+import { Star, ArrowUpRight } from "lucide-react"
 import { useLanguage } from "@/components/language-context"
 import { cn } from "@/lib/utils"
 import Image from "next/image"
@@ -1443,83 +1443,132 @@ export function TestimonialsSection() {
             WebkitMaskImage: "linear-gradient(to bottom, transparent, white 10%, white 90%, transparent)",
           }}
         >
-          <TestimonialColumn items={col1} speed="28s" direction="up" isRtl={isRtl} />
+          <TestimonialColumn items={col1} speed="70s" direction="up" isRtl={isRtl} />
           <div className="hidden sm:block">
-            <TestimonialColumn items={col2} speed="32s" direction="down" isRtl={isRtl} />
+            <TestimonialColumn items={col2} speed="80s" direction="down" isRtl={isRtl} />
           </div>
           <div className="hidden md:block">
-            <TestimonialColumn items={col3} speed="25s" direction="up" isRtl={isRtl} />
+            <TestimonialColumn items={col3} speed="65s" direction="up" isRtl={isRtl} />
           </div>
         </div>
 
-        <div className="max-w-3xl mx-auto mt-12 pt-8 border-t border-neutral-200/60">
-          <div className="bg-white border border-neutral-200/80 rounded-2xl p-6 shadow-[0_2px_15px_rgba(0,0,0,0.015)] flex flex-col sm:flex-row items-center justify-center gap-8 sm:gap-12 md:gap-16">
-            
-            {/* Left Block */}
-            <div className="flex flex-col items-center sm:items-start gap-2">
-              <div className="flex items-center gap-2" dir="ltr">
-                <span className="text-xs tracking-wider font-bold text-neutral-500 uppercase">
-                  {t("reviews.reviewed_on")}
-                </span>
-                <div className="flex gap-0.5">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-3.5 h-3.5 fill-red-500 stroke-red-500" />
-                  ))}
-                </div>
-              </div>
-              
-              <div className="flex items-center gap-2 mt-1" dir="ltr">
-                <Image 
-                  src="/macosdock/homepage.svg" 
-                  alt="PENCIL Icon" 
-                  width={20} 
-                  height={20} 
-                  className="w-5 h-5 object-contain"
-                />
-                <span className="text-base font-extrabold text-neutral-900 tracking-wider">
-                  PENCIL
-                </span>
-                <span className="text-xs font-semibold text-neutral-500 ml-1">
-                  {locale === "ar" ? (
-                    <>
-                      <span dir="ltr" className="inline-block">1,208</span> تقييم
-                    </>
-                  ) : (
-                    "1,208 REVIEWS"
-                  )}
-                </span>
-              </div>
-            </div>
+        <div className="max-w-6xl mx-auto mt-12 pt-8 border-t border-neutral-200/60">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-stretch">
+            {/* Board 1: Pencil Rating */}
+            <div className="bg-white border border-neutral-200/80 rounded-2xl p-6 shadow-[0_2px_15px_rgba(0,0,0,0.015)] flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-10 h-full">
 
-            {/* Vertical Divider */}
-            <div className="hidden sm:block w-px h-12 bg-neutral-200" />
-
-            {/* Right Block */}
-            <div className="flex items-center gap-3">
-              <Image 
-                src="/macosdock/homepage.svg" 
-                alt="PENCIL Icon" 
-                width={36} 
-                height={36} 
-                className="w-9 h-9 object-contain"
-              />
-              <div className="flex flex-col items-start gap-1">
+              {/* Left Block */}
+              <div className="flex flex-col items-center sm:items-start gap-2">
                 <div className="flex items-center gap-2" dir="ltr">
-                  <span className="text-lg font-black text-neutral-900 leading-none">
-                    4.9
+                  <span className="text-xs tracking-wider font-bold text-neutral-500 uppercase">
+                    {t("reviews.reviewed_on")}
                   </span>
                   <div className="flex gap-0.5">
                     {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-3.5 h-3.5 fill-yellow-400 stroke-yellow-400" />
+                      <Star key={i} className="w-3.5 h-3.5 fill-red-500 stroke-red-500" />
                     ))}
                   </div>
                 </div>
-                <span className={cn("text-[10px] font-bold text-neutral-500", locale === "ar" ? "tracking-normal" : "tracking-wider uppercase")}>
-                  {t("reviews.customer_reviews")}
-                </span>
+
+                <div className="flex items-center gap-2 mt-1" dir="ltr">
+                  <Image
+                    src="/macosdock/homepage.svg"
+                    alt="PENCIL Icon"
+                    width={20}
+                    height={20}
+                    className="w-5 h-5 object-contain"
+                  />
+                  <span className="text-base font-extrabold text-neutral-900 tracking-wider">
+                    PENCIL
+                  </span>
+                  <span className="text-xs font-semibold text-neutral-500 ml-1">
+                    {locale === "ar" ? (
+                      <>
+                        <span dir="ltr" className="inline-block">1,208</span> تقييم
+                      </>
+                    ) : (
+                      "1,208 REVIEWS"
+                    )}
+                  </span>
+                </div>
               </div>
+
+              {/* Vertical Divider */}
+              <div className="hidden sm:block w-px h-12 bg-neutral-200" />
+
+              {/* Right Block */}
+              <div className="flex items-center gap-3">
+                <Image
+                  src="/macosdock/homepage.svg"
+                  alt="PENCIL Icon"
+                  width={36}
+                  height={36}
+                  className="w-9 h-9 object-contain"
+                />
+                <div className="flex flex-col items-start gap-1">
+                  <div className="flex items-center gap-2" dir="ltr">
+                    <span className="text-lg font-black text-neutral-900 leading-none">
+                      4.9
+                    </span>
+                    <div className="flex gap-0.5">
+                      {[...Array(5)].map((_, i) => (
+                        <Star key={i} className="w-3.5 h-3.5 fill-yellow-400 stroke-yellow-400" />
+                      ))}
+                    </div>
+                  </div>
+                  <span className={cn("text-[10px] font-bold text-neutral-500", locale === "ar" ? "tracking-normal" : "tracking-wider uppercase")}>
+                    {t("reviews.customer_reviews")}
+                  </span>
+                </div>
+              </div>
+
             </div>
 
+            {/* Board 2: Trustpilot Review Board */}
+            <a
+              href="https://www.trustpilot.com/review/dipencil.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group block bg-white hover:bg-neutral-50/80 border border-neutral-200/80 hover:border-[#00b67a]/50 rounded-2xl p-6 shadow-[0_2px_15px_rgba(0,0,0,0.015)] hover:shadow-[0_8px_25px_rgba(0,182,122,0.08)] transition-all duration-300 h-full"
+            >
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-6 h-full">
+                {/* Trustpilot Brand & Rating Visual */}
+                <div className="flex items-center gap-3.5">
+                  <div className="w-10 h-10 rounded-xl bg-[#00b67a]/10 flex items-center justify-center shrink-0 border border-[#00b67a]/20 group-hover:scale-105 transition-transform duration-300">
+                    <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none" aria-hidden="true">
+                      <path d="M12 1.75L15.09 8.01L22 9.02L17 13.89L18.18 20.77L12 17.52L5.82 20.77L7 13.89L2 9.02L8.91 8.01L12 1.75Z" fill="#00B67A" />
+                      <path d="M16.45 15.22L18.18 20.77L12 17.52V11.23L16.45 15.22Z" fill="#005128" />
+                    </svg>
+                  </div>
+
+                  <div className="flex flex-col items-center sm:items-start text-center sm:text-start">
+                    <div className="flex items-center gap-2" dir="ltr">
+                      <span className="text-base font-extrabold text-neutral-900 tracking-tight">
+                        Trustpilot
+                      </span>
+                      <div className="flex gap-0.5">
+                        {[...Array(5)].map((_, i) => (
+                          <div key={i} className="w-4 h-4 bg-[#00b67a] flex items-center justify-center rounded-[2px]">
+                            <Star className="w-2.5 h-2.5 fill-white stroke-white" />
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                    <p className="text-xs text-neutral-500 mt-1 font-medium">
+                      {locale === "ar"
+                        ? "تقييمات Pencil Studio • كن أول من يكتب تقييماً على dipencil.com"
+                        : "Pencil Studio Reviews • Be the first to review dipencil.com"}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Action Button */}
+                <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-neutral-900 text-white text-xs font-bold group-hover:bg-[#00b67a] transition-colors duration-300 shrink-0">
+                  <span>{locale === "ar" ? "قيّمنا على Trustpilot" : "Review us on Trustpilot"}</span>
+                  <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </div>
+              </div>
+            </a>
           </div>
         </div>
       </div>

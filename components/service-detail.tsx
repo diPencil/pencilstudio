@@ -26,6 +26,7 @@ import { WhatsAppIcon } from "@/components/whatsapp-icon";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { Reveal } from "@/components/reveal";
+import { SectionHeading } from "@/components/section-heading";
 import { useLanguage } from "@/components/language-context";
 import { getRelatedServices, type Service } from "@/lib/services";
 import { cn } from "@/lib/utils";
@@ -39,9 +40,9 @@ export function ServiceDetail({ service }: { service: Service }) {
 
   const videoPoints = isRtl
     ? [
-        { n: "01", t: "المشكلة: قبل", d: "الشكل القديم زي ما هو فعلاً، من غير تجميل ولا فلاتر." },
-        { n: "02", t: "الشغل: من الرسم للإطلاق", d: "لقطات من الورشة والتصميم والبرمجة والاختبار على موبايلات حقيقية." },
-        { n: "03", t: "الأرقام: بعد", d: "السرعة والحجوزات والفلوس. فيديو من غير أرقام يبقى ديكور." },
+        { n: "01", t: "المشكلة: قبل", d: "الشكل القديم كما هو فعلا، دون تجميل أو فلاتر." },
+        { n: "02", t: "العمل: من الرسم إلى الإطلاق", d: "لقطات من الورشة والتصميم والبرمجة والاختبار على هواتف حقيقية." },
+        { n: "03", t: "الأرقام: بعد", d: "السرعة والحجوزات والإيرادات. فيديو بلا أرقام مجرد ديكور." },
       ]
     : [
         { n: "01", t: "The problem: before", d: "The old look exactly as it was. No beautifying, no filters." },
@@ -124,7 +125,7 @@ export function ServiceDetail({ service }: { service: Service }) {
                     href="#deliverables"
                     className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/5 px-6 py-3 text-sm font-bold text-white backdrop-blur-md transition hover:bg-white/15"
                   >
-                    {isRtl ? "شوف هتستلم إيه" : "See deliverables"}
+                    {isRtl ? "شاهد ماذا ستستلم" : "See deliverables"}
                   </a>
                 </div>
               </Reveal>
@@ -138,8 +139,8 @@ export function ServiceDetail({ service }: { service: Service }) {
                       key={i}
                       className="rounded-2xl border border-white/15 bg-white/5 p-4 text-start backdrop-blur-md"
                     >
-                      <div className="text-2xl font-black" dir="ltr">
-                        {s.value}
+                      <div className="text-2xl font-black" dir={isRtl ? "rtl" : "ltr"}>
+                        {s.valueAr && isRtl ? s.valueAr : s.value}
                       </div>
                       <div className="mt-1 text-xs font-semibold text-white/65">
                         {isRtl ? s.labelAr : s.labelEn}
@@ -184,22 +185,20 @@ export function ServiceDetail({ service }: { service: Service }) {
       <section className="py-16 md:py-24">
         <div className="container-custom grid gap-10 lg:grid-cols-12 lg:gap-14">
           <div className="lg:col-span-7">
-            <Reveal>
-              <p className="text-xs font-bold uppercase tracking-[0.18em] text-neutral-500">
-                {sectionLabel("How we actually work", "بنشتغل إزاي فعلاً")}
-              </p>
-              <h2 className="mt-3 text-3xl font-bold tracking-tight md:text-5xl">
-                {isRtl ? (
+            <SectionHeading
+              label={sectionLabel("How we actually work", "كيف نعمل فعلا")}
+              title={
+                isRtl ? (
                   <>
-                    مش شكل حلو، <span className="font-light italic text-neutral-500">نظام شغال.</span>
+                    ليس مجرد شكل جميل، <span className="font-light italic text-neutral-500">بل نظام يعمل.</span>
                   </>
                 ) : (
                   <>
                     Not decoration, <span className="font-light italic text-neutral-500">a working system.</span>
                   </>
-                )}
-              </h2>
-            </Reveal>
+                )
+              }
+            />
             {(isRtl ? service.storyAr : service.storyEn).map((p, i) => (
               <Reveal key={i} delay={0.06 * i}>
                 <p className="mt-6 leading-loose text-neutral-600">{p}</p>
@@ -210,7 +209,7 @@ export function ServiceDetail({ service }: { service: Service }) {
               <div className="mt-8 rounded-2xl border border-neutral-200 bg-white p-6">
                 <p className="mb-4 flex items-center gap-2 text-sm font-bold">
                   <BadgeCheck size={17} />
-                  {isRtl ? "لمين الخدمة دي؟" : "Who is this for?"}
+                  {isRtl ? "لمن هذه الخدمة؟" : "Who is this for?"}
                 </p>
                 <ul className="space-y-3">
                   {(isRtl ? service.forWhoAr : service.forWhoEn).map((w, i) => (
@@ -257,15 +256,15 @@ export function ServiceDetail({ service }: { service: Service }) {
             <div className="mb-12 flex flex-col gap-3 text-start md:flex-row md:items-end md:justify-between">
               <div>
                 <p className="text-xs font-bold uppercase tracking-[0.18em] text-neutral-500">
-                  {sectionLabel("What is included", "إيه اللي جوه الخدمة")}
+                  {sectionLabel("What is included", "ما الذي تتضمنه الخدمة")}
                 </p>
                 <h2 className="mt-3 text-3xl font-bold tracking-tight md:text-5xl">
-                  {isRtl ? "تفاصيل مدروسة، مش عناوين." : "Real details, not slogans."}
+                  {isRtl ? "تفاصيل مدروسة، لا شعارات." : "Real details, not slogans."}
                 </h2>
               </div>
               <p className="max-w-md text-sm leading-relaxed text-neutral-500">
                 {isRtl
-                  ? "كل نقطة تحت دي حاجة بنسلّمها فعلاً وبتتمضي في محضر الاستلام. مش كلام تسويقي."
+                  ? "كل نقطة أدناه شيء نسلّمه فعلاً وتوقع على استلامه. لا كلام تسويقي."
                   : "Every point below is something we actually deliver and you sign off. Not marketing copy."}
               </p>
             </div>
@@ -293,28 +292,30 @@ export function ServiceDetail({ service }: { service: Service }) {
         <div className="container-custom grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
           {/* Text column */}
           <div>
-            <Reveal>
-              <p className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.18em] text-neutral-500">
-                <CirclePlay size={14} />
-                {isRtl ? "شوفها في 3 دقايق" : "Watch it in 3 minutes"}
-              </p>
-              <h2 className="mt-3 text-3xl font-bold tracking-tight md:text-5xl">
-                {isRtl ? (
+            <SectionHeading
+              label={
+                <>
+                  <CirclePlay size={14} />
+                  {isRtl ? "شاهدها في 3 دقائق" : "Watch it in 3 minutes"}
+                </>
+              }
+              title={
+                isRtl ? (
                   <>
-                    متصوّر بالطول، <span className="font-light italic text-neutral-500">زي ما عملاءك بيتفرجوا.</span>
+                    مصوَّر بالوضع العمودي، <span className="font-light italic text-neutral-500">كما يشاهد عملاؤك.</span>
                   </>
                 ) : (
                   <>
                     Shot vertical, <span className="font-light italic text-neutral-500">like your clients watch.</span>
                   </>
-                )}
-              </h2>
-              <p className="mt-5 max-w-xl leading-loose text-neutral-600">
-                {isRtl
-                  ? "أكتر من 70% من اللي هيشوف شغلك هيقابله لأول مرة على شاشة موبايل وهو بيقلب بسرعة. عشان كده فيديو المشروع عندنا طولي 9:16، يشتغل Reels وTikTok وShorts وحالة واتساب، مش مركون على يوتيوب."
-                  : "Over 70% of the people who see your work will meet it first on a phone screen while scrolling fast. That is why our project video is vertical 9:16, built for Reels, TikTok, Shorts and WhatsApp status, not parked on YouTube."}
-              </p>
-            </Reveal>
+                )
+              }
+              description={
+                isRtl
+                  ? "أكثر من 70% ممن سيشاهد عملك سيلقاه أول مرة على شاشة جوال وهو يقلب بسرعة. لذلك فيديو المشروع لدينا عمودي 9:16، يعمل على الريلز وتيك توك والشورتس وحالة واتساب، وليس حبيس يوتيوب."
+                  : "Over 70% of the people who see your work will meet it first on a phone screen while scrolling fast. That is why our project video is vertical 9:16, built for Reels, TikTok, Shorts and WhatsApp status, not parked on YouTube."
+              }
+            />
 
             <div className="mt-8 space-y-3">
               {videoPoints.map((pt, i) => (
@@ -406,7 +407,7 @@ export function ServiceDetail({ service }: { service: Service }) {
               </div>
 
               <p className="mt-5 text-center text-xs font-semibold text-neutral-500">
-                {isRtl ? "مكان فيديو طولي للريلز والتيك توك والشورتس" : "Vertical video slot for Reels, TikTok and Shorts"}
+                {isRtl ? "فيديو عمودي للريلز والتيك توك والشورتس" : "Vertical video slot for Reels, TikTok and Shorts"}
               </p>
             </div>
           </Reveal>
@@ -416,14 +417,12 @@ export function ServiceDetail({ service }: { service: Service }) {
       {/* ---------- 6. PROCESS ---------- */}
       <section className="bg-neutral-900 py-16 text-white md:py-24">
         <div className="container-custom">
-          <Reveal>
-            <p className="text-xs font-bold uppercase tracking-[0.18em] text-white/50">
-              {sectionLabel("Timeline without surprises", "جدول زمني من غير مفاجآت")}
-            </p>
-            <h2 className="mt-3 max-w-2xl text-3xl font-bold tracking-tight md:text-5xl">
-              {isRtl ? "هتعرف كل أسبوع بيحصل فيه إيه." : "You will know what happens every week."}
-            </h2>
-          </Reveal>
+            <SectionHeading
+              dark
+              wide
+              label={sectionLabel("Timeline without surprises", "جدول زمني بلا مفاجآت")}
+              title={isRtl ? "ستعرف ما يحدث كل أسبوع." : "You will know what happens every week."}
+            />
           <div className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
             {service.steps.map((st, i) => (
               <Reveal key={i} delay={0.06 * i}>
@@ -458,15 +457,15 @@ export function ServiceDetail({ service }: { service: Service }) {
       <section id="deliverables" className="scroll-mt-24 py-16 md:py-24">
         <div className="container-custom grid gap-8 lg:grid-cols-12">
           <div className="lg:col-span-7">
-            <Reveal>
-              <p className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.18em] text-neutral-500">
-                <PackageCheck size={14} />
-                {sectionLabel("Handover list", "قائمة الاستلام")}
-              </p>
-              <h2 className="mt-3 text-3xl font-bold tracking-tight md:text-5xl">
-                {isRtl ? "هتمضي على إيه بالظبط؟" : "What exactly do you sign off?"}
-              </h2>
-            </Reveal>
+            <SectionHeading
+              label={
+                <>
+                  <PackageCheck size={14} />
+                  {sectionLabel("Handover list", "قائمة الاستلام")}
+                </>
+              }
+              title={isRtl ? "على ماذا ستوقع بالضبط؟" : "What exactly do you sign off?"}
+            />
             <div className="mt-8 space-y-3">
               {(isRtl ? service.deliverablesAr : service.deliverablesEn).map((d, i) => (
                 <Reveal key={i} delay={0.03 * i}>
@@ -492,7 +491,7 @@ export function ServiceDetail({ service }: { service: Service }) {
                     <CurrencyConverter baseUsd={service.priceUsd} monthly={service.monthly} />
                     <p className="mt-3 text-sm leading-relaxed text-white/65">
                       {isRtl
-                        ? "السعر النهائي بعد مكالمة 20 دقيقة ومعاينة المحتوى الجاهز عندك. مفيش مفاجآت في النص. أي إضافة بسعر متفق عليه قبل التنفيذ."
+                        ? "السعر النهائي بعد مكالمة 20 دقيقة ومعاينة المحتوى الجاهز لديك. لا مفاجآت في النص. أي إضافة بسعر متفق عليه قبل التنفيذ."
                         : "Final quote after a 20-min call and a look at your ready content. No mid-project surprises. Any add-on is quoted before we build it."}
                     </p>
                     <div className="mt-6 space-y-3">
@@ -515,7 +514,7 @@ export function ServiceDetail({ service }: { service: Service }) {
                     </div>
                     <div className="mt-6 flex items-center gap-2 border-t border-white/10 pt-5 text-xs text-white/55">
                       <Wrench size={13} />
-                      {isRtl ? "info@dipencil.com وهنرد في نفس اليوم" : "info@dipencil.com, same-day reply"}
+                      {isRtl ? "info@dipencil.com وسنرد في اليوم نفسه" : "info@dipencil.com, same-day reply"}
                     </div>
                   </div>
                 </div>
@@ -535,12 +534,12 @@ export function ServiceDetail({ service }: { service: Service }) {
               <Reveal>
                 <p className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.18em] text-neutral-500">
                   <MessageSquare size={14} />
-                  {isRtl ? "بتتسأل كل أسبوع" : "Asked every week"}
+                  {isRtl ? "تُطرح كل أسبوع" : "Asked every week"}
                 </p>
                 <h2 className="mt-3 text-3xl font-bold tracking-tight md:text-5xl">
                   {isRtl ? (
                     <>
-                      أسئلة بنجاوب عليها <span className="font-light italic text-neutral-500">كل أسبوع.</span>
+                      أسئلة نجيب عنها <span className="font-light italic text-neutral-500">كل أسبوع.</span>
                     </>
                   ) : (
                     <>
@@ -550,7 +549,7 @@ export function ServiceDetail({ service }: { service: Service }) {
                 </h2>
                 <p className="mt-4 max-w-sm leading-relaxed text-neutral-600">
                   {isRtl
-                    ? "دي اللي بتتكرر في كل مكالمة تعارف تقريباً. لو سؤالك مش هنا، ابعته واتساب وهنرد عليك في نفس اليوم."
+                    ? "هذه تتكرر في كل مكالمة تعارف تقريباً. وإن لم يكن سؤالك هنا، أرسله عبر واتساب وسنرد عليك في اليوم نفسه."
                     : "These come up on almost every intro call. If yours is not here, send it on WhatsApp and we will reply the same day."}
                 </p>
                 <a
@@ -560,7 +559,7 @@ export function ServiceDetail({ service }: { service: Service }) {
                   className="mt-6 inline-flex items-center gap-2 rounded-full bg-neutral-900 px-6 py-3 text-sm font-bold text-white transition hover:bg-neutral-700"
                 >
                   <WhatsAppIcon size={17} />
-                  {isRtl ? "اسألنا واتساب" : "Ask on WhatsApp"}
+                  {isRtl ? "اسألنا عبر واتساب" : "Ask on WhatsApp"}
                 </a>
               </Reveal>
             </div>
@@ -637,7 +636,7 @@ export function ServiceDetail({ service }: { service: Service }) {
           <Reveal>
             <div className="mb-8 flex items-end justify-between gap-4">
               <h2 className="text-2xl font-bold tracking-tight md:text-4xl">
-                {isRtl ? "خدمات بتكمل بعضها" : "Services that go together"}
+                {isRtl ? "خدمات تكمل بعضها" : "Services that go together"}
               </h2>
               <Link
                 href="/services"
@@ -689,7 +688,7 @@ export function ServiceDetail({ service }: { service: Service }) {
               className="inline-flex items-center gap-2 rounded-full border border-neutral-300 bg-white px-5 py-2.5 text-sm font-bold transition hover:border-neutral-900"
             >
               <BackIcon size={15} />
-              {isRtl ? "رجوع للرئيسية" : "Back home"}
+              {isRtl ? "العودة للرئيسية" : "Back home"}
             </Link>
           </div>
         </div>

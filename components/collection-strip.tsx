@@ -1,3 +1,5 @@
+"use client"
+
 import { useRef } from "react"
 import { motion, useScroll, useTransform } from "framer-motion"
 import Image from "next/image"
@@ -142,7 +144,7 @@ export function CollectionStrip() {
   })
 
   return (
-    <section ref={containerRef} className="overflow-hidden py-20 lg:py-32">
+    <section id="business-sectors" ref={containerRef} className="overflow-hidden py-20 lg:py-32 scroll-mt-24">
       <div className="mb-12">
         <Reveal>
           <div className="container-custom text-center">

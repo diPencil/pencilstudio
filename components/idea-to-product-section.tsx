@@ -3,10 +3,10 @@
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Compass, Layout, Zap, ArrowRight, ArrowLeft } from "lucide-react"
-import { DotLottieReact } from "@lottiefiles/dotlottie-react"
 import { Reveal } from "./reveal"
 import { useLanguage } from "@/components/language-context"
 import { cn } from "@/lib/utils"
+import { LazyDotLottie } from "@/components/lazy-dot-lottie"
 
 export function IdeaToProductSection() {
   const { t, locale } = useLanguage()
@@ -27,6 +27,7 @@ export function IdeaToProductSection() {
       description: t("method.tab1.desc"),
       cta: t("method.tab1.cta"),
       icon: Compass,
+      href: "/strategy-direction",
       lottieSrc: "https://lottie.host/4264c941-5022-4639-a2a3-86ad8fd46ed1/6Mv8mSvNCD.lottie",
     },
     {
@@ -37,6 +38,7 @@ export function IdeaToProductSection() {
       description: t("method.tab2.desc"),
       cta: t("method.tab2.cta"),
       icon: Layout,
+      href: "/design-experience",
       lottieSrc: "https://lottie.host/6a508e03-4ffb-4bbd-bbef-9f07bb8763fc/eiBqNk5jQb.lottie",
     },
     {
@@ -47,6 +49,7 @@ export function IdeaToProductSection() {
       description: t("method.tab3.desc"),
       cta: t("method.tab3.cta"),
       icon: Zap,
+      href: "/build-launch",
       lottieSrc: "https://lottie.host/5feea738-69c3-4a47-8b62-0e356c1ffed4/TlihmRQp5m.lottie",
     },
   ]
@@ -131,7 +134,7 @@ export function IdeaToProductSection() {
                 </p>
 
                 <motion.a
-                  href="#contact"
+                  href={activeData.href}
                   whileHover={{ x: isRtl ? -4 : 4 }}
                   transition={{ duration: 0.2 }}
                   className="inline-flex cursor-pointer items-center gap-2 rounded-full bg-neutral-900 px-5 py-3 text-xs font-bold text-white transition-colors hover:bg-neutral-800"
@@ -144,7 +147,7 @@ export function IdeaToProductSection() {
               <div className="w-full lg:col-span-5 lg:-mt-10">
                 <div className="flex w-full items-start justify-center overflow-visible lg:-mt-10">
                   {mounted ? (
-                    <DotLottieReact
+                    <LazyDotLottie
                       src={activeData.lottieSrc}
                       loop
                       autoplay

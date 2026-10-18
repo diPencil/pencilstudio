@@ -213,13 +213,13 @@ export function SuperFelizCinematicSection() {
             ))}
           </div>
           <div className="flex flex-col gap-3 sm:flex-row">
-            <motion.a
-              href="#contact"
-              whileHover={{ x: isRtl ? -3 : 3 }}
-              transition={{ duration: 0.2 }}
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-neutral-900 px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-neutral-700"
-            >
-              <span>{t("superfeliz.cta.primary")}</span>
+              <motion.a
+                href="/superfeliz"
+                whileHover={{ x: isRtl ? -3 : 3 }}
+                transition={{ duration: 0.2 }}
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-neutral-900 px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-neutral-700"
+              >
+                <span>{t("superfeliz.cta.primary")}</span>
               {isRtl ? <ArrowLeft size={14} /> : <ArrowRight size={14} />}
             </motion.a>
             <motion.a

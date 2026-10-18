@@ -8,7 +8,7 @@ import Image from "next/image"
 import { Globe, Mail, Phone, Menu, Headphones, CircleHelp, X, PhoneCall } from "lucide-react"
 import { WhatsAppIcon } from "@/components/whatsapp-icon"
 
-export function Header({ solid = false }: { solid?: boolean }) {
+export function Header({ solid = false, light = false }: { solid?: boolean; light?: boolean }) {
   const [isScrolled, setIsScrolled] = useState(solid)
   const [langOpen, setLangOpen] = useState(false)
   const [emailOpen, setEmailOpen] = useState(false)
@@ -58,26 +58,30 @@ export function Header({ solid = false }: { solid?: boolean }) {
 
   const menuItems = [
     { label: t("dock.homepage"), href: "/" },
-    { label: t("dock.solutions"), href: "#solutions" },
-    { label: t("dock.sectors"), href: "#business-sectors" },
-    { label: t("dock.programs"), href: "#programs" },
-    { label: t("dock.enterprise"), href: "#enterprise" },
-    { label: t("dock.feliz"), href: "#super-feliz" },
-    { label: t("dock.pricing"), href: "#pricing" },
-    { label: t("dock.about"), href: "#about" },
-    { label: t("dock.contact"), href: "#contact" },
+    { label: t("dock.solutions"), href: "/solutions" },
+    { label: t("dock.sectors"), href: "/sectors" },
+    { label: t("dock.cloudHosting"), href: "/cloud-hosting" },
+    { label: t("dock.enterprise"), href: "/enterprise" },
+    { label: t("dock.feliz"), href: "/superfeliz" },
+    { label: t("dock.pricing"), href: "/pricing" },
+    { label: t("dock.about"), href: "/about" },
+    { label: t("dock.contact"), href: "/contact" },
   ]
+
+  // `light` = transparent header over a LIGHT hero: dark icons from the
+  // first pixel (homepage behavior), white bar only after scrolling.
+  const darkIcons = isScrolled || light
 
   const iconButtonStyle = cn(
     "p-2 rounded-full border transition-all duration-200 cursor-pointer flex items-center justify-center",
-    isScrolled
+    darkIcons
       ? "border-neutral-200 bg-neutral-100/50 text-neutral-800 hover:bg-neutral-200/80"
       : "border-white/10 bg-white/5 text-white hover:bg-white/15"
   )
 
   const dropdownStyle = cn(
     "absolute mt-2 rounded-xl border p-2 backdrop-blur-md shadow-xl z-50 flex flex-col gap-1 min-w-[200px]",
-    isScrolled
+    darkIcons
       ? "bg-white/95 border-neutral-200/80 text-neutral-900"
       : "bg-neutral-900/95 border-white/15 text-white"
   )
@@ -260,11 +264,11 @@ export function Header({ solid = false }: { solid?: boolean }) {
                 aria-label={`${t("brand.logo")} Home`}
               >
                 <Image
-                  src={isScrolled ? "/logoblack.png" : "/logowhite.png"}
+                  src={darkIcons ? "/logoblack.png" : "/logowhite.png"}
                   alt={t("brand.logo")}
                   width={150}
                   height={35}
-                  className={cn("h-7 w-auto object-contain", !isScrolled && "brightness-0 invert")}
+                  className={cn("h-7 w-auto object-contain", !darkIcons && "brightness-0 invert")}
                   priority
                 />
               </a>
@@ -273,81 +277,84 @@ export function Header({ solid = false }: { solid?: boolean }) {
 
           {/* RIGHT/LEFT SIDE: Help Center, Support & Burger Menu (Right in LTR, Left in RTL) */}
           <div className="flex items-center gap-2 lg:gap-3 z-10">
-            {/* Help Center dropdown */}
-            <div ref={helpRef} className="relative">
-              <button
-                onClick={() => setHelpOpen(!helpOpen)}
-                className={iconButtonStyle}
-                aria-label="Help Center"
-                aria-haspopup="true"
-                aria-expanded={helpOpen}
-              >
-                <CircleHelp size={16} />
-              </button>
-              <AnimatePresence>
-                {helpOpen && (
-                  <motion.div
-                    dir={isRtl ? "rtl" : "ltr"}
-                    className={cn(dropdownStyle, isRtl ? "left-0" : "right-0")}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 10 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <button onClick={() => setHelpOpen(false)} className={dropdownItemStyle}>
-                      {isRtl ? "مركز المساعدة" : "Help Center"}
-                    </button>
-                    <button onClick={() => setHelpOpen(false)} className={dropdownItemStyle}>
-                      {isRtl ? "الأسئلة الشائعة" : "FAQs"}
-                    </button>
-                    <button onClick={() => setHelpOpen(false)} className={dropdownItemStyle}>
-                      {isRtl ? "الأدلة" : "Guides"}
-                    </button>
-                    <button onClick={() => setHelpOpen(false)} className={dropdownItemStyle}>
-                      {isRtl ? "تواصل مع المساعدة" : "Contact Help"}
-                    </button>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
+             {/* Help Center dropdown */}
+             <div ref={helpRef} className="relative">
+               <button
+                 onClick={() => setHelpOpen(!helpOpen)}
+                 className={iconButtonStyle}
+                 aria-label="Help Center"
+                 aria-haspopup="true"
+                 aria-expanded={helpOpen}
+               >
+                 <CircleHelp size={16} />
+               </button>
+               <AnimatePresence>
+                 {helpOpen && (
+                   <motion.div
+                     dir={isRtl ? "rtl" : "ltr"}
+                     className={cn(dropdownStyle, isRtl ? "left-0" : "right-0")}
+                     initial={{ opacity: 0, y: 10 }}
+                     animate={{ opacity: 1, y: 0 }}
+                     exit={{ opacity: 0, y: 10 }}
+                     transition={{ duration: 0.2 }}
+                   >
+                     <a href="/help" onClick={() => setHelpOpen(false)} className={dropdownItemStyle}>
+                       {isRtl ? "مركز المساعدة" : "Help Center"}
+                     </a>
+                     <a href="/help/faqs" onClick={() => setHelpOpen(false)} className={dropdownItemStyle}>
+                       {isRtl ? "الأسئلة الشائعة" : "FAQs"}
+                     </a>
+                     <a href="/help/guides" onClick={() => setHelpOpen(false)} className={dropdownItemStyle}>
+                       {isRtl ? "الأدلة" : "Guides"}
+                     </a>
+                     <a href="/help/contact" onClick={() => setHelpOpen(false)} className={dropdownItemStyle}>
+                       {isRtl ? "تواصل مع المساعدة" : "Contact Help"}
+                     </a>
+                   </motion.div>
+                 )}
+               </AnimatePresence>
+             </div>
 
-            {/* Support dropdown */}
-            <div ref={supportRef} className="relative">
-              <button
-                onClick={() => setSupportOpen(!supportOpen)}
-                className={iconButtonStyle}
-                aria-label="Support options"
-                aria-haspopup="true"
-                aria-expanded={supportOpen}
-              >
-                <Headphones size={16} />
-              </button>
-              <AnimatePresence>
-                {supportOpen && (
-                  <motion.div
-                    dir={isRtl ? "rtl" : "ltr"}
-                    className={cn(dropdownStyle, isRtl ? "left-0" : "right-0")}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 10 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <button onClick={() => setSupportOpen(false)} className={dropdownItemStyle}>
-                      {isRtl ? "دعم العملاء" : "Customer Support"}
-                    </button>
-                    <button onClick={() => setSupportOpen(false)} className={dropdownItemStyle}>
-                      {isRtl ? "الدعم التقني" : "Technical Support"}
-                    </button>
-                    <button onClick={() => setSupportOpen(false)} className={dropdownItemStyle}>
-                      {isRtl ? "طلب اتصال" : "Request Callback"}
-                    </button>
-                    <button onClick={() => setSupportOpen(false)} className={dropdownItemStyle}>
-                      {isRtl ? "الإبلاغ عن مشكلة" : "Report an Issue"}
-                    </button>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
+             {/* Support dropdown */}
+             <div ref={supportRef} className="relative">
+               <button
+                 onClick={() => setSupportOpen(!supportOpen)}
+                 className={iconButtonStyle}
+                 aria-label="Support options"
+                 aria-haspopup="true"
+                 aria-expanded={supportOpen}
+               >
+                 <Headphones size={16} />
+               </button>
+               <AnimatePresence>
+                 {supportOpen && (
+                   <motion.div
+                     dir={isRtl ? "rtl" : "ltr"}
+                     className={cn(dropdownStyle, isRtl ? "left-0" : "right-0")}
+                     initial={{ opacity: 0, y: 10 }}
+                     animate={{ opacity: 1, y: 0 }}
+                     exit={{ opacity: 0, y: 10 }}
+                     transition={{ duration: 0.2 }}
+                   >
+                     <a href="/support" onClick={() => setSupportOpen(false)} className={dropdownItemStyle}>
+                       {isRtl ? "مركز الدعم" : "Support Center"}
+                     </a>
+                     <a href="/support/customer" onClick={() => setSupportOpen(false)} className={dropdownItemStyle}>
+                       {isRtl ? "دعم العملاء" : "Customer Support"}
+                     </a>
+                     <a href="/support/technical" onClick={() => setSupportOpen(false)} className={dropdownItemStyle}>
+                       {isRtl ? "الدعم التقني" : "Technical Support"}
+                     </a>
+                     <a href="/support/callback" onClick={() => setSupportOpen(false)} className={dropdownItemStyle}>
+                       {isRtl ? "طلب اتصال" : "Request Callback"}
+                     </a>
+                     <a href="/support/report" onClick={() => setSupportOpen(false)} className={dropdownItemStyle}>
+                       {isRtl ? "الإبلاغ عن مشكلة" : "Report an Issue"}
+                     </a>
+                   </motion.div>
+                 )}
+               </AnimatePresence>
+             </div>
 
             {/* Burger Menu dropdown */}
             <div ref={menuRef} className="relative">
@@ -392,3 +399,5 @@ export function Header({ solid = false }: { solid?: boolean }) {
     </motion.header>
   )
 }
+
+

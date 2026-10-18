@@ -2,14 +2,14 @@
 
 import { useEffect, useMemo, useState } from "react"
 import { CalendarCheck, LayoutDashboard, MessageSquareText } from "lucide-react"
-import { DotLottieReact } from "@lottiefiles/dotlottie-react"
 import { cn } from "@/lib/utils"
-import { useLanguage } from "@/components/language-context"
+import { useLanguage, type TranslationKey } from "@/components/language-context"
 import { Reveal } from "./reveal"
+import { LazyDotLottie } from "@/components/lazy-dot-lottie"
 
 type FeatureCard = {
-  titleKey: string
-  descKey: string
+  titleKey: TranslationKey
+  descKey: TranslationKey
 }
 
 export function BusinessFeaturesSection() {
@@ -72,7 +72,7 @@ export function BusinessFeaturesSection() {
               <article className="group h-full overflow-hidden rounded-[28px] border border-neutral-200 bg-white shadow-[0_18px_50px_rgba(15,23,42,0.06)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_24px_70px_rgba(15,23,42,0.1)]">
                 <div className="flex h-44 items-center justify-center overflow-visible px-4 pt-5 sm:h-52 sm:px-5">
                   {mounted ? (
-                    <DotLottieReact
+                    <LazyDotLottie
                       src={
                         index === 0
                           ? "https://lottie.host/6796e80e-2342-495e-9859-9850af73ed40/KE2EjMkPj1.lottie"
