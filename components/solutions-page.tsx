@@ -506,7 +506,7 @@ export function SolutionsPage() {
       </section>
 
       {/* ============================================================ */}
-      {/* 3. FOUR ENTERPRISE SOLUTION SUITES (Turnkey Engines Ledger) */}
+      {/* 3. FOUR ENTERPRISE SOLUTION SUITES (Studio Split-Workbench) */}
       {/* ============================================================ */}
       <section
         id="solutions-suites"
@@ -543,115 +543,201 @@ export function SolutionsPage() {
             </div>
           </Reveal>
 
-          {/* Turnkey Engines Capability Ledger — editorial cards matching The SuperFeliz Standard */}
-          <div className="mt-14 flex flex-col gap-4 lg:gap-5">
-            {SOLUTION_SUITES.map((suite, idx) => {
-              const Icon = suite.icon;
-              const num = `0${idx + 1}`;
+          {/* The Studio Split-Workbench Layout */}
+          <div className="mt-14 grid gap-8 lg:grid-cols-12 items-stretch">
+            {/* Left Rail: Interactive Suite Cards (5 Cols) */}
+            <div className="flex flex-col gap-3.5 lg:col-span-5 justify-between">
+              {SOLUTION_SUITES.map((suite, idx) => {
+                const isSelected = suite.id === selectedSuiteId;
+                const Icon = suite.icon;
+                const num = `0${idx + 1}`;
 
-              return (
-                <div key={suite.id} className="[perspective:1400px]">
-                  <motion.div
-                    initial={{ opacity: 0, y: 24 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.15 }}
-                    transition={{ duration: 0.5, delay: idx * 0.07, ease: [0.21, 0.47, 0.32, 0.98] }}
-                    className="group grid grid-cols-1 lg:grid-cols-12 gap-x-8 gap-y-5 rounded-2xl border border-neutral-200 bg-white p-6 sm:p-7 lg:py-8 shadow-[0_18px_45px_-26px_rgba(15,23,42,0.18)] hover:border-blue-200 hover:shadow-[0_24px_50px_-20px_rgba(32,87,255,0.20)] transition-all duration-300"
+                return (
+                  <button
+                    key={suite.id}
+                    onClick={() => setSelectedSuiteId(suite.id)}
+                    aria-pressed={isSelected}
+                    className={cn(
+                      "group relative flex flex-col justify-between rounded-2xl p-4 sm:p-5 text-start transition-all duration-300 cursor-pointer outline-none border",
+                      isSelected
+                        ? "border-[#2057ff] bg-gradient-to-br from-blue-50/50 via-white to-white shadow-lg shadow-blue-500/10 ring-1 ring-[#2057ff]"
+                        : "border-neutral-200/80 bg-white hover:border-blue-200 hover:bg-neutral-50/60 shadow-sm"
+                    )}
                   >
-                    {/* Index + Icon (Col span 1) */}
-                    <div className="lg:col-span-1 flex items-center gap-3 lg:flex-col lg:items-start">
-                      <span className="font-mono text-4xl lg:text-5xl font-light leading-none text-neutral-200 transition-colors duration-300 group-hover:text-[#2057ff]/40">
-                        {num}
+                    {/* Top Row: Index + Icon & Tag */}
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="flex items-center gap-3">
+                        <span
+                          className={cn(
+                            "font-mono text-2xl sm:text-3xl font-light leading-none transition-colors",
+                            isSelected ? "text-[#2057ff]" : "text-neutral-300 group-hover:text-neutral-400"
+                          )}
+                        >
+                          {num}
+                        </span>
+                        <div
+                          className={cn(
+                            "h-8 w-8 rounded-lg border flex items-center justify-center transition-all duration-300 shrink-0",
+                            isSelected
+                              ? "bg-[#2057ff] text-white border-[#2057ff] shadow-sm"
+                              : "border-neutral-200 bg-neutral-50 text-neutral-600 group-hover:bg-white group-hover:border-neutral-300"
+                          )}
+                        >
+                          <Icon className="h-4 w-4" />
+                        </div>
+                      </div>
+
+                      <span
+                        className={cn(
+                          "rounded-full px-2.5 py-0.5 text-[10px] font-mono font-bold uppercase tracking-wider",
+                          isSelected
+                            ? "bg-blue-100 text-[#2057ff]"
+                            : "bg-neutral-100 text-neutral-600"
+                        )}
+                      >
+                        {isRtl ? suite.badgeAr : suite.badgeEn}
                       </span>
-                      <div className="h-10 w-10 rounded-xl border border-neutral-200 bg-white flex items-center justify-center text-neutral-800 shadow-sm transition-all duration-300 group-hover:bg-[#2057ff] group-hover:text-white group-hover:border-[#2057ff] lg:mt-4 shrink-0">
-                        <Icon className="h-4 w-4" />
-                      </div>
                     </div>
 
-                    {/* Capability Details (Col span 7) */}
-                    <div className="lg:col-span-7 flex flex-col justify-between">
-                      <div>
-                        <div className="flex flex-wrap items-center gap-2">
-                          <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#2057ff]">
-                            {isRtl ? suite.badgeAr : suite.badgeEn}
+                    {/* Middle: Title & Brief Description */}
+                    <div className="mt-2.5">
+                      <h4
+                        className={cn(
+                          "text-base sm:text-lg font-bold leading-snug transition-colors",
+                          isSelected ? "text-neutral-950 font-black" : "text-neutral-800"
+                        )}
+                      >
+                        {isRtl ? suite.titleAr : suite.titleEn}
+                      </h4>
+                      <p className="mt-1 text-xs text-neutral-500 leading-relaxed line-clamp-2">
+                        {isRtl ? suite.kickerAr : suite.kickerEn}
+                      </p>
+                    </div>
+
+                    {/* Bottom: Feature Highlights Line + Verified Metric Badge */}
+                    <div
+                      className={cn(
+                        "mt-3 flex items-center justify-between border-t pt-2.5 text-[11px]",
+                        isSelected ? "border-blue-100" : "border-neutral-100"
+                      )}
+                    >
+                      <div className="flex items-center gap-1.5 text-neutral-700 truncate max-w-[65%]">
+                        <Zap className="h-3 w-3 shrink-0 fill-[#2057ff] text-[#2057ff]" />
+                        <span className="truncate font-medium text-neutral-600">
+                          {(isRtl ? suite.deliverablesAr : suite.deliverablesEn).slice(0, 2).join(" • ")}
+                        </span>
+                      </div>
+
+                      <div className="flex items-center gap-1 shrink-0 font-mono text-[10px] font-bold text-emerald-600" dir="ltr">
+                        <CheckCircle2 size={12} className="text-emerald-600" />
+                        <span>{isRtl ? suite.metricAr : suite.metricEn}</span>
+                      </div>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Right Stage: Visual Window & Executive Dossier (7 Cols) */}
+            <div className="lg:col-span-7">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeSuite.id}
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -12 }}
+                  transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                  className="relative flex h-full flex-col justify-between rounded-[28px] border border-neutral-200/90 bg-white p-6 sm:p-8 shadow-sm transition-all duration-300 hover:border-neutral-300 hover:shadow-md"
+                >
+                  <div className="flex flex-col justify-between h-full">
+                    <div>
+                      {/* Visual Stage (Autoplaying Video with Image Fallback) */}
+                      <div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl border border-neutral-200/90 bg-neutral-950 shadow-md">
+                        {activeSuite.video ? (
+                          <video
+                            src={activeSuite.video}
+                            autoPlay
+                            loop
+                            muted
+                            playsInline
+                            className="h-full w-full object-cover"
+                          />
+                        ) : (
+                          <Image
+                            src={activeSuite.image}
+                            alt={isRtl ? activeSuite.titleAr : activeSuite.titleEn}
+                            fill
+                            priority
+                            className="object-cover"
+                            sizes="(max-width: 1024px) 100vw, 50vw"
+                          />
+                        )}
+
+                        {/* Visual Stage Overlays */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/70 via-transparent to-transparent pointer-events-none" />
+
+                        <div className="absolute top-4 start-4 end-4 flex items-center justify-between">
+                          <span className="rounded-full bg-black/60 border border-white/20 px-3.5 py-1 text-[11px] font-mono font-bold text-[#8fb0ff] backdrop-blur-md" dir="ltr">
+                            {isRtl ? activeSuite.metricAr : activeSuite.metricEn}
                           </span>
-                          <span className="text-neutral-300">•</span>
-                          <span className="text-[11px] font-mono text-neutral-500" dir="ltr">
-                            {isRtl ? suite.metricAr : suite.metricEn}
+                          <span className="rounded-full bg-white/90 px-3 py-1 text-[11px] font-bold text-neutral-900 backdrop-blur-md">
+                            {isRtl ? "ضمان تسليم بنسل المعتمد" : "Pencil Certified SLA"}
                           </span>
                         </div>
+                      </div>
 
-                        <h3 className="mt-2 text-xl sm:text-2xl font-bold text-neutral-950 leading-tight">
-                          {isRtl ? suite.titleAr : suite.titleEn}
-                        </h3>
-
-                        <p className="mt-2.5 text-xs sm:text-sm text-neutral-600 leading-relaxed max-w-2xl">
-                          {isRtl ? suite.hookAr : suite.hookEn}
+                      {/* Executive Hook & Value Proposition */}
+                      <div className="mt-5 border-s-4 border-[#2057ff] ps-4 py-1 text-start">
+                        <p className="text-base sm:text-lg font-bold leading-relaxed text-neutral-900">
+                          &ldquo;{isRtl ? activeSuite.hookAr : activeSuite.hookEn}&rdquo;
                         </p>
                       </div>
 
-                      {/* Key Deliverables Highlight */}
-                      <div className="mt-4 flex items-center gap-2 text-xs text-neutral-800">
-                        <Zap className="h-3.5 w-3.5 shrink-0 fill-[#2057ff] text-[#2057ff]" />
-                        <span className="font-medium text-neutral-700">
-                          {(isRtl ? suite.deliverablesAr : suite.deliverablesEn).slice(0, 3).join(" • ")}
+                      {/* 3 Core System Pillars (Minimalist Specs) */}
+                      <div className="mt-6 border-t border-neutral-100 pt-5 text-start">
+                        <span className="font-mono text-xs font-bold uppercase tracking-wider text-neutral-400 block mb-3">
+                          {isRtl ? "المخرجات الأساسية المضمنة // CORE DELIVERABLES" : "CORE SYSTEM PILLARS // DELIVERABLES"}
                         </span>
-                      </div>
-                    </div>
-
-                    {/* Verified Outcome & Action Button (Col span 4) */}
-                    <div className="lg:col-span-4 flex flex-col justify-between lg:border-s lg:border-neutral-200 lg:ps-8">
-                      <div>
-                        <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-neutral-400">
-                          {isRtl ? "مؤشر المنظومة المعتمد" : "VERIFIED OUTCOME"}
-                        </span>
-                        <div className="mt-2 inline-flex items-center gap-2 text-sm font-semibold text-neutral-900">
-                          <CheckCircle2 className="h-4 w-4 shrink-0 text-[#2057ff]" />
-                          <span>{isRtl ? suite.metricAr : suite.metricEn}</span>
+                        <div className="grid gap-2.5 sm:grid-cols-3">
+                          {(isRtl ? activeSuite.deliverablesAr : activeSuite.deliverablesEn).slice(0, 3).map((item, idx) => (
+                            <div
+                              key={idx}
+                              className="rounded-xl border border-neutral-200/80 bg-neutral-50/70 p-3.5 transition hover:bg-neutral-50 hover:border-neutral-300"
+                            >
+                              <span className="font-mono text-[10px] font-bold text-[#2057ff] block">
+                                0{idx + 1} //
+                              </span>
+                              <p className="mt-1 text-xs font-semibold leading-relaxed text-neutral-800">
+                                {item}
+                              </p>
+                            </div>
+                          ))}
                         </div>
-                        <p className="mt-1 text-xs text-neutral-500">
-                          {isRtl ? "تسليم واختبار معتمد 100% بعقد استوديو موحد" : "100% Certified Production Delivery"}
-                        </p>
-                      </div>
-
-                      <div className="mt-5 flex items-center gap-3">
-                        <Link
-                          href={suite.href}
-                          className="inline-flex items-center gap-2 rounded-full bg-neutral-950 px-5 py-2.5 text-xs font-bold text-white transition-all duration-300 hover:bg-[#2057ff] group-hover:bg-[#2057ff] shadow-sm"
-                        >
-                          <span>{isRtl ? suite.ctaAr : suite.ctaEn}</span>
-                          <ArrowUpRight size={14} />
-                        </Link>
-                        <Link
-                          href="/support/callback"
-                          className="inline-flex items-center gap-1.5 rounded-full border border-neutral-200 bg-white px-3.5 py-2.5 text-xs font-bold text-neutral-700 transition hover:bg-neutral-50 hover:border-neutral-300 shadow-sm"
-                        >
-                          <PhoneCall size={13} />
-                          <span className="hidden sm:inline">{isRtl ? "استشارة" : "Call"}</span>
-                        </Link>
                       </div>
                     </div>
-                  </motion.div>
-                </div>
-              );
-            })}
-          </div>
 
-          {/* Footnote matching SuperFeliz standard */}
-          <div className="mt-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-[11px] font-mono uppercase tracking-wider text-neutral-500">
-            <span className="flex items-center gap-2">
-              <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-              <span className="font-semibold text-neutral-800">
-                {isRtl
-                  ? "تسليم متكامل 100%: مظلة واحدة مسؤولة عن التصميم، الكود، والذكاء"
-                  : "100% Turnkey Delivery: Single studio umbrella for Design, Code & AI"}
-              </span>
-            </span>
-            <span>
-              {isRtl
-                ? "جاهزية إطلاق سريعة — تبدأ من 30 يوماً"
-                : "Rapid Production Sprints — From 30 Days"}
-            </span>
+                    {/* Bottom Action Row */}
+                    <div className="mt-8 flex flex-wrap items-center gap-3 border-t border-neutral-100 pt-6">
+                      <Link
+                        href={activeSuite.href}
+                        className="inline-flex items-center justify-center gap-2 rounded-full bg-[#2057ff] px-7 py-3.5 text-xs sm:text-sm font-bold text-white shadow-md shadow-blue-500/20 transition hover:bg-blue-700"
+                      >
+                        <span>{isRtl ? activeSuite.ctaAr : activeSuite.ctaEn}</span>
+                        <ArrowUpRight size={16} />
+                      </Link>
+
+                      <Link
+                        href="/support/callback"
+                        className="inline-flex items-center justify-center gap-2 rounded-full border border-neutral-300 bg-white px-5 py-3.5 text-xs sm:text-sm font-bold text-neutral-800 transition hover:bg-neutral-50 hover:border-neutral-400"
+                      >
+                        <PhoneCall size={15} />
+                        <span>{isRtl ? "استشارة تنفيذية سريعة" : "Advisory Call"}</span>
+                      </Link>
+                    </div>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+            </div>
           </div>
         </div>
       </section>
