@@ -28,6 +28,7 @@ import { useLanguage } from "@/components/language-context";
 import { PencilHero } from "@/components/pencil-ui";
 import { EditorialPageHero, StatStrip } from "@/components/editorial";
 import { CalendlyCarousel, type CarouselItem } from "@/components/ui/connected-carousel";
+import GlassFolder, { type FolderFile } from "@/components/ui/glass-folder-cards";
 import { cn } from "@/lib/utils";
 
 interface SolutionSuite {
@@ -231,7 +232,22 @@ const SOLUTION_SUITES: SolutionSuite[] = [
   },
 ];
 
-const FELIZ_FAMILY_MODELS = [
+const FELIZ_FAMILY_MODELS: {
+  slug: string;
+  nameEn: string;
+  nameAr: string;
+  taglineEn: string;
+  taglineAr: string;
+  descEn: string;
+  descAr: string;
+  formulaEn: string[];
+  formulaAr: string[];
+  accent: string;
+  art: "verdant" | "glacier" | "dusk" | "ember" | "aurora";
+  tone: "light" | "dark";
+  filesEn: FolderFile[];
+  filesAr: FolderFile[];
+}[] = [
   {
     slug: "oper",
     nameEn: "Feliz Oper",
@@ -243,6 +259,20 @@ const FELIZ_FAMILY_MODELS = [
     formulaEn: ["Audit Costs", "Model Margins", "Streamline"],
     formulaAr: ["تحليل التكاليف", "نمذجة الهوامش", "تبسيط التشغيل"],
     accent: "#10b981",
+    art: "verdant",
+    tone: "light",
+    filesEn: [
+      { name: "Pricing Matrix v4", meta: "XLSX · 1.4 MB", art: "verdant" },
+      { name: "Margin Defense Plan", meta: "Audit · 12 pp", art: "ember" },
+      { name: "Unit Economics Model", meta: "Formulas" },
+      { name: "Commercial SOP.pdf", meta: "PDF · 820 KB" },
+    ],
+    filesAr: [
+      { name: "مصفوفة التسعير v4", meta: "XLSX · 1.4 MB", art: "verdant" },
+      { name: "خطة حماية الهوامش", meta: "تقرير · 12 صفحة", art: "ember" },
+      { name: "اقتصاديات الوحدة", meta: "معادلات مالية" },
+      { name: "دليل التشغيل التجاري.pdf", meta: "PDF · 820 KB" },
+    ],
   },
   {
     slug: "tech",
@@ -255,6 +285,20 @@ const FELIZ_FAMILY_MODELS = [
     formulaEn: ["Inspect Schema", "Check Latency", "Verify Security"],
     formulaAr: ["فحص القواعد", "اختبار الاستجابة", "ضمان الأمان"],
     accent: "#06b6d4",
+    art: "glacier",
+    tone: "light",
+    filesEn: [
+      { name: "Cloud Topology v4.2", meta: "AWS & GCP · Spec", art: "glacier" },
+      { name: "PostgreSQL Schema Map", meta: "28 Tables · DB", art: "aurora" },
+      { name: "Latency Benchmark", meta: "p99 < 85ms" },
+      { name: "Zero-Downtime Spec.pdf", meta: "SLA · 99.99%" },
+    ],
+    filesAr: [
+      { name: "مخطط البنية السحابية v4.2", meta: "AWS & GCP · مواصفات", art: "glacier" },
+      { name: "خريطة قواعد البيانات", meta: "28 جدول · PostgreSQL", art: "aurora" },
+      { name: "اختبار سرعة الاستجابة", meta: "p99 < 85ms" },
+      { name: "مواصفة الاستقرار الدائم.pdf", meta: "SLA · 99.99%" },
+    ],
   },
   {
     slug: "gen",
@@ -267,6 +311,20 @@ const FELIZ_FAMILY_MODELS = [
     formulaEn: ["Analyze Brief", "Craft Positioning", "Iterate Copy"],
     formulaAr: ["قراءة الهدف", "صياغة التموضع", "صقل النصوص"],
     accent: "#8b5cf6",
+    art: "dusk",
+    tone: "light",
+    filesEn: [
+      { name: "Campaign Concepts 2025", meta: "Deck · 42 Slides", art: "dusk" },
+      { name: "Conversion Copydeck", meta: "Landing Pages · v3", art: "aurora" },
+      { name: "Brand Voice Playbook", meta: "Tone & Style" },
+      { name: "UI Microcopy Spec.pdf", meta: "Figma Sync" },
+    ],
+    filesAr: [
+      { name: "أفكار الحملة 2025", meta: "عرض · 42 شريحة", art: "dusk" },
+      { name: "نصوص التحويل الإعلاني", meta: "صفحات الهبوط · v3", art: "aurora" },
+      { name: "دليل النبرة والهوية الصوتية", meta: "قاموس البراند" },
+      { name: "نصوص الواجهات الدقيقة.pdf", meta: "مزامنة Figma" },
+    ],
   },
   {
     slug: "superfeliz",
@@ -279,6 +337,20 @@ const FELIZ_FAMILY_MODELS = [
     formulaEn: ["Holistic View", "Autonomous Triggers", "Enterprise Guardrails"],
     formulaAr: ["رؤية شمولية", "أتمتة ذاتية", "حماية وسرية تامة"],
     accent: "#f59e0b",
+    art: "ember",
+    tone: "dark",
+    filesEn: [
+      { name: "Enterprise Orchestrator", meta: "Core · Multi-Agent", art: "ember" },
+      { name: "24/7 WhatsApp Agent", meta: "Live Channel · Active", art: "verdant" },
+      { name: "Private Knowledge Vault", meta: "Vector DB · Isolated" },
+      { name: "Human Audit SLA.pdf", meta: "Weekly Protocol" },
+    ],
+    filesAr: [
+      { name: "الموجه المؤسسي الشامل", meta: "نواة · متعدد الوكلاء", art: "ember" },
+      { name: "وكيل واتساب 24/7", meta: "قناة مباشرة · نشط", art: "verdant" },
+      { name: "مستودع المعرفة المعزول", meta: "Vector DB · آمن", art: "verdant" },
+      { name: "بروتوكول التدقيق البشري.pdf", meta: "مراجعة أسبوعية" },
+    ],
   },
 ];
 
@@ -830,29 +902,50 @@ export function SolutionsPage() {
             </div>
           </Reveal>
 
-          {/* Model Family Tabs */}
-          <div className="mt-12 flex flex-wrap justify-center gap-2">
-            {FELIZ_FAMILY_MODELS.map((m) => {
-              const active = m.slug === activeFelizModel;
-              return (
-                <button
-                  key={m.slug}
-                  onClick={() => setActiveFelizModel(m.slug)}
-                  className={cn(
-                    "inline-flex cursor-pointer items-center gap-2.5 rounded-full px-5 py-2.5 text-xs font-bold transition-all",
-                    active
-                      ? "bg-neutral-950 text-white shadow-md shadow-neutral-950/20"
-                      : "border border-neutral-200 bg-neutral-100/90 text-neutral-600 hover:bg-neutral-200/80 hover:text-neutral-950"
-                  )}
-                >
-                  <span
-                    className="h-2 w-2 rounded-full"
-                    style={{ backgroundColor: m.accent }}
-                  />
-                  <span>{isRtl ? m.nameAr : m.nameEn}</span>
-                </button>
-              );
-            })}
+          {/* Interactive Glass Folder Cards - Feliz Model Family */}
+          <div className="mt-14 w-full">
+            <div
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 xl:gap-8 justify-items-center items-end"
+              dir="ltr"
+            >
+              {FELIZ_FAMILY_MODELS.map((m, idx) => {
+                const active = m.slug === activeFelizModel;
+                return (
+                  <div key={m.slug} className="flex flex-col items-center">
+                    <GlassFolder
+                      label={isRtl ? m.nameAr : m.nameEn}
+                      meta={isRtl ? m.taglineAr : m.taglineEn}
+                      tone={m.tone}
+                      art={m.art}
+                      seed={idx * 7 + 3}
+                      width={280}
+                      open={active}
+                      onOpenChange={(isOpen) => {
+                        if (isOpen) {
+                          setActiveFelizModel(m.slug);
+                        }
+                      }}
+                      onFileSelect={() => setActiveFelizModel(m.slug)}
+                      files={isRtl ? m.filesAr : m.filesEn}
+                      action="more"
+                      menu={[
+                        {
+                          label: isRtl ? "اختيار هذا النموذج" : "Focus this model",
+                          onSelect: () => setActiveFelizModel(m.slug),
+                        },
+                      ]}
+                      appearDelay={idx * 100}
+                    />
+                  </div>
+                );
+              })}
+            </div>
+
+            <p className="mt-8 text-center font-mono text-[11px] tracking-[0.16em] text-neutral-400 uppercase">
+              {isRtl
+                ? "مرر الماوس للمعاينة · اضغط على المجلد للفتح واختيار النموذج · اضغط القائمة لمزيد من الخيارات"
+                : "Hover to lean · Click folder to open & focus model · ··· for more options"}
+            </p>
           </div>
 
           {/* Active Model Spotlight Box */}
