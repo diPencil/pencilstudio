@@ -520,25 +520,25 @@ export function SolutionsPage() {
 
         <div className="container-custom relative z-10">
           <Reveal>
-            <div className="mx-auto max-w-2xl text-center">
-              <span className="font-mono text-xs font-bold uppercase tracking-[0.2em] text-[#2057ff]">
-                SPEC // 02 — THE 4 ENGINES
+            <div className="mx-auto max-w-3xl text-center">
+              <span className="text-xs font-bold uppercase tracking-[0.2em] text-[#2057ff]">
+                {isRtl ? "منظومات الحلول التنفيذية المتخصصة" : "Signature Solution Suites"}
               </span>
               <h2 className="mt-3 text-3xl font-black tracking-tight text-neutral-950 md:text-5xl">
                 {isRtl ? (
                   <>
-                    أربع منظومات متكاملة<span className="text-[#2057ff]">.</span>
+                    أربع منظومات متكاملة.. <span className="font-light italic text-neutral-500">اختر ما يناسب مرحلتك.</span>
                   </>
                 ) : (
                   <>
-                    Four Turnkey Engines<span className="text-[#2057ff]">.</span>
+                    Four Turnkey Suites.. <span className="font-light italic text-neutral-500">Built for your growth phase.</span>
                   </>
                 )}
               </h2>
-              <p className="mt-3 text-sm text-neutral-500 font-medium sm:text-base">
+              <p className="mt-4 text-base leading-relaxed text-neutral-600 sm:text-lg">
                 {isRtl
-                  ? "حلول تجارية شاملة تدمج الهوية المؤسسية، البرمجيات، وذكاء الأعمال."
-                  : "Turnkey commercial engines combining brand authority, custom software, and AI."}
+                  ? "كل حزمة تمثل حلاً تجارياً شاملاً ومترابطاً. اختر المنظومة التي تحتاجها مؤسستك لاستكشاف مخرجاتها وهندستها بالتفصيل."
+                  : "Each suite is an end-to-end commercial engine. Select a solution to explore its architectural deliverables, ROI, and execution roadmap."}
               </p>
             </div>
           </Reveal>
