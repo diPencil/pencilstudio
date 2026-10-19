@@ -27,7 +27,7 @@ import * as React from "react"
  * Self-contained: React is the only import. No CSS file, no images, no fonts.
  */
 
-export type ArtPreset = "aurora" | "ember" | "dusk" | "glacier" | "verdant"
+export type ArtPreset = "aurora" | "ember" | "dusk" | "glacier" | "verdant" | "cobalt"
 
 export type ArtRecipe = {
   /** `marble` folds the colours through each other; `streak` pulls them into a long exposure. */
@@ -71,8 +71,8 @@ export type GlassFolderProps = {
   label?: string
   /** The second line. Defaults to the number of files, which rolls as you add. */
   meta?: string
-  /** `light` is milk glass, `dark` is smoked glass. */
-  tone?: "light" | "dark"
+  /** `light` is milk glass, `dark` is smoked glass, `blue` is cobalt enterprise glass. */
+  tone?: "light" | "dark" | "blue"
   /** What the back panel holds. A preset, your own recipe, or `none` for a plain frosted back. */
   art?: FolderArt
   /** A different arrangement of the same recipe. */
@@ -83,6 +83,8 @@ export type GlassFolderProps = {
   files?: FolderFile[]
   /** `add` drops new files in, `more` opens a menu, `none` hides the key. */
   action?: "add" | "more" | "none"
+  /** Custom icon for the key button. Defaults to Feliz icon for 'more'. */
+  keyIcon?: React.ReactNode
   /** What `add` puts in the folder. Return nothing for an "Untitled" sheet. */
   onAdd?: (files: FolderFile[]) => FolderFile | void
   onFilesChange?: (files: FolderFile[]) => void
@@ -156,6 +158,16 @@ export const ART_PRESETS: Record<ArtPreset, ArtRecipe> = {
     angle: 2.1,
     gloss: 0.5,
     veins: 0.5,
+  },
+  // electric cobalt and deep sapphire ink
+  cobalt: {
+    style: "marble",
+    colors: ["#020b18", "#0a2558", "#124294", "#1a56db", "#2563eb", "#60a5fa", "#dbeafe"],
+    scale: 0.65,
+    warp: 3.4,
+    angle: 0.9,
+    gloss: 0.6,
+    veins: 0.4,
   },
 }
 
@@ -536,6 +548,7 @@ export default function GlassFolder({
   image,
   files: initialFiles = SAMPLE_FILES,
   action = "add",
+  keyIcon,
   onAdd,
   onFilesChange,
   menu = [],
@@ -854,12 +867,17 @@ export default function GlassFolder({
                 <svg key={bump} className="gf-glyph gf-glyph--plus" viewBox="0 0 24 24" aria-hidden="true">
                   <path d="M12 4.5v15M4.5 12h15" />
                 </svg>
+              ) : keyIcon ? (
+                keyIcon
               ) : (
-                <svg className="gf-glyph gf-glyph--more" viewBox="0 0 30 12" aria-hidden="true">
-                  <rect x="1" y="1.5" width="8" height="9" rx="3.4" />
-                  <rect x="11" y="1.5" width="8" height="9" rx="3.4" />
-                  <rect x="21" y="1.5" width="8" height="9" rx="3.4" />
-                </svg>
+                <img
+                  src="/macosdock/superfeliz.svg"
+                  alt=""
+                  width={24}
+                  height={24}
+                  className="gf-key-icon"
+                  draggable={false}
+                />
               )}
             </button>
           ) : null}
@@ -922,6 +940,7 @@ const GF_CSS = `
   isolation: isolate;
 }
 .gf-root[data-tone="dark"] { --gf-ink: #f5f5f7; --gf-ink-soft: rgba(245, 245, 247, .58); }
+.gf-root[data-tone="blue"] { --gf-ink: #ffffff; --gf-ink-soft: rgba(220, 235, 255, .82); }
 .gf-root:hover, .gf-root:focus-within { --gf-hinge: -11deg; --gf-lift: -34px; --gf-spread: 8px; --gf-fan: 1.4deg; --gf-stack: 10px; }
 .gf-root[data-open] { --gf-hinge: -24deg; --gf-lift: -96px; --gf-spread: 40px; --gf-fan: 5deg; --gf-stack: 30px; }
 
@@ -1314,6 +1333,39 @@ canvas.gf-sheet-art[data-ready] { opacity: 1; filter: none; }
 .gf-root[data-entered] .gf-sheet { transition-delay: calc(var(--gf-depth) * 40ms), 0s, calc(.18s + var(--gf-depth) * 90ms), calc(.18s + var(--gf-depth) * 90ms); }
 .gf-root[data-entered] .gf-front { transition-delay: 0s, .42s, .42s; }
 .gf-key { transition: transform .35s var(--gf-spring), box-shadow .35s var(--gf-ease), opacity .6s var(--gf-ease) .7s, scale .7s var(--gf-spring) .7s; }
+
+/* ---- tone: blue (cobalt enterprise glass) ----------------------------------- */
+.gf-root[data-tone="blue"] .gf-shadow { background: rgba(8, 25, 80, .7); filter: blur(24px); }
+.gf-root[data-tone="blue"] .gf-back { background: linear-gradient(180deg, #102a6b 0%, #061338 100%); }
+.gf-root[data-tone="blue"] .gf-back-rim path { stroke: rgba(147, 197, 253, .45); }
+.gf-root[data-tone="blue"] .gf-sheet { background: linear-gradient(180deg, #1e3a8a 0%, #0c1527 100%); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .25), 0 0 0 .5px rgba(255, 255, 255, .15), 0 14px 30px -8px rgba(3, 10, 35, .8); }
+.gf-root[data-tone="blue"] .gf-sheet-name { color: #ffffff; }
+.gf-root[data-tone="blue"] .gf-sheet-meta { color: rgba(224, 242, 254, .8); }
+.gf-root[data-tone="blue"] .gf-lines i { background: rgba(255, 255, 255, .15); }
+.gf-root[data-tone="blue"] .gf-lines i:first-child { background: rgba(255, 255, 255, .28); }
+.gf-root[data-tone="blue"] .gf-tint { background: linear-gradient(180deg, rgba(32, 87, 255, .35) 0%, rgba(18, 55, 165, .75) 44%, rgba(8, 26, 85, .96) 100%); }
+.gf-root[data-tone="blue"] .gf-spec { mix-blend-mode: screen; opacity: .35; }
+.gf-root[data-tone="blue"] .gf-front-rim { opacity: .85; }
+.gf-root[data-tone="blue"] .gf-front-rim path { stroke: rgba(191, 219, 254, .85); }
+.gf-root[data-tone="blue"] .gf-key--more {
+  color: #ffffff;
+  background: linear-gradient(180deg, rgba(37, 99, 235, .95) 0%, rgba(29, 78, 216, .9) 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .45), 0 0 0 1px rgba(255, 255, 255, .25), 0 10px 20px -6px rgba(10, 30, 95, .7);
+}
+.gf-root[data-tone="blue"] .gf-menu { background: rgba(15, 23, 42, .92); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .15), 0 0 0 .5px rgba(255, 255, 255, .15), 0 24px 48px -16px rgba(0, 0, 0, .85); }
+.gf-root[data-tone="blue"] .gf-menu-item { color: #f1f5f9; }
+.gf-root[data-tone="blue"] .gf-menu-item:hover, .gf-root[data-tone="blue"] .gf-menu-item:focus-visible { background: rgba(255, 255, 255, .12); }
+
+.gf-key-icon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, .18));
+  transition: transform .35s var(--gf-spring);
+}
+.gf-key:hover .gf-key-icon {
+  transform: scale(1.15);
+}
 
 @media (prefers-reduced-motion: reduce) {
   .gf-root *, .gf-root *::before, .gf-root *::after {

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
@@ -243,8 +243,8 @@ const FELIZ_FAMILY_MODELS: {
   formulaEn: string[];
   formulaAr: string[];
   accent: string;
-  art: "verdant" | "glacier" | "dusk" | "ember" | "aurora";
-  tone: "light" | "dark";
+  art: "verdant" | "glacier" | "dusk" | "ember" | "aurora" | "cobalt";
+  tone: "light" | "dark" | "blue";
   filesEn: FolderFile[];
   filesAr: FolderFile[];
 }[] = [
@@ -336,19 +336,19 @@ const FELIZ_FAMILY_MODELS: {
     descAr: "الطبقة المركزية الشاملة لذكاء بنسل. يربط الأهداف التجارية مع البنية التقنية ومحادثات العملاء 24/7 دون انقطاع.",
     formulaEn: ["Holistic View", "Autonomous Triggers", "Enterprise Guardrails"],
     formulaAr: ["رؤية شمولية", "أتمتة ذاتية", "حماية وسرية تامة"],
-    accent: "#f59e0b",
-    art: "ember",
-    tone: "dark",
+    accent: "#2057ff",
+    art: "cobalt",
+    tone: "blue",
     filesEn: [
-      { name: "Enterprise Orchestrator", meta: "Core · Multi-Agent", art: "ember" },
+      { name: "Enterprise Orchestrator", meta: "Core · Multi-Agent", art: "cobalt" },
       { name: "24/7 WhatsApp Agent", meta: "Live Channel · Active", art: "verdant" },
-      { name: "Private Knowledge Vault", meta: "Vector DB · Isolated" },
+      { name: "Private Knowledge Vault", meta: "Vector DB · Isolated", art: "glacier" },
       { name: "Human Audit SLA.pdf", meta: "Weekly Protocol" },
     ],
     filesAr: [
-      { name: "الموجه المؤسسي الشامل", meta: "نواة · متعدد الوكلاء", art: "ember" },
+      { name: "الموجه المؤسسي الشامل", meta: "نواة · متعدد الوكلاء", art: "cobalt" },
       { name: "وكيل واتساب 24/7", meta: "قناة مباشرة · نشط", art: "verdant" },
-      { name: "مستودع المعرفة المعزول", meta: "Vector DB · آمن", art: "verdant" },
+      { name: "مستودع المعرفة المعزول", meta: "Vector DB · آمن", art: "glacier" },
       { name: "بروتوكول التدقيق البشري.pdf", meta: "مراجعة أسبوعية" },
     ],
   },
@@ -903,7 +903,7 @@ export function SolutionsPage() {
           </Reveal>
 
           {/* Interactive Glass Folder Cards - Feliz Model Family */}
-          <div className="mt-14 w-full">
+          <div className="mt-12 w-full">
             <div
               className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 xl:gap-8 justify-items-center items-end"
               dir="ltr"
@@ -947,10 +947,9 @@ export function SolutionsPage() {
                 : "Hover to lean · Click folder to open & focus model · ··· for more options"}
             </p>
           </div>
-
           {/* Active Model Spotlight Box */}
           <Reveal delay={0.05}>
-            <div className="mt-8 rounded-3xl border border-neutral-200 bg-gradient-to-br from-neutral-50 via-white to-neutral-50 p-8 shadow-sm md:p-12">
+            <div className="rounded-3xl border border-neutral-200 bg-gradient-to-br from-neutral-50 via-white to-neutral-50 p-8 shadow-sm md:p-12">
               <div className="grid gap-8 lg:grid-cols-12 lg:items-center">
                 <div className="lg:col-span-8">
                   <div className="flex flex-wrap items-center gap-3">
