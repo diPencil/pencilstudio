@@ -26,8 +26,7 @@ import { Footer } from "@/components/footer";
 import { Reveal } from "@/components/reveal";
 import { useLanguage } from "@/components/language-context";
 import { PencilHero } from "@/components/pencil-ui";
-import { CinematicPageHero } from "@/components/cinematic-page-hero";
-import { SolutionsOrbitMotionBg } from "@/components/page-motion-backgrounds";
+import { EditorialPageHero, StatStrip } from "@/components/editorial";
 import { cn } from "@/lib/utils";
 
 interface SolutionSuite {
@@ -38,6 +37,7 @@ interface SolutionSuite {
   metricAr: string;
   icon: any;
   image: string;
+  video?: string;
   titleEn: string;
   titleAr: string;
   kickerEn: string;
@@ -64,6 +64,7 @@ const SOLUTION_SUITES: SolutionSuite[] = [
     metricAr: "جاهزية كاملة في 30 يوماً",
     icon: Rocket,
     image: "/hero-section.jpg",
+    video: "/signature-capabilities/brand-identity-creative-design.mp4",
     titleEn: "Brand Authority & Full Market Entry",
     titleAr: "منظومة إطلاق العلامات واختراق السوق من الصفر",
     kickerEn: "For New Ventures & Ambitious Rebrands",
@@ -106,6 +107,7 @@ const SOLUTION_SUITES: SolutionSuite[] = [
     metricAr: "توفير 60% من وقت التشغيل اليدوي",
     icon: Workflow,
     image: "/business-sectors/crm-automation.jpg",
+    video: "/signature-capabilities/business-systems-dashboards.mp4",
     titleEn: "Connected Systems & Workflow Automation",
     titleAr: "منظومة الربط التقني وأتمتة مسارات العمليات",
     kickerEn: "For Scaling Companies Losing Time in Manual Hand-offs",
@@ -148,6 +150,7 @@ const SOLUTION_SUITES: SolutionSuite[] = [
     metricAr: "إتمام طلب بأقل من ثانية",
     icon: TrendingUp,
     image: "/business-sectors/e-commerce.jpg",
+    video: "/signature-capabilities/websites-digital-platforms.mp4",
     titleEn: "High-Volume Digital Commerce & Portals",
     titleAr: "منظومة التجارة الرقمية ومنصات البيع الكبرى",
     kickerEn: "For High-Growth Brands & Subscription Platforms",
@@ -190,6 +193,7 @@ const SOLUTION_SUITES: SolutionSuite[] = [
     metricAr: "فريق منتج متكامل تحت إدارتك",
     icon: Layers,
     image: "/business-sectors/corporate-websites.jpg",
+    video: "/signature-capabilities/hosting-cloud-tech-support.mp4",
     titleEn: "Total Digital Overhaul & Ongoing Retainer",
     titleAr: "منظومة التحول المؤسسي الشامل والإدارة المستمرة",
     kickerEn: "For Established Enterprises Modernizing Legacy Systems",
@@ -346,58 +350,69 @@ export function SolutionsPage() {
 
   return (
     <div dir={isRtl ? "rtl" : "ltr"} className="min-h-screen bg-[#FBFBFB] text-neutral-900 selection:bg-[#2057ff] selection:text-white">
-      <Header />
+      <Header light />
 
       {/* ============================================================ */}
-      <CinematicPageHero
+      <EditorialPageHero
         isRtl={isRtl}
-        badge={isRtl ? "حلول الأعمال المتكاملة" : "Turnkey Business Solutions"}
-        breadcrumb={[
-          { label: isRtl ? "الرئيسية" : "Home", href: "/" },
-          { label: isRtl ? "حلول الأعمال" : "Business Solutions" },
+        cards={[
+          { letter: "B", label: isRtl ? "الهوية" : "BRAND", index: "01" },
+          { letter: "S", label: isRtl ? "برمجيات" : "SOFTWARE", index: "02" },
+          { letter: "A", label: isRtl ? "ذكاء Feliz" : "FELIZ AI", index: "03" },
         ]}
-        titleSolid={isRtl ? "منظومات أعمال متكاملة." : "Integrated Business Engines."}
-        titleOutline={isRtl ? "تُدار وتتوسّع بثقة." : "Engineered to Run & Scale."}
+        title={
+          isRtl ? (
+            <>
+              <span className="text-[#2057ff]">منظومات</span> أعمال متكاملة
+              <span className="text-[#2057ff]">.</span>
+            </>
+          ) : (
+            <>
+              <span className="text-[#2057ff]">INTEGRATED</span> BUSINESS ENGINES
+              <span className="text-[#2057ff]">.</span>
+            </>
+          )
+        }
         subtitle={
           isRtl
             ? "حلول تجارية شاملة تدمج الهوية المؤسسية، البرمجيات السحابية، أتمتة العمليات، وذكاء Feliz."
             : "Turnkey enterprise architectures merging brand authority, custom software, automations, and SuperFeliz AI."
         }
-        bgMotion={<SolutionsOrbitMotionBg />}
-        metrics={[
-          {
-            value: isRtl ? "+10 سنوات" : "+10 Years",
-            label: isRtl ? "خبرة تنفيذية في السوق العربي" : "Multidisciplinary Experience",
-          },
-          {
-            value: isRtl ? "مسؤولية كاملة" : "Single Ownership",
-            label: isRtl ? "فريق واحد يضمن النتيجة التجارية" : "One Team Owns the Result",
-          },
-          {
-            value: isRtl ? "99.99% استقرار" : "99.99% Uptime",
-            label: isRtl ? "بنية سحابية ذاتية التوسع والأمان" : "Scalable Cloud Architecture",
-          },
-          {
-            value: isRtl ? "ذكاء Feliz المؤسسي" : "Feliz AI Layer",
-            label: isRtl ? "أتمتة العمليات وخدمة العملاء 24/7" : "Enterprise AI & Operations",
-          },
-        ]}
+        leftMeta={isRtl ? ["الهوية", "البرمجيات", "الأتمتة"] : ["BRAND", "SOFTWARE", "AUTOMATION"]}
+        rightMeta={{
+          brand: "PENCIL STUDIO",
+          line: isRtl ? "الحلول // 2026" : "SOLUTIONS // 2026",
+          accent: isRtl ? "مسؤولية كاملة" : "SINGLE OWNERSHIP",
+        }}
+        ticker={{
+          status: isRtl ? "فريق واحد يضمن النتيجة التجارية" : "ONE TEAM OWNS THE RESULT",
+          locations: ["CAIRO", "DUBAI", "RIYADH", "BERLIN"],
+        }}
       >
         <Link
           href="#solutions-suites"
-          className="inline-flex items-center gap-2 rounded-full bg-[#2057ff] px-6 py-3 text-xs font-bold text-white shadow-lg shadow-blue-500/25 transition hover:bg-blue-600 sm:text-sm"
+          className="inline-flex items-center gap-2 rounded-full bg-neutral-950 px-6 py-3 text-xs font-bold text-white transition hover:bg-[#2057ff] sm:text-sm"
         >
           <span>{isRtl ? "استكشف المنظومات الأربعة" : "Explore The 4 Suites"}</span>
           <ArrowUpRight size={14} />
         </Link>
         <Link
           href="/support/callback"
-          className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-6 py-3 text-xs font-bold text-white transition hover:bg-white/10 sm:text-sm"
+          className="inline-flex items-center gap-2 rounded-full border border-neutral-300 bg-white px-6 py-3 text-xs font-bold text-neutral-900 transition hover:bg-neutral-100 sm:text-sm"
         >
           <PhoneCall size={14} />
           <span>{isRtl ? "طلب استشارة تنفيذية" : "Book Consultation"}</span>
         </Link>
-      </CinematicPageHero>
+      </EditorialPageHero>
+
+      <StatStrip
+        items={[
+          { value: isRtl ? "+10 سنوات" : "+10 Years", label: isRtl ? "خبرة تنفيذية في السوق العربي" : "Multidisciplinary Experience" },
+          { value: isRtl ? "مسؤولية كاملة" : "Single Ownership", label: isRtl ? "فريق واحد يضمن النتيجة التجارية" : "One Team Owns the Result" },
+          { value: isRtl ? "99.99% استقرار" : "99.99% Uptime", label: isRtl ? "بنية سحابية ذاتية التوسع والأمان" : "Scalable Cloud Architecture" },
+          { value: isRtl ? "ذكاء Feliz المؤسسي" : "Feliz AI Layer", label: isRtl ? "أتمتة العمليات وخدمة العملاء 24/7" : "Enterprise AI & Operations" },
+        ]}
+      />
 
       {/* ============================================================ */}
       {/* 2. THE REAL PROBLEM VS THE PENCIL SOLUTION                   */}
@@ -491,308 +506,152 @@ export function SolutionsPage() {
       </section>
 
       {/* ============================================================ */}
-      {/* 3. FOUR ENTERPRISE SOLUTION SUITES (Interactive Studio Console) */}
+      {/* 3. FOUR ENTERPRISE SOLUTION SUITES (Turnkey Engines Ledger) */}
       {/* ============================================================ */}
-      <section id="solutions-suites" className="scroll-mt-24 bg-[#F8F9FB] py-20 md:py-28">
-        <div className="container-custom">
+      <section
+        id="solutions-suites"
+        className="relative scroll-mt-24 border-b border-neutral-200/80 bg-[#FBFBFB] py-20 md:py-28"
+      >
+        {/* Subtle Ambient Aura */}
+        <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+          <div className="animate-aura-1 absolute -top-24 left-1/4 h-[420px] w-[420px] rounded-full bg-[#2057ff]/6 blur-[150px]" />
+          <div className="animate-aura-2 absolute bottom-0 right-1/4 h-[420px] w-[420px] rounded-full bg-[#8b5cf6]/5 blur-[150px]" />
+        </div>
+
+        <div className="container-custom relative z-10">
           <Reveal>
-            <div className="mx-auto max-w-3xl text-center">
-              <span className="text-xs font-bold uppercase tracking-[0.2em] text-[#2057ff]">
-                {isRtl ? "منظومات الحلول التنفيذية المتخصصة" : "Signature Solution Suites"}
+            <div className="mx-auto max-w-2xl text-center">
+              <span className="font-mono text-xs font-bold uppercase tracking-[0.2em] text-[#2057ff]">
+                SPEC // 02 — THE 4 ENGINES
               </span>
               <h2 className="mt-3 text-3xl font-black tracking-tight text-neutral-950 md:text-5xl">
                 {isRtl ? (
                   <>
-                    أربع منظومات متكاملة.. <span className="font-light italic text-neutral-500">اختر ما يناسب مرحلتك.</span>
+                    أربع منظومات متكاملة<span className="text-[#2057ff]">.</span>
                   </>
                 ) : (
                   <>
-                    Four Turnkey Suites.. <span className="font-light italic text-neutral-500">Built for your growth phase.</span>
+                    Four Turnkey Engines<span className="text-[#2057ff]">.</span>
                   </>
                 )}
               </h2>
-              <p className="mt-4 text-base leading-relaxed text-neutral-600 sm:text-lg">
+              <p className="mt-3 text-sm text-neutral-500 font-medium sm:text-base">
                 {isRtl
-                  ? "كل حزمة تمثل حلاً تجارياً شاملاً ومترابطاً. اختر المنظومة التي تحتاجها مؤسستك لاستكشاف مخرجاتها وهندستها بالتفصيل."
-                  : "Each suite is an end-to-end commercial engine. Select a solution to explore its architectural deliverables, ROI, and execution roadmap."}
+                  ? "حلول تجارية شاملة تدمج الهوية المؤسسية، البرمجيات، وذكاء الأعمال."
+                  : "Turnkey commercial engines combining brand authority, custom software, and AI."}
               </p>
             </div>
           </Reveal>
 
-          {/* Suite Selector Tabs */}
-          <div className="mt-12">
-            <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
-              {SOLUTION_SUITES.map((suite, idx) => {
-                const Icon = suite.icon;
-                const isSelected = suite.id === selectedSuiteId;
-                const suiteNum = `0${idx + 1}`;
+          {/* Turnkey Engines Capability Ledger — editorial cards matching The SuperFeliz Standard */}
+          <div className="mt-14 flex flex-col gap-4 lg:gap-5">
+            {SOLUTION_SUITES.map((suite, idx) => {
+              const Icon = suite.icon;
+              const num = `0${idx + 1}`;
 
-                return (
-                  <button
-                    key={suite.id}
-                    onClick={() => setSelectedSuiteId(suite.id)}
-                    className={cn(
-                      "group relative flex flex-col justify-between rounded-2xl p-4 text-start transition-all duration-300 md:p-5 cursor-pointer outline-none",
-                      isSelected
-                        ? "bg-neutral-950 text-white shadow-xl shadow-neutral-950/20"
-                        : "border border-neutral-200/90 bg-white text-neutral-800 hover:border-neutral-400 hover:bg-neutral-50/80 shadow-sm"
-                    )}
+              return (
+                <div key={suite.id} className="[perspective:1400px]">
+                  <motion.div
+                    initial={{ opacity: 0, y: 24 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.15 }}
+                    transition={{ duration: 0.5, delay: idx * 0.07, ease: [0.21, 0.47, 0.32, 0.98] }}
+                    className="group grid grid-cols-1 lg:grid-cols-12 gap-x-8 gap-y-5 rounded-2xl border border-neutral-200 bg-white p-6 sm:p-7 lg:py-8 shadow-[0_18px_45px_-26px_rgba(15,23,42,0.18)] hover:border-blue-200 hover:shadow-[0_24px_50px_-20px_rgba(32,87,255,0.20)] transition-all duration-300"
                   >
-                    <div>
-                      <div className="flex items-center justify-between">
-                        <span
-                          className={cn(
-                            "font-mono text-xs font-black",
-                            isSelected ? "text-amber-400" : "text-neutral-400 group-hover:text-neutral-700"
-                          )}
-                        >
-                          {suiteNum}
-                        </span>
-                        <span
-                          className={cn(
-                            "rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider",
-                            isSelected
-                              ? "bg-white/15 text-white"
-                              : "bg-neutral-100 text-neutral-600"
-                          )}
-                        >
-                          {isRtl ? suite.badgeAr : suite.badgeEn}
-                        </span>
-                      </div>
-
-                      <h4
-                        className={cn(
-                          "mt-3 text-sm font-black md:text-base leading-snug",
-                          isSelected ? "text-white" : "text-neutral-900"
-                        )}
-                      >
-                        {isRtl ? suite.titleAr : suite.titleEn}
-                      </h4>
-                    </div>
-
-                    <div
-                      className="mt-3 flex items-center justify-between border-t pt-3"
-                      style={{ borderColor: isSelected ? "rgba(255,255,255,0.12)" : "rgba(0,0,0,0.06)" }}
-                    >
-                      <span
-                        className={cn(
-                          "font-mono text-[11px] font-bold",
-                          isSelected ? "text-white/70" : "text-neutral-500"
-                        )}
-                        dir="ltr"
-                      >
-                        {isRtl ? suite.metricAr : suite.metricEn}
+                    {/* Index + Icon (Col span 1) */}
+                    <div className="lg:col-span-1 flex items-center gap-3 lg:flex-col lg:items-start">
+                      <span className="font-mono text-4xl lg:text-5xl font-light leading-none text-neutral-200 transition-colors duration-300 group-hover:text-[#2057ff]/40">
+                        {num}
                       </span>
-                      <Icon
-                        size={16}
-                        className={isSelected ? "text-amber-400" : "text-neutral-400 group-hover:text-neutral-900"}
-                      />
-                    </div>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Active Suite Cinematic Showcase Stage */}
-          <div className="mt-8">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeSuite.id}
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -12 }}
-                transition={{ duration: 0.35, ease: [0.21, 0.47, 0.32, 0.98] }}
-                className="overflow-hidden rounded-3xl border border-neutral-200/90 bg-white p-7 shadow-xl sm:p-10 lg:p-12"
-              >
-                <div className="grid gap-10 lg:grid-cols-12 lg:items-start">
-                  {/* Left Column: Commercial Pitch & Deliverables */}
-                  <div className="flex flex-col justify-between lg:col-span-7">
-                    <div>
-                      {/* Top Badges */}
-                      <div className="flex flex-wrap items-center gap-2.5">
-                        <span className="font-mono text-xs font-black text-[#2057ff] bg-blue-50 border border-blue-200/80 px-3 py-1 rounded-full">
-                          {`0${activeSuiteIndex + 1} / 04`}
-                        </span>
-                        <span className="rounded-full bg-neutral-900 px-3.5 py-1 text-xs font-bold text-white">
-                          {isRtl ? activeSuite.badgeAr : activeSuite.badgeEn}
-                        </span>
-                        <span className="rounded-full border border-neutral-200 bg-neutral-50 px-3.5 py-1 text-xs font-semibold text-neutral-600">
-                          {isRtl ? activeSuite.kickerAr : activeSuite.kickerEn}
-                        </span>
+                      <div className="h-10 w-10 rounded-xl border border-neutral-200 bg-white flex items-center justify-center text-neutral-800 shadow-sm transition-all duration-300 group-hover:bg-[#2057ff] group-hover:text-white group-hover:border-[#2057ff] lg:mt-4 shrink-0">
+                        <Icon className="h-4 w-4" />
                       </div>
+                    </div>
 
-                      {/* Main Title */}
-                      <h3 className="mt-4 text-2xl font-black text-neutral-950 sm:text-3xl lg:text-4xl leading-tight">
-                        {isRtl ? activeSuite.titleAr : activeSuite.titleEn}
-                      </h3>
+                    {/* Capability Details (Col span 7) */}
+                    <div className="lg:col-span-7 flex flex-col justify-between">
+                      <div>
+                        <div className="flex flex-wrap items-center gap-2">
+                          <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#2057ff]">
+                            {isRtl ? suite.badgeAr : suite.badgeEn}
+                          </span>
+                          <span className="text-neutral-300">•</span>
+                          <span className="text-[11px] font-mono text-neutral-500" dir="ltr">
+                            {isRtl ? suite.metricAr : suite.metricEn}
+                          </span>
+                        </div>
 
-                      {/* Hook Quote */}
-                      <div className="mt-4 border-s-4 border-[#2057ff] ps-4 py-1">
-                        <p className="text-sm sm:text-base font-bold leading-relaxed text-neutral-900">
-                          {isRtl ? activeSuite.hookAr : activeSuite.hookEn}
+                        <h3 className="mt-2 text-xl sm:text-2xl font-bold text-neutral-950 leading-tight">
+                          {isRtl ? suite.titleAr : suite.titleEn}
+                        </h3>
+
+                        <p className="mt-2.5 text-xs sm:text-sm text-neutral-600 leading-relaxed max-w-2xl">
+                          {isRtl ? suite.hookAr : suite.hookEn}
                         </p>
                       </div>
 
-                      {/* Editorial Pitch */}
-                      <p className="mt-4 text-xs sm:text-sm leading-relaxed text-neutral-600">
-                        {isRtl ? activeSuite.descAr : activeSuite.descEn}
-                      </p>
-
-                      {/* Deliverables Structured Matrix */}
-                      <div className="mt-7">
-                        <div className="flex items-center justify-between border-b border-neutral-100 pb-2">
-                          <span className="text-xs font-black uppercase tracking-wider text-neutral-500">
-                            {isRtl ? "المخرجات والأنظمة المضمنة:" : "Included Turnkey Deliverables:"}
-                          </span>
-                          <span className="text-[11px] font-bold text-emerald-600">
-                            {isRtl ? "تسليم واختبار معتمد 100%" : "100% Certified Production Delivery"}
-                          </span>
-                        </div>
-
-                        <div className="mt-3 grid gap-2.5 sm:grid-cols-2">
-                          {(isRtl ? activeSuite.deliverablesAr : activeSuite.deliverablesEn).map((del, dIdx) => (
-                            <div
-                              key={dIdx}
-                              className="flex items-start gap-2.5 rounded-xl border border-neutral-200/70 bg-neutral-50/70 p-3 transition hover:bg-white hover:border-neutral-300"
-                            >
-                              <CheckCircle2 size={16} className="mt-0.5 shrink-0 text-emerald-600" />
-                              <span className="text-xs font-semibold leading-relaxed text-neutral-800">
-                                {del}
-                              </span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-
-                      {/* Strategic Impact Mini-Cards */}
-                      <div className="mt-6 grid gap-3 sm:grid-cols-2">
-                        {(isRtl ? activeSuite.featuresAr : activeSuite.featuresEn).map((feat, fIdx) => (
-                          <div
-                            key={fIdx}
-                            className="rounded-xl border border-blue-100 bg-gradient-to-br from-blue-50/50 to-white p-3.5 shadow-sm"
-                          >
-                            <span className="block font-black text-neutral-950 text-xs">
-                              {feat.title}
-                            </span>
-                            <span className="mt-1 block text-[11px] leading-relaxed text-neutral-600">
-                              {feat.desc}
-                            </span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Bottom Action Bar */}
-                    <div className="mt-8 flex flex-wrap items-center gap-3 border-t border-neutral-200/80 pt-6">
-                      <Link
-                        href={activeSuite.href}
-                        className="inline-flex items-center justify-center gap-2 rounded-full bg-[#2057ff] px-8 py-4 text-xs sm:text-sm font-bold text-white shadow-lg shadow-blue-500/20 transition hover:bg-blue-700"
-                      >
-                        <span>{isRtl ? activeSuite.ctaAr : activeSuite.ctaEn}</span>
-                        <ArrowUpRight size={16} />
-                      </Link>
-
-                      <Link
-                        href="/support/callback"
-                        className="inline-flex items-center justify-center gap-2 rounded-full border border-neutral-300 bg-white px-6 py-4 text-xs sm:text-sm font-bold text-neutral-800 shadow-sm transition hover:bg-neutral-50 hover:border-neutral-400"
-                      >
-                        <PhoneCall size={15} />
-                        <span>{isRtl ? "استشارة تنفيذية سريعة" : "Advisory Call"}</span>
-                      </Link>
-                    </div>
-                  </div>
-
-                  {/* Right Column: Visual Stage with Photo, Floating Badges & Navigation */}
-                  <div className="flex flex-col gap-4 lg:col-span-5">
-                    <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl border border-neutral-200/90 bg-neutral-100 shadow-md">
-                      <Image
-                        src={activeSuite.image}
-                        alt={isRtl ? activeSuite.titleAr : activeSuite.titleEn}
-                        fill
-                        priority
-                        className="object-cover transition-transform duration-700 hover:scale-105"
-                        sizes="(max-width: 1024px) 100vw, 40vw"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/85 via-neutral-950/20 to-transparent" />
-
-                      {/* Top Metric Badge */}
-                      <div className="absolute top-4 start-4 end-4 flex items-center justify-between">
-                        <span className="rounded-full bg-neutral-950/85 border border-white/20 px-3.5 py-1 text-xs font-mono font-bold text-amber-300 backdrop-blur-md" dir="ltr">
-                          {isRtl ? activeSuite.metricAr : activeSuite.metricEn}
-                        </span>
-                        <span className="rounded-full bg-white/90 px-3 py-1 text-[11px] font-bold text-neutral-900 backdrop-blur-md">
-                          {isRtl ? "ضمان تسليم بنسل" : "Pencil SLA Guarantee"}
+                      {/* Key Deliverables Highlight */}
+                      <div className="mt-4 flex items-center gap-2 text-xs text-neutral-800">
+                        <Zap className="h-3.5 w-3.5 shrink-0 fill-[#2057ff] text-[#2057ff]" />
+                        <span className="font-medium text-neutral-700">
+                          {(isRtl ? suite.deliverablesAr : suite.deliverablesEn).slice(0, 3).join(" • ")}
                         </span>
                       </div>
+                    </div>
 
-                      {/* Bottom Visual Card Caption */}
-                      <div className="absolute bottom-4 start-4 end-4 rounded-xl bg-white/95 p-3.5 backdrop-blur-md border border-neutral-200/80 shadow-lg">
-                        <div className="flex items-center justify-between">
-                          <div>
-                            <span className="block text-[11px] font-bold uppercase tracking-wider text-neutral-500">
-                              {isRtl ? "مؤشر المنظومة" : "Engine Metric"}
-                            </span>
-                            <span className="text-sm font-black text-neutral-950">
-                              {isRtl ? activeSuite.metricAr : activeSuite.metricEn}
-                            </span>
-                          </div>
-                          <Link
-                            href={activeSuite.href}
-                            className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-[#2057ff] text-white shadow-md transition hover:bg-blue-700"
-                          >
-                            <ArrowUpRight size={16} />
-                          </Link>
+                    {/* Verified Outcome & Action Button (Col span 4) */}
+                    <div className="lg:col-span-4 flex flex-col justify-between lg:border-s lg:border-neutral-200 lg:ps-8">
+                      <div>
+                        <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-neutral-400">
+                          {isRtl ? "مؤشر المنظومة المعتمد" : "VERIFIED OUTCOME"}
+                        </span>
+                        <div className="mt-2 inline-flex items-center gap-2 text-sm font-semibold text-neutral-900">
+                          <CheckCircle2 className="h-4 w-4 shrink-0 text-[#2057ff]" />
+                          <span>{isRtl ? suite.metricAr : suite.metricEn}</span>
                         </div>
-                      </div>
-                    </div>
-
-                    {/* Suite Fast Cycler (Next / Prev & Index dots) */}
-                    <div className="flex items-center justify-between rounded-2xl border border-neutral-200/80 bg-neutral-50/80 p-3 text-xs">
-                      <div className="flex items-center gap-1.5">
-                        {SOLUTION_SUITES.map((s, i) => (
-                          <button
-                            key={s.id}
-                            onClick={() => setSelectedSuiteId(s.id)}
-                            className={cn(
-                              "h-7 px-2.5 rounded-lg font-mono text-xs font-bold transition-all cursor-pointer",
-                              s.id === selectedSuiteId
-                                ? "bg-neutral-950 text-white shadow-sm"
-                                : "bg-white border border-neutral-200 text-neutral-600 hover:bg-neutral-100"
-                            )}
-                          >
-                            {`0${i + 1}`}
-                          </button>
-                        ))}
+                        <p className="mt-1 text-xs text-neutral-500">
+                          {isRtl ? "تسليم واختبار معتمد 100% بعقد استوديو موحد" : "100% Certified Production Delivery"}
+                        </p>
                       </div>
 
-                      <div className="flex items-center gap-2">
-                        <button
-                          onClick={() => {
-                            const prevIndex = (activeSuiteIndex - 1 + SOLUTION_SUITES.length) % SOLUTION_SUITES.length;
-                            setSelectedSuiteId(SOLUTION_SUITES[prevIndex].id);
-                          }}
-                          className="flex h-8 w-8 items-center justify-center rounded-full border border-neutral-200 bg-white text-neutral-700 hover:bg-neutral-100 transition shadow-sm cursor-pointer"
-                          aria-label="Previous Suite"
+                      <div className="mt-5 flex items-center gap-3">
+                        <Link
+                          href={suite.href}
+                          className="inline-flex items-center gap-2 rounded-full bg-neutral-950 px-5 py-2.5 text-xs font-bold text-white transition-all duration-300 hover:bg-[#2057ff] group-hover:bg-[#2057ff] shadow-sm"
                         >
-                          {isRtl ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
-                        </button>
-                        <button
-                          onClick={() => {
-                            const nextIndex = (activeSuiteIndex + 1) % SOLUTION_SUITES.length;
-                            setSelectedSuiteId(SOLUTION_SUITES[nextIndex].id);
-                          }}
-                          className="flex h-8 w-8 items-center justify-center rounded-full border border-neutral-200 bg-white text-neutral-700 hover:bg-neutral-100 transition shadow-sm cursor-pointer"
-                          aria-label="Next Suite"
+                          <span>{isRtl ? suite.ctaAr : suite.ctaEn}</span>
+                          <ArrowUpRight size={14} />
+                        </Link>
+                        <Link
+                          href="/support/callback"
+                          className="inline-flex items-center gap-1.5 rounded-full border border-neutral-200 bg-white px-3.5 py-2.5 text-xs font-bold text-neutral-700 transition hover:bg-neutral-50 hover:border-neutral-300 shadow-sm"
                         >
-                          {isRtl ? <ChevronLeft size={16} /> : <ChevronRight size={16} />}
-                        </button>
+                          <PhoneCall size={13} />
+                          <span className="hidden sm:inline">{isRtl ? "استشارة" : "Call"}</span>
+                        </Link>
                       </div>
                     </div>
-                  </div>
+                  </motion.div>
                 </div>
-              </motion.div>
-            </AnimatePresence>
+              );
+            })}
+          </div>
+
+          {/* Footnote matching SuperFeliz standard */}
+          <div className="mt-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-[11px] font-mono uppercase tracking-wider text-neutral-500">
+            <span className="flex items-center gap-2">
+              <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+              <span className="font-semibold text-neutral-800">
+                {isRtl
+                  ? "تسليم متكامل 100%: مظلة واحدة مسؤولة عن التصميم، الكود، والذكاء"
+                  : "100% Turnkey Delivery: Single studio umbrella for Design, Code & AI"}
+              </span>
+            </span>
+            <span>
+              {isRtl
+                ? "جاهزية إطلاق سريعة — تبدأ من 30 يوماً"
+                : "Rapid Production Sprints — From 30 Days"}
+            </span>
           </div>
         </div>
       </section>
@@ -804,7 +663,7 @@ export function SolutionsPage() {
         <div className="container-custom relative z-10">
           <Reveal>
             <div className="mx-auto max-w-3xl text-center">
-              <div className="inline-flex items-center gap-2 rounded-full border border-amber-300 bg-amber-50 px-4 py-1.5 text-xs font-bold text-amber-900 shadow-sm">
+              <div className="inline-flex items-center gap-2 rounded-full border border-[#cdd9ff] bg-[#eef3ff] px-4 py-1.5 text-xs font-bold text-[#2057ff] shadow-sm">
                 <Image
                   src="/macosdock/superfeliz.svg"
                   alt="SuperFeliz"
@@ -919,7 +778,7 @@ export function SolutionsPage() {
           <div className="mt-12 rounded-3xl border border-neutral-200 bg-[#F8F9FA] p-8 md:p-12">
             <div className="grid gap-8 lg:grid-cols-12 lg:items-center">
               <div className="lg:col-span-7">
-                <span className="text-xs font-bold uppercase tracking-widest text-amber-600">
+                <span className="text-xs font-bold uppercase tracking-widest text-[#2057ff]">
                   {isRtl ? "كيف تقدم بنسل خدمة فيليز لشركتك؟" : "Feliz as a Managed Enterprise Solution"}
                 </span>
                 <h3 className="mt-2 text-2xl font-black text-neutral-950 sm:text-3xl">
@@ -989,7 +848,7 @@ export function SolutionsPage() {
                 <div className="mt-6 flex w-full flex-col gap-3">
                   <Link
                     href="/superfeliz"
-                    className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-amber-400 px-6 py-3.5 text-xs font-bold text-neutral-950 shadow-sm transition hover:bg-amber-300"
+                    className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#2057ff] px-6 py-3.5 text-xs font-bold text-white shadow-sm transition hover:bg-[#1a49d6]"
                   >
                     <Sparkles size={14} />
                     <span>{isRtl ? "تعرف على عائلة Feliz بالتفصيل" : "Explore Feliz Family Page"}</span>
@@ -1288,7 +1147,7 @@ export function SolutionsPage() {
                     href="/superfeliz"
                     className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-7 py-4 text-sm font-bold text-white transition hover:bg-white/10"
                   >
-                    <Sparkles size={15} className="text-amber-400" />
+                    <Sparkles size={15} className="text-[#8fb0ff]" />
                     <span>{isRtl ? "اكتشف ذكاء Feliz لشركتك" : "Discover Feliz AI"}</span>
                   </Link>
                 </div>
@@ -1302,3 +1161,4 @@ export function SolutionsPage() {
     </div>
   );
 }
+
