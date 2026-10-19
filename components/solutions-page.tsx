@@ -1085,7 +1085,7 @@ export function SolutionsPage() {
       {/* ============================================================ */}
       {/* 6. DELIVERY ARCHITECTURE & TIMELINE                         */}
       {/* ============================================================ */}
-      <section className="border-t border-neutral-200/80 bg-white py-20 md:py-28">
+      <section className="border-t border-neutral-200/80 bg-white py-20 md:py-28 overflow-hidden w-full">
         <div className="container-custom">
           <Reveal>
             <div className="mx-auto max-w-3xl text-center">
@@ -1110,15 +1110,15 @@ export function SolutionsPage() {
               </p>
             </div>
           </Reveal>
+        </div>
 
-          {/* Connected Carousel for the 4 Phases */}
-          <div className="mt-14 w-full">
-            <CalendlyCarousel
-              items={deliveryCarouselItems}
-              autoPlayInterval={6000}
-              pauseOnHover={true}
-            />
-          </div>
+        {/* Connected Carousel for the 4 Phases - Unboxed Full Width */}
+        <div className="mt-14 w-full">
+          <CalendlyCarousel
+            items={deliveryCarouselItems}
+            autoPlayInterval={6000}
+            pauseOnHover={true}
+          />
         </div>
       </section>
 

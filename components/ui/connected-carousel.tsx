@@ -185,8 +185,14 @@ export function CalendlyCarousel({
     }
   };
 
+  const isUltraWide = viewportWidth >= 1650;
+  const isWide = viewportWidth >= 1380;
+
   const activeDimensions = {
-    desktop: { width: 790, height: 516 },
+    desktop: {
+      width: isUltraWide ? 960 : isWide ? 880 : 790,
+      height: isUltraWide ? 550 : isWide ? 530 : 516,
+    },
     tablet: { width: 560, height: 440 },
     mobile: { width: Math.min(340, viewportWidth - 56), height: 490 },
   }[tier];
@@ -203,7 +209,7 @@ export function CalendlyCarousel({
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       className={cn(
-        "relative w-full max-w-[1320px] mx-auto flex flex-col items-center select-none outline-none py-4 overflow-hidden",
+        "relative w-full flex flex-col items-center select-none outline-none py-6 overflow-hidden",
         className
       )}
       {...props}
@@ -330,83 +336,97 @@ export function CalendlyCarousel({
               };
             }
 
+            const activeW = activeDimensions.width;
+            const activeH = activeDimensions.height;
+            const gap0 = 20;
+            const gap1 = 16;
+
+            const side1W = isUltraWide ? 145 : isWide ? 130 : 114;
+            const side1H = isUltraWide ? 390 : isWide ? 370 : 348;
+
+            const side2W = isUltraWide ? 110 : isWide ? 98 : 86;
+            const side2H = isUltraWide ? 250 : isWide ? 232 : 216;
+
+            const x1 = activeW / 2 + gap0;
+            const x2 = x1 + side1W + gap1;
+
             switch (offset) {
               case 0:
                 return {
-                  x: -395,
-                  y: -258,
-                  width: 790,
-                  height: 516,
+                  x: -activeW / 2,
+                  y: -activeH / 2,
+                  width: activeW,
+                  height: activeH,
                   opacity: 1,
                   zIndex: 0,
                   pointerEvents: "auto" as const,
                 };
               case 1:
                 return {
-                  x: 415,
-                  y: -174,
-                  width: 114,
-                  height: 348,
+                  x: x1,
+                  y: -side1H / 2,
+                  width: side1W,
+                  height: side1H,
                   opacity: 1,
                   zIndex: 100,
                   pointerEvents: "auto" as const,
                 };
               case -1:
                 return {
-                  x: -529,
-                  y: -174,
-                  width: 114,
-                  height: 348,
+                  x: -(x1 + side1W),
+                  y: -side1H / 2,
+                  width: side1W,
+                  height: side1H,
                   opacity: 1,
                   zIndex: 100,
                   pointerEvents: "auto" as const,
                 };
               case 2:
                 return {
-                  x: 545,
-                  y: -108,
-                  width: 86,
-                  height: 216,
+                  x: x2,
+                  y: -side2H / 2,
+                  width: side2W,
+                  height: side2H,
                   opacity: 1,
                   zIndex: 90,
                   pointerEvents: "auto" as const,
                 };
               case -2:
                 return {
-                  x: -631,
-                  y: -108,
-                  width: 86,
-                  height: 216,
+                  x: -(x2 + side2W),
+                  y: -side2H / 2,
+                  width: side2W,
+                  height: side2H,
                   opacity: 1,
                   zIndex: 90,
                   pointerEvents: "auto" as const,
                 };
               case 3:
                 return {
-                  x: 720,
-                  y: -108,
-                  width: 86,
-                  height: 216,
+                  x: x2 + side2W + 90,
+                  y: -side2H / 2,
+                  width: side2W,
+                  height: side2H,
                   opacity: 0,
                   zIndex: 0,
                   pointerEvents: "none" as const,
                 };
               case -3:
                 return {
-                  x: -720,
-                  y: -108,
-                  width: 86,
-                  height: 216,
+                  x: -(x2 + side2W + 90),
+                  y: -side2H / 2,
+                  width: side2W,
+                  height: side2H,
                   opacity: 0,
                   zIndex: 0,
                   pointerEvents: "none" as const,
                 };
               default:
                 return {
-                  x: offset < 0 ? -860 : 860,
-                  y: -108,
-                  width: 86,
-                  height: 216,
+                  x: offset < 0 ? -(x2 + side2W + 220) : (x2 + side2W + 220),
+                  y: -side2H / 2,
+                  width: side2W,
+                  height: side2H,
                   opacity: 0,
                   zIndex: 0,
                   pointerEvents: "none" as const,
@@ -429,7 +449,7 @@ export function CalendlyCarousel({
                 willChange: "transform",
               }}
               className={cn(
-                "rounded-[28px] sm:rounded-[32px] bg-white border border-neutral-200/90 text-neutral-900 shadow-[0_10px_30px_rgba(95,109,119,0.08),0_4px_12px_rgba(95,109,119,0.06)] overflow-visible",
+                "rounded-[28px] sm:rounded-[36px] bg-white border border-neutral-200/90 text-neutral-900 shadow-[0_12px_36px_rgba(95,109,119,0.09),0_4px_14px_rgba(95,109,119,0.06)] overflow-visible",
                 !isActive && "cursor-pointer"
               )}
             >
@@ -440,7 +460,7 @@ export function CalendlyCarousel({
                   className="absolute top-0 bottom-0 flex items-center text-white pointer-events-none z-[100]"
                   style={{
                     width: 22,
-                    height: 42,
+                    height: isUltraWide ? 48 : 42,
                     margin: "auto 0",
                     left: "calc(100% - 1px)",
                   }}
@@ -462,7 +482,7 @@ export function CalendlyCarousel({
                   className="absolute top-0 bottom-0 flex items-center text-white pointer-events-none z-[100]"
                   style={{
                     width: 22,
-                    height: 42,
+                    height: isUltraWide ? 48 : 42,
                     margin: "auto 0",
                     right: "calc(100% - 1px)",
                   }}
@@ -484,7 +504,7 @@ export function CalendlyCarousel({
                   className="absolute top-0 bottom-0 flex items-center text-white pointer-events-none z-[100]"
                   style={{
                     width: 18,
-                    height: 28,
+                    height: isUltraWide ? 34 : 28,
                     margin: "auto 0",
                     left: "calc(100% - 1px)",
                   }}
@@ -506,7 +526,7 @@ export function CalendlyCarousel({
                   className="absolute top-0 bottom-0 flex items-center text-white pointer-events-none z-[100]"
                   style={{
                     width: 18,
-                    height: 28,
+                    height: isUltraWide ? 34 : 28,
                     margin: "auto 0",
                     right: "calc(100% - 1px)",
                   }}
@@ -610,7 +630,7 @@ export function CalendlyCarousel({
                       </div>
                     </div>
 
-                    <div className="relative shrink-0 overflow-hidden rounded-[18px] sm:rounded-[22px] bg-neutral-100 w-full md:w-[clamp(180px,44%,330px)] flex-1 md:flex-initial md:h-full max-h-[220px] md:max-h-none border border-neutral-200/80 shadow-md">
+                    <div className="relative shrink-0 overflow-hidden rounded-[20px] sm:rounded-[26px] bg-neutral-100 w-full md:w-[clamp(240px,46%,440px)] flex-1 md:flex-initial md:h-full max-h-[260px] md:max-h-none border border-neutral-200/80 shadow-md">
                       <Image
                         alt={item.alt || item.author}
                         src={item.selectedImage}
