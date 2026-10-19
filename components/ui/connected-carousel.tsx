@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import type { HTMLAttributes, MouseEvent, KeyboardEvent } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export interface CarouselItem {
@@ -54,7 +55,7 @@ export function CalendlyCarousel({
   const [progress, setProgress] = useState<number>(0);
   const [isHovered, setIsHovered] = useState<boolean>(false);
   const [tier, setTier] = useState<ScreenTier>("desktop");
-  const [viewportWidth, setViewportWidth] = useState<number>(1200);
+  const [viewportWidth, setViewportWidth] = useState<number>(1400);
 
   // Global State/Hooks
   const total = items.length;
@@ -185,10 +186,16 @@ export function CalendlyCarousel({
     }
   };
 
+  const isWide = viewportWidth >= 1600;
+  const isLarge = viewportWidth >= 1350;
+
   const activeDimensions = {
-    desktop: { width: 762, height: 513 },
+    desktop: {
+      width: isWide ? 860 : isLarge ? 810 : 750,
+      height: 520,
+    },
     tablet: { width: 560, height: 440 },
-    mobile: { width: Math.min(340, viewportWidth - 56), height: 490 },
+    mobile: { width: Math.min(340, viewportWidth - 48), height: 490 },
   }[tier];
 
   return (
@@ -203,11 +210,35 @@ export function CalendlyCarousel({
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       className={cn(
-        "relative w-full max-w-[1240px] mx-auto flex flex-col items-center select-none outline-none py-4 overflow-hidden",
+        "relative w-full flex flex-col items-center select-none outline-none py-4 overflow-hidden",
         className
       )}
       {...props}
     >
+      {/* Edge gradient masks for smooth full-bleed fade */}
+      <div className="pointer-events-none absolute inset-y-0 left-0 w-8 sm:w-20 md:w-32 bg-gradient-to-r from-white via-white/80 to-transparent z-[140]" />
+      <div className="pointer-events-none absolute inset-y-0 right-0 w-8 sm:w-20 md:w-32 bg-gradient-to-l from-white via-white/80 to-transparent z-[140]" />
+
+      {/* Navigation Arrow - Left */}
+      <button
+        type="button"
+        onClick={handlePrev}
+        aria-label="Previous phase"
+        className="hidden md:flex absolute left-4 lg:left-8 top-1/2 -translate-y-1/2 z-[160] h-11 w-11 items-center justify-center rounded-full border border-neutral-200 bg-white/95 text-neutral-800 shadow-lg backdrop-blur-sm transition-all hover:bg-neutral-100 hover:scale-105 active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 cursor-pointer"
+      >
+        <ChevronLeft className="h-5 w-5" />
+      </button>
+
+      {/* Navigation Arrow - Right */}
+      <button
+        type="button"
+        onClick={handleNext}
+        aria-label="Next phase"
+        className="hidden md:flex absolute right-4 lg:right-8 top-1/2 -translate-y-1/2 z-[160] h-11 w-11 items-center justify-center rounded-full border border-neutral-200 bg-white/95 text-neutral-800 shadow-lg backdrop-blur-sm transition-all hover:bg-neutral-100 hover:scale-105 active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 cursor-pointer"
+      >
+        <ChevronRight className="h-5 w-5" />
+      </button>
+
       <div
         id="carousel-view-panel"
         role="tabpanel"
@@ -330,83 +361,125 @@ export function CalendlyCarousel({
               };
             }
 
+            const activeW = activeDimensions.width;
+            const activeH = activeDimensions.height;
+            const gap0 = 20;
+            const gap = 16;
+
+            const w1 = isWide ? 124 : isLarge ? 112 : 105;
+            const h1 = 350;
+
+            const w2 = isWide ? 96 : isLarge ? 86 : 78;
+            const h2 = 236;
+
+            const w3 = isWide ? 84 : isLarge ? 76 : 70;
+            const h3 = 176;
+
+            const w4 = isWide ? 76 : isLarge ? 68 : 64;
+            const h4 = 136;
+
+            const x1 = activeW / 2 + gap0;
+            const x2 = x1 + w1 + gap;
+            const x3 = x2 + w2 + gap;
+            const x4 = x3 + w3 + gap;
+
             switch (offset) {
               case 0:
                 return {
-                  x: -381,
-                  y: -256.5,
-                  width: 762,
-                  height: 513,
+                  x: -activeW / 2,
+                  y: -activeH / 2,
+                  width: activeW,
+                  height: activeH,
                   opacity: 1,
                   zIndex: 0,
                   pointerEvents: "auto" as const,
                 };
-              case -1:
-                return {
-                  x: -506,
-                  y: -172,
-                  width: 105,
-                  height: 344,
-                  opacity: 1,
-                  zIndex: 100,
-                  pointerEvents: "auto" as const,
-                };
               case 1:
                 return {
-                  x: 401,
-                  y: -172,
-                  width: 105,
-                  height: 344,
+                  x: x1,
+                  y: -h1 / 2,
+                  width: w1,
+                  height: h1,
                   opacity: 1,
                   zIndex: 100,
                   pointerEvents: "auto" as const,
                 };
-              case -2:
+              case -1:
                 return {
-                  x: -596,
-                  y: -102.5,
-                  width: 74,
-                  height: 205,
+                  x: -(x1 + w1),
+                  y: -h1 / 2,
+                  width: w1,
+                  height: h1,
                   opacity: 1,
                   zIndex: 100,
                   pointerEvents: "auto" as const,
                 };
               case 2:
                 return {
-                  x: 522,
-                  y: -102.5,
-                  width: 74,
-                  height: 205,
+                  x: x2,
+                  y: -h2 / 2,
+                  width: w2,
+                  height: h2,
                   opacity: 1,
-                  zIndex: 100,
+                  zIndex: 90,
+                  pointerEvents: "auto" as const,
+                };
+              case -2:
+                return {
+                  x: -(x2 + w2),
+                  y: -h2 / 2,
+                  width: w2,
+                  height: h2,
+                  opacity: 1,
+                  zIndex: 90,
+                  pointerEvents: "auto" as const,
+                };
+              case 3:
+                return {
+                  x: x3,
+                  y: -h3 / 2,
+                  width: w3,
+                  height: h3,
+                  opacity: 1,
+                  zIndex: 80,
                   pointerEvents: "auto" as const,
                 };
               case -3:
                 return {
-                  x: -720,
-                  y: -102.5,
-                  width: 74,
-                  height: 205,
-                  opacity: 0,
-                  zIndex: 0,
-                  pointerEvents: "none" as const,
+                  x: -(x3 + w3),
+                  y: -h3 / 2,
+                  width: w3,
+                  height: h3,
+                  opacity: 1,
+                  zIndex: 80,
+                  pointerEvents: "auto" as const,
                 };
-              case 3:
+              case 4:
                 return {
-                  x: 646,
-                  y: -102.5,
-                  width: 74,
-                  height: 205,
-                  opacity: 0,
-                  zIndex: 0,
-                  pointerEvents: "none" as const,
+                  x: x4,
+                  y: -h4 / 2,
+                  width: w4,
+                  height: h4,
+                  opacity: 0.65,
+                  zIndex: 70,
+                  pointerEvents: "auto" as const,
+                };
+              case -4:
+                return {
+                  x: -(x4 + w4),
+                  y: -h4 / 2,
+                  width: w4,
+                  height: h4,
+                  opacity: 0.65,
+                  zIndex: 70,
+                  pointerEvents: "auto" as const,
                 };
               default:
                 return {
-                  x: offset < 0 ? -860 : 860,
-                  y: -102.5,
-                  width: 74,
-                  height: 205,
+                  x: offset < 0 ? -(x4 + w4 + 200) : (x4 + w4 + 200),
+                  y: -h4 / 2,
+                  width: w4,
+                  height: h4,
                   opacity: 0,
                   zIndex: 0,
                   pointerEvents: "none" as const,
@@ -433,6 +506,7 @@ export function CalendlyCarousel({
                 !isActive && "cursor-pointer"
               )}
             >
+              {/* Connector between -1 and 0 */}
               {offset === -1 && (
                 <div
                   aria-hidden="true"
@@ -454,6 +528,7 @@ export function CalendlyCarousel({
                 </div>
               )}
 
+              {/* Connector between 0 and 1 */}
               {offset === 1 && (
                 <div
                   aria-hidden="true"
@@ -475,6 +550,7 @@ export function CalendlyCarousel({
                 </div>
               )}
 
+              {/* Connector between -2 and -1 */}
               {offset === -2 && tier === "desktop" && (
                 <div
                   aria-hidden="true"
@@ -496,6 +572,7 @@ export function CalendlyCarousel({
                 </div>
               )}
 
+              {/* Connector between 1 and 2 */}
               {offset === 2 && tier === "desktop" && (
                 <div
                   aria-hidden="true"
@@ -503,6 +580,94 @@ export function CalendlyCarousel({
                   style={{
                     width: 18,
                     height: 28,
+                    margin: "auto 0",
+                    right: "calc(100% - 1px)",
+                  }}
+                >
+                  <svg
+                    viewBox="0 0 16 28"
+                    preserveAspectRatio="none"
+                    className="size-full fill-current overflow-visible block drop-shadow-sm"
+                  >
+                    <path d="M0 0C0 0 0.993759 10.1818 8 10.1818C15.0062 10.1818 16 0 16 0V28C16 28 15.0062 17.8182 8 17.8182C0.993759 17.8182 0 28 0 28V0Z" />
+                  </svg>
+                </div>
+              )}
+
+              {/* Connector between -3 and -2 */}
+              {offset === -3 && tier === "desktop" && (
+                <div
+                  aria-hidden="true"
+                  className="absolute top-0 bottom-0 flex items-center text-white pointer-events-none z-[100]"
+                  style={{
+                    width: 18,
+                    height: 24,
+                    margin: "auto 0",
+                    left: "calc(100% - 1px)",
+                  }}
+                >
+                  <svg
+                    viewBox="0 0 16 28"
+                    preserveAspectRatio="none"
+                    className="size-full fill-current overflow-visible block drop-shadow-sm"
+                  >
+                    <path d="M0 0C0 0 0.993759 10.1818 8 10.1818C15.0062 10.1818 16 0 16 0V28C16 28 15.0062 17.8182 8 17.8182C0.993759 17.8182 0 28 0 28V0Z" />
+                  </svg>
+                </div>
+              )}
+
+              {/* Connector between 2 and 3 */}
+              {offset === 3 && tier === "desktop" && (
+                <div
+                  aria-hidden="true"
+                  className="absolute top-0 bottom-0 flex items-center text-white pointer-events-none z-[100]"
+                  style={{
+                    width: 18,
+                    height: 24,
+                    margin: "auto 0",
+                    right: "calc(100% - 1px)",
+                  }}
+                >
+                  <svg
+                    viewBox="0 0 16 28"
+                    preserveAspectRatio="none"
+                    className="size-full fill-current overflow-visible block drop-shadow-sm"
+                  >
+                    <path d="M0 0C0 0 0.993759 10.1818 8 10.1818C15.0062 10.1818 16 0 16 0V28C16 28 15.0062 17.8182 8 17.8182C0.993759 17.8182 0 28 0 28V0Z" />
+                  </svg>
+                </div>
+              )}
+
+              {/* Connector between -4 and -3 */}
+              {offset === -4 && tier === "desktop" && (
+                <div
+                  aria-hidden="true"
+                  className="absolute top-0 bottom-0 flex items-center text-white pointer-events-none z-[100]"
+                  style={{
+                    width: 18,
+                    height: 20,
+                    margin: "auto 0",
+                    left: "calc(100% - 1px)",
+                  }}
+                >
+                  <svg
+                    viewBox="0 0 16 28"
+                    preserveAspectRatio="none"
+                    className="size-full fill-current overflow-visible block drop-shadow-sm"
+                  >
+                    <path d="M0 0C0 0 0.993759 10.1818 8 10.1818C15.0062 10.1818 16 0 16 0V28C16 28 15.0062 17.8182 8 17.8182C0.993759 17.8182 0 28 0 28V0Z" />
+                  </svg>
+                </div>
+              )}
+
+              {/* Connector between 3 and 4 */}
+              {offset === 4 && tier === "desktop" && (
+                <div
+                  aria-hidden="true"
+                  className="absolute top-0 bottom-0 flex items-center text-white pointer-events-none z-[100]"
+                  style={{
+                    width: 18,
+                    height: 20,
                     margin: "auto 0",
                     right: "calc(100% - 1px)",
                   }}
@@ -557,7 +722,7 @@ export function CalendlyCarousel({
                     initial={false}
                     animate={{
                       opacity: isActive ? 1 : 0,
-                      x: isActive ? 0 : offset < 0 ? -822 : 822,
+                      x: isActive ? 0 : offset < 0 ? -activeDimensions.width : activeDimensions.width,
                     }}
                     transition={TRANSITION_SPRING}
                     className={cn(
