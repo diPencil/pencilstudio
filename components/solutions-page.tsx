@@ -27,6 +27,7 @@ import { Reveal } from "@/components/reveal";
 import { useLanguage } from "@/components/language-context";
 import { PencilHero } from "@/components/pencil-ui";
 import { EditorialPageHero, StatStrip } from "@/components/editorial";
+import { CalendlyCarousel, type CarouselItem } from "@/components/ui/connected-carousel";
 import { cn } from "@/lib/utils";
 
 interface SolutionSuite {
@@ -347,6 +348,57 @@ export function SolutionsPage() {
   const selectedModel =
     FELIZ_FAMILY_MODELS.find((m) => m.slug === activeFelizModel) ??
     FELIZ_FAMILY_MODELS[3];
+
+  const deliveryCarouselItems: CarouselItem[] = [
+    {
+      id: isRtl ? "المرحلة // 01" : "Phase // 01",
+      days: isRtl ? "الأسبوع الأول (الأيام 1 - 7)" : "Days 1 - 7",
+      stat: isRtl ? "التشخيص وهندسة معمارية المنظومة" : "Diagnostic & Architecture Blueprint",
+      quote: isRtl
+        ? "دراسة عميقة للهدف التجاري، تحليل البنية الحالية، ورسم المعمارية التقنية والتصميمية المحددة للحل التجاري."
+        : "We audit your commercial target, existing tech stack, customer journey, and specify the exact solution blueprint.",
+      author: isRtl ? "المرحلة 01" : "Phase 01 Checkpoint",
+      role: isRtl ? "وثيقة المعمارية الهندسية وخريطة الطريق" : "Technical & Design Architecture Blueprint",
+      defaultImage: "/business-sectors/corporate-websites.jpg",
+      selectedImage: "/business-sectors/corporate-websites.jpg",
+    },
+    {
+      id: isRtl ? "المرحلة // 02" : "Phase // 02",
+      days: isRtl ? "الأسبوع 2 - 3 (الأيام 8 - 25)" : "Days 8 - 25",
+      stat: isRtl ? "سبرنت البناء والتصميم المكثف" : "Rapid Production Sprint",
+      quote: isRtl
+        ? "التنفيذ المتوازي: صقل الهوية المؤسسية، برمجة المنصة، ربط بوابات الدفع وقواعد البيانات، وتغذية ذكاء فيليز."
+        : "Full speed ahead: brand identity, custom Next.js frontend, backend integrations, and Feliz AI knowledge base ingestion.",
+      author: isRtl ? "المرحلة 02" : "Phase 02 Checkpoint",
+      role: isRtl ? "الأكواد البرمجية الكاملة ونظام الهوية" : "Production Code & Brand Book Handover",
+      defaultImage: "/business-sectors/crm-automation.jpg",
+      selectedImage: "/business-sectors/crm-automation.jpg",
+    },
+    {
+      id: isRtl ? "المرحلة // 03" : "Phase // 03",
+      days: isRtl ? "الأسبوع الرابع (الأيام 26 - 30)" : "Days 26 - 30",
+      stat: isRtl ? "اختبار الضغط وتدريب الفريق" : "Stress Testing & Training",
+      quote: isRtl
+        ? "محاكاة ضغط الزيارات، فحص الأمان والثغرات، اختبار دورات الدفع الحقيقية، وتدريب فريقك على الإدارة."
+        : "Simulating campaign traffic, security audits, payment test cycles, and training your team on dashboards.",
+      author: isRtl ? "المرحلة 03" : "Phase 03 Checkpoint",
+      role: isRtl ? "محضر الفحص والجودة وتدريب الإدارة" : "Security Audits & Executive Handover",
+      defaultImage: "/business-sectors/e-commerce.jpg",
+      selectedImage: "/business-sectors/e-commerce.jpg",
+    },
+    {
+      id: isRtl ? "المرحلة // 04" : "Phase // 04",
+      days: isRtl ? "ما بعد الإطلاق (اليوم 31 فصاعداً)" : "Day 31 Onwards",
+      stat: isRtl ? "الإطلاق والإشراف المستمر" : "Launch & Managed SLA",
+      quote: isRtl
+        ? "تدشين الحل في السوق تحت مراقبة هندسية لصيقة، مع تقارير شهرية وتطوير مستمر يضمن تفوقك المستمر."
+        : "Going live under close monitoring. Weekly performance reviews, server management, and continuous optimization.",
+      author: isRtl ? "المرحلة 04" : "Phase 04 Checkpoint",
+      role: isRtl ? "التزام SLA 99.99% وتطوير دوري مستمر" : "Continuous Optimization & 99.99% SLA",
+      defaultImage: "/hero-section.jpg",
+      selectedImage: "/hero-section.jpg",
+    },
+  ];
 
   return (
     <div dir={isRtl ? "rtl" : "ltr"} className="min-h-screen bg-[#FBFBFB] text-neutral-900 selection:bg-[#2057ff] selection:text-white">
@@ -1059,66 +1111,13 @@ export function SolutionsPage() {
             </div>
           </Reveal>
 
-          <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {[
-              {
-                num: "01",
-                titleEn: "Diagnostic & Architecture",
-                titleAr: "التشخيص وهندسة المنظومة",
-                daysEn: "Days 1 - 7",
-                daysAr: "الأسبوع الأول",
-                descEn: "We audit your commercial target, existing tech stack, customer journey, and specify the exact solution blueprint.",
-                descAr: "دراسة عميقة للهدف التجاري، تحليل البنية الحالية، ورسم المعمارية التقنية والتصميمية المحددة للحل.",
-              },
-              {
-                num: "02",
-                titleEn: "Rapid Production Sprint",
-                titleAr: "سبرنت البناء والتصميم المكثف",
-                daysEn: "Days 8 - 25",
-                daysAr: "الأسبوع 2 - 3",
-                descEn: "Full speed ahead: brand identity, custom Next.js frontend, backend integrations, and Feliz AI knowledge base ingestion.",
-                descAr: "التنفيذ المتوازي: صقل الهوية، برمجة المنصة، ربط بوابات الدفع وقواعد البيانات، وتغذية ذكاء فيليز.",
-              },
-              {
-                num: "03",
-                titleEn: "Stress Testing & Training",
-                titleAr: "اختبار الضغط وتدريب الفريق",
-                daysEn: "Days 26 - 30",
-                daysAr: "الأسبوع الرابع",
-                descEn: "Simulating campaign traffic, security audits, payment test cycles, and training your team on dashboards.",
-                descAr: "محاكاة ضغط الزيارات، فحص الأمان والثغرات، اختبار دورات الدفع الحقيقية، وتدريب فريقك على الإدارة.",
-              },
-              {
-                num: "04",
-                titleEn: "Launch & Managed SLA",
-                titleAr: "الإطلاق والإشراف المستمر",
-                daysEn: "Day 31 Onwards",
-                daysAr: "ما بعد الإطلاق",
-                descEn: "Going live under close monitoring. Weekly performance reviews, server management, and continuous optimization.",
-                descAr: "تدشين الحل في السوق تحت مراقبة هندسية لصيقة، مع تقارير شهرية وتطوير مستمر يضمن تفوقك المستمر.",
-              },
-            ].map((step, idx) => (
-              <Reveal key={idx} delay={0.05 * idx}>
-                <div className="flex h-full flex-col justify-between rounded-2xl border border-neutral-200 bg-[#F8F9FA] p-6 shadow-sm transition hover:border-neutral-900 hover:shadow-md">
-                  <div>
-                    <div className="flex items-center justify-between">
-                      <span className="font-mono text-xs font-black text-white bg-neutral-900 px-2.5 py-1 rounded-md">
-                        {step.num}
-                      </span>
-                      <span className="text-xs font-bold text-blue-600">
-                        {isRtl ? step.daysAr : step.daysEn}
-                      </span>
-                    </div>
-                    <h4 className="mt-4 text-lg font-bold text-neutral-950">
-                      {isRtl ? step.titleAr : step.titleEn}
-                    </h4>
-                    <p className="mt-2 text-xs leading-relaxed text-neutral-600 sm:text-sm">
-                      {isRtl ? step.descAr : step.descEn}
-                    </p>
-                  </div>
-                </div>
-              </Reveal>
-            ))}
+          {/* Connected Carousel for the 4 Phases */}
+          <div className="mt-14">
+            <CalendlyCarousel
+              items={deliveryCarouselItems}
+              autoPlayInterval={6000}
+              pauseOnHover={true}
+            />
           </div>
         </div>
       </section>
