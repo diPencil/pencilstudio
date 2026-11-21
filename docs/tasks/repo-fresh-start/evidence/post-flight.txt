@@ -1,0 +1,13 @@
+=== POST-FLIGHT 2026-11-21 ===
+--- history:
+a076836 baseline: fresh repository history
+--- commit count: 1
+--- branches:
+* main
+  remotes/origin/main
+--- remote branches:
+a076836fc67291ba298db296e13563ff240baa47	refs/heads/main
+--- working tree status (should be clean):
+?? docs/tasks/repo-fresh-start/evidence/gate-final.txt
+?? docs/tasks/repo-fresh-start/evidence/post-flight.txt
+(entries: 2)

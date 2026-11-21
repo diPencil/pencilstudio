@@ -1,0 +1,160 @@
+verify-project: governance gate for pencilstudio
+============================================================
+[1] Required governance files
+  [PASS] exists: AGENTS.md
+  [PASS] exists: README.md
+  [PASS] exists: docs/constitution.md
+  [PASS] exists: docs/project-guide.md
+  [PASS] exists: docs/architecture/modules.md
+  [PASS] exists: docs/DESIGN_SYSTEM.md
+  [PASS] exists: docs/ERD.md
+  [PASS] exists: docs/workflow.md
+  [PASS] exists: docs/tooling/skills.md
+  [PASS] exists: docs/tooling/skills.lock.json
+  [PASS] exists: docs/scripts/verify-project.py
+  [PASS] exists: docs/scripts/check-ui-controls.py
+  [PASS] exists: docs/scripts/README.md
+  [PASS] exists: docs/tasks/README.md
+  [PASS] exists: docs/design/README.md
+[2] Vendored agent skills vs skills.lock.json
+  [PASS] lock file lists at least one skill
+  [PASS] skill dir exists: .agents/skills/21st-ai
+  [PASS] 21st-ai: HEAD 15c7436 matches pin 15c7436
+  [PASS] skill dir exists: .agents/skills/agent-skills
+  [PASS] agent-skills: HEAD 8c99fa3 matches pin 8c99fa3
+  [PASS] skill dir exists: .agents/skills/rea
+  [PASS] rea: HEAD 088bc68 matches pin 088bc68
+  [PASS] skill dir exists: .agents/skills/ui-ux-pro-max
+  [PASS] ui-ux-pro-max: HEAD f76d165 matches pin f76d165
+  [PASS] skill dir exists: .agents/skills/security-audit
+  [PASS] security-audit: HEAD c1c8a8c matches pin c1c8a8c
+[3] Internal Markdown links resolve
+  [PASS] AGENTS.md: link target exists -> README.md
+  [PASS] AGENTS.md: link target exists -> docs/constitution.md
+  [PASS] AGENTS.md: link target exists -> docs/project-guide.md
+  [PASS] AGENTS.md: link target exists -> docs/architecture/modules.md
+  [PASS] AGENTS.md: link target exists -> docs/DESIGN_SYSTEM.md
+  [PASS] AGENTS.md: link target exists -> docs/ERD.md
+  [PASS] AGENTS.md: link target exists -> docs/workflow.md
+  [PASS] AGENTS.md: link target exists -> docs/tooling/skills.md
+  [PASS] AGENTS.md: link target exists -> docs/project-guide.md
+  [PASS] AGENTS.md: link target exists -> docs/workflow.md
+  [PASS] AGENTS.md: link target exists -> docs/constitution.md
+  [PASS] AGENTS.md: link target exists -> docs/DESIGN_SYSTEM.md
+  [PASS] AGENTS.md: link target exists -> docs/workflow.md
+  [PASS] AGENTS.md: link target exists -> docs/scripts/README.md
+  [PASS] AGENTS.md: link target exists -> docs/tooling/skills.lock.json
+  [PASS] AGENTS.md: link target exists -> docs/tooling/skills.md
+  [PASS] AGENTS.md: link target exists -> docs/project-guide.md
+  [PASS] AGENTS.md: link target exists -> docs/architecture/modules.md
+  [PASS] AGENTS.md: link target exists -> docs/DESIGN_SYSTEM.md
+  [PASS] AGENTS.md: link target exists -> docs/ERD.md
+  [PASS] AGENTS.md: link target exists -> docs/workflow.md
+  [PASS] README.md: link target exists -> AGENTS.md
+  [PASS] README.md: link target exists -> docs/constitution.md
+  [PASS] README.md: link target exists -> docs/project-guide.md
+  [PASS] README.md: link target exists -> docs/workflow.md
+  [PASS] README.md: link target exists -> docs/DESIGN_SYSTEM.md
+  [PASS] README.md: link target exists -> docs/ERD.md
+  [PASS] README.md: link target exists -> docs/architecture/modules.md
+  [PASS] README.md: link target exists -> docs/tooling/skills.md
+  [PASS] docs/architecture/modules.md: link target exists -> ../constitution.md
+  [PASS] docs/architecture/modules.md: link target exists -> ../project-guide.md
+  [PASS] docs/architecture/modules.md: link target exists -> ../DESIGN_SYSTEM.md
+  [PASS] docs/architecture/modules.md: link target exists -> ../ERD.md
+  [PASS] docs/architecture/modules.md: link target exists -> ../ERD.md
+  [PASS] docs/architecture/modules.md: link target exists -> ../constitution.md
+  [PASS] docs/constitution.md: link target exists -> ../AGENTS.md
+  [PASS] docs/constitution.md: link target exists -> architecture/modules.md
+  [PASS] docs/constitution.md: link target exists -> DESIGN_SYSTEM.md
+  [PASS] docs/constitution.md: link target exists -> ERD.md
+  [PASS] docs/constitution.md: link target exists -> workflow.md
+  [PASS] docs/constitution.md: link target exists -> workflow.md
+  [PASS] docs/constitution.md: link target exists -> architecture/modules.md
+  [PASS] docs/constitution.md: link target exists -> ERD.md
+  [PASS] docs/constitution.md: link target exists -> ../AGENTS.md
+  [PASS] docs/constitution.md: link target exists -> DESIGN_SYSTEM.md
+  [PASS] docs/constitution.md: link target exists -> DESIGN_SYSTEM.md#8-accessibility-wcag-22-aa
+  [PASS] docs/constitution.md: link target exists -> ../AGENTS.md
+  [PASS] docs/constitution.md: link target exists -> workflow.md#risk-register
+  [PASS] docs/constitution.md: link target exists -> tooling/skills.lock.json
+  [PASS] docs/constitution.md: link target exists -> workflow.md
+  [PASS] docs/design/README.md: link target exists -> ../DESIGN_SYSTEM.md
+  [PASS] docs/design/README.md: link target exists -> ../../app/globals.css
+  [PASS] docs/DESIGN_SYSTEM.md: link target exists -> ../AGENTS.md
+  [PASS] docs/DESIGN_SYSTEM.md: link target exists -> constitution.md
+  [PASS] docs/DESIGN_SYSTEM.md: link target exists -> ../app/globals.css
+  [PASS] docs/ERD.md: link target exists -> constitution.md
+  [PASS] docs/ERD.md: link target exists -> architecture/modules.md
+  [PASS] docs/ERD.md: link target exists -> architecture/modules.md
+  [PASS] docs/project-guide.md: link target exists -> ../AGENTS.md
+  [PASS] docs/project-guide.md: link target exists -> constitution.md
+  [PASS] docs/project-guide.md: link target exists -> architecture/modules.md
+  [PASS] docs/project-guide.md: link target exists -> DESIGN_SYSTEM.md
+  [PASS] docs/project-guide.md: link target exists -> workflow.md
+  [PASS] docs/project-guide.md: link target exists -> ERD.md
+  [PASS] docs/project-guide.md: link target exists -> constitution.md#law-2--type-safety--diagnostics
+  [PASS] docs/project-guide.md: link target exists -> constitution.md#law-5--bilingual--rtl-contract
+  [PASS] docs/project-guide.md: link target exists -> ../AGENTS.md
+  [PASS] docs/project-guide.md: link target exists -> constitution.md
+  [PASS] docs/project-guide.md: link target exists -> architecture/modules.md
+  [PASS] docs/project-guide.md: link target exists -> DESIGN_SYSTEM.md
+  [PASS] docs/project-guide.md: link target exists -> ERD.md
+  [PASS] docs/project-guide.md: link target exists -> workflow.md
+  [PASS] docs/project-guide.md: link target exists -> tooling/skills.md
+  [PASS] docs/scripts/README.md: link target exists -> ../workflow.md
+  [PASS] docs/scripts/README.md: link target exists -> verify-project.py
+  [PASS] docs/scripts/README.md: link target exists -> ../tooling/skills.lock.json
+  [PASS] docs/scripts/README.md: link target exists -> check-ui-controls.py
+  [PASS] docs/scripts/README.md: link target exists -> ../DESIGN_SYSTEM.md
+  [PASS] docs/tasks/governance-foundation/report.md: link target exists -> plan.md
+  [PASS] docs/tasks/governance-foundation/report.md: link target exists -> ../../tooling/skills.lock.json
+  [PASS] docs/tasks/governance-foundation/report.md: link target exists -> ../../../AGENTS.md
+  [PASS] docs/tasks/governance-foundation/report.md: link target exists -> ../../constitution.md
+  [PASS] docs/tasks/governance-foundation/report.md: link target exists -> ../../project-guide.md
+  [PASS] docs/tasks/governance-foundation/report.md: link target exists -> ../../architecture/modules.md
+  [PASS] docs/tasks/governance-foundation/report.md: link target exists -> ../../DESIGN_SYSTEM.md
+  [PASS] docs/tasks/governance-foundation/report.md: link target exists -> ../../ERD.md
+  [PASS] docs/tasks/governance-foundation/report.md: link target exists -> ../../workflow.md
+  [PASS] docs/tasks/governance-foundation/report.md: link target exists -> evidence/gate-run-1.txt
+  [PASS] docs/tasks/governance-foundation/report.md: link target exists -> evidence/gate-run-final.txt
+  [PASS] docs/tasks/governance-foundation/report.md: link target exists -> evidence/ui-controls.txt
+  [PASS] docs/tasks/governance-foundation/report.md: link target exists -> evidence/gate-run-1.txt
+  [PASS] docs/tasks/governance-foundation/report.md: link target exists -> evidence/gate-run-final.txt
+  [PASS] docs/tasks/governance-foundation/report.md: link target exists -> evidence/ui-controls.txt
+  [PASS] docs/tasks/governance-foundation/report.md: link target exists -> ../../workflow.md
+  [PASS] docs/tasks/README.md: link target exists -> ../workflow.md
+  [PASS] docs/tasks/README.md: link target exists -> ../workflow.md#delivery-log
+  [PASS] docs/tasks/README.md: link target exists -> ../../AGENTS.md
+  [PASS] docs/tooling/skills.md: link target exists -> ../../AGENTS.md
+  [PASS] docs/tooling/skills.md: link target exists -> skills.lock.json
+  [PASS] docs/tooling/skills.md: link target exists -> ../workflow.md#delivery-log
+  [PASS] docs/workflow.md: link target exists -> ../AGENTS.md
+  [PASS] docs/workflow.md: link target exists -> constitution.md
+  [PASS] docs/workflow.md: link target exists -> constitution.md
+  [PASS] docs/workflow.md: link target exists -> architecture/modules.md
+  [PASS] docs/workflow.md: link target exists -> tasks/README.md
+  [PASS] docs/workflow.md: link target exists -> ../AGENTS.md
+  [PASS] docs/workflow.md: link target exists -> constitution.md
+  [PASS] docs/workflow.md: link target exists -> DESIGN_SYSTEM.md
+  [PASS] docs/workflow.md: link target exists -> ERD.md
+  [PASS] docs/workflow.md: link target exists -> architecture/modules.md
+  [PASS] docs/workflow.md: link target exists -> tasks/README.md
+  [PASS] docs/workflow.md: link target exists -> tasks/governance-foundation/report.md
+[4] Governance docs are in English
+  [PASS] AGENTS.md: no Arabic codepoints
+  [PASS] README.md: no Arabic codepoints
+  [PASS] docs/architecture/modules.md: no Arabic codepoints
+  [PASS] docs/constitution.md: no Arabic codepoints
+  [PASS] docs/design/README.md: no Arabic codepoints
+  [PASS] docs/DESIGN_SYSTEM.md: no Arabic codepoints
+  [PASS] docs/ERD.md: no Arabic codepoints
+  [PASS] docs/project-guide.md: no Arabic codepoints
+  [PASS] docs/scripts/README.md: no Arabic codepoints
+  [PASS] docs/tasks/governance-foundation/plan.md: no Arabic codepoints
+  [PASS] docs/tasks/governance-foundation/report.md: no Arabic codepoints
+  [PASS] docs/tasks/README.md: no Arabic codepoints
+  [PASS] docs/tooling/skills.md: no Arabic codepoints
+  [PASS] docs/workflow.md: no Arabic codepoints
+============================================================
+RESULT: GREEN — all 152 checks passed

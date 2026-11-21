@@ -1,0 +1,27 @@
+{
+  "css.lint.unknownAtRules": "ignore",
+  "css.lint.unknownProperties": "ignore",
+  "scss.lint.unknownAtRules": "ignore",
+  "less.lint.unknownAtRules": "ignore",
+  "html.format.enable": true,
+  "tailwindCSS.lint.unknownAtRules": "ignore",
+  "tailwindCSS.lint.invalidApply": "ignore",
+  "tailwindCSS.lint.invalidScreen": "ignore",
+  "tailwindCSS.lint.invalidTailwindDirective": "ignore",
+  "tailwindCSS.lint.invalidVariant": "ignore",
+  "tailwindCSS.lint.recommendedVariantOrder": "ignore",
+  "tailwindCSS.lint.suggestCanonicalClasses": "ignore",
+  "sonarlint.rules": {
+    "javascript:S6853": { "level": "off" },
+    "typescript:S6853": { "level": "off" },
+    "javascript:S6844": { "level": "off" },
+    "typescript:S6844": { "level": "off" },
+    "javascript:S6848": { "level": "off" },
+    "typescript:S6848": { "level": "off" },
+    "javascript:S6759": { "level": "off" },
+    "typescript:S6759": { "level": "off" },
+    "javascript:S3317": { "level": "off" },
+    "typescript:S3317": { "level": "off" }
+  },
+  "sonarlint.analysisExcludes": "**/*"
+}

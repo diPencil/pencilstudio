@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "pencil-studio-agent-skills-lock",
+  "version": 1,
+  "description": "Pinned vendored agent skills for PENCIL Studio. Verified by docs/scripts/verify-project.py.",
+  "updated": "2026-11-21",
+  "skills": [
+    {
+      "name": "21st-ai",
+      "source": "https://github.com/21st-dev/skill.git",
+      "path": ".agents/skills/21st-ai",
+      "commit": "15c7436c41dc88c54094f1be93ce53bda456b114",
+      "committedAt": "2026-09-09T13:02:45-07:00",
+      "capabilities": ["21st-ai", "21st-cli-use", "21st-design-sync", "21st-registry", "21st-ui-build", "21st-ui-explore", "21st-ui-review"]
+    },
+    {
+      "name": "agent-skills",
+      "source": "https://github.com/addyosmani/agent-skills.git",
+      "path": ".agents/skills/agent-skills",
+      "commit": "8c99fa36d90068c82d547f7c12a9d67a3e95f4ee",
+      "committedAt": "2026-11-18T12:06:37-08:00",
+      "capabilities": ["test-driven-development", "code-review-and-quality", "code-simplification", "performance-optimization", "frontend-ui-engineering", "accessibility-engineering", "api-and-interface-design", "debugging-and-error-recovery", "ci-cd-and-automation", "git-workflow-and-versioning", "planning-and-task-breakdown", "spec-driven-development", "incremental-implementation", "security-and-hardening", "observability-and-instrumentation", "deprecation-and-migration", "documentation-and-adrs"]
+    },
+    {
+      "name": "rea",
+      "source": "https://github.com/morluto/rea.git",
+      "path": ".agents/skills/rea",
+      "commit": "088bc68b1cbddb11b7432e7541ba66f47409abf2",
+      "committedAt": "2026-11-21T20:38:10Z",
+      "capabilities": ["reverse-engineering", "codebase-anatomy", "mcp-server", "native-analysis-tools"]
+    },
+    {
+      "name": "ui-ux-pro-max",
+      "source": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill.git",
+      "path": ".agents/skills/ui-ux-pro-max",
+      "commit": "f76d1653d7467fc11fb9d9d79295a421c92ab958",
+      "committedAt": "2026-11-21T20:12:18+07:00",
+      "capabilities": ["ui-ux-design-intelligence", "design-system-audit", "component-styling"]
+    },
+    {
+      "name": "security-audit",
+      "source": "https://github.com/cloudflare/security-audit-skill.git",
+      "path": ".agents/skills/security-audit",
+      "commit": "c1c8a8c1471069fb0e188eeaff69b8e8db6564a8",
+      "committedAt": "2026-09-14T20:28:54+01:00",
+      "capabilities": ["web-security-audit", "threat-modeling"]
+    }
+  ]
+}

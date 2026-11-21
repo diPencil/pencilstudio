@@ -1,0 +1,357 @@
+   ▲ Next.js 15.2.6
+   - Local:        http://127.0.0.1:3003
+   - Network:      http://127.0.0.1:3003
+
+ ✓ Starting...
+ ✓ Ready in 5s
+ ○ Compiling /support/callback ...
+ ✓ Compiled /support/callback in 7.5s (1492 modules)
+ GET /support/callback?lang=en 200 in 8987ms
+ ✓ Compiled in 1702ms (699 modules)
+ GET /support/callback?lang=ar 200 in 332ms
+ ○ Compiling /help ...
+ ✓ Compiled /help in 4s (1528 modules)
+ GET /help 200 in 5460ms
+ ✓ Compiled in 3.9s (1542 modules)
+ GET /help 200 in 492ms
+ GET /support/callback?lang=ar 200 in 1422ms
+ GET /support/callback?lang=en 200 in 1197ms
+ GET /support/callback?lang=ar 200 in 383ms
+ ✓ Compiled in 70.3s (1542 modules)
+ GET /support/callback?lang=ar 200 in 341ms
+ GET /help 200 in 348ms
+ GET /support/callback?lang=ar 200 in 115ms
+ GET /support/callback?lang=en 200 in 188ms
+ GET /support/callback 200 in 247ms
+ GET /support/callback 200 in 389ms
+ ✓ Compiled in 3.1s (1542 modules)
+ GET /help 200 in 448ms
+ GET /support/callback 200 in 1604ms
+ ✓ Compiled in 3.6s (1542 modules)
+ GET /support/callback 200 in 398ms
+ ✓ Compiled in 3.6s (1542 modules)
+ GET /support/callback 200 in 372ms
+ ✓ Compiled in 1300ms (729 modules)
+ GET /support/callback 200 in 79ms
+ ✓ Compiled in 1612ms (729 modules)
+ GET /support/callback 200 in 92ms
+ GET /help 200 in 1983ms
+ ✓ Compiled in 900ms (729 modules)
+ GET /help 200 in 47ms
+ ○ Compiling /support/report ...
+ ✓ Compiled /support/report in 3.4s (1568 modules)
+ GET /support/report?lang=en 200 in 5281ms
+ GET /help 200 in 1829ms
+ ✓ Compiled in 2.1s (740 modules)
+ GET /help 200 in 96ms
+ GET /support/report?lang=ar 200 in 377ms
+ ✓ Compiled in 1790ms (1568 modules)
+ GET /help 200 in 373ms
+ GET /support/report?lang=ar 200 in 382ms
+ ✓ Compiled in 45s (1568 modules)
+ GET /help 200 in 217ms
+ GET /support/report?lang=ar 200 in 221ms
+ ✓ Compiled in 1298ms (1554 modules)
+ GET /support/report?lang=ar 200 in 191ms
+ GET /help 200 in 194ms
+ GET /support/report?lang=en 200 in 199ms
+ GET /support/report 200 in 493ms
+ GET /support/report?lang=ar 200 in 712ms
+ GET /support/report 200 in 321ms
+ GET /help?lang=en 200 in 549ms
+ ○ Compiling /help/faqs ...
+ ✓ Compiled /help/faqs in 2.4s (1588 modules)
+ GET /help/faqs?lang=en 200 in 3591ms
+ ○ Compiling /help/guides ...
+ ✓ Compiled /help/guides in 1467ms (1604 modules)
+ GET /help/guides?lang=en 200 in 2340ms
+ ○ Compiling /help/contact ...
+ ✓ Compiled /help/contact in 1401ms (1622 modules)
+ GET /help/contact?lang=en 200 in 2133ms
+ ○ Compiling /support ...
+ ✓ Compiled /support in 2.4s (1648 modules)
+ GET /support?lang=en 200 in 3235ms
+ ○ Compiling /support/customer ...
+ ✓ Compiled /support/customer in 789ms (1661 modules)
+ GET /support/customer?lang=en 200 in 1558ms
+ ○ Compiling /support/technical ...
+ ✓ Compiled /support/technical in 2.3s (1691 modules)
+ GET /support/technical?lang=en 200 in 3316ms
+ ✓ Compiled /support/callback in 459ms (907 modules)
+ GET /support/callback?lang=en 200 in 1178ms
+ ○ Compiling /support/report ...
+ ✓ Compiled /support/report in 728ms (921 modules)
+ GET /support/report?lang=en 200 in 1402ms
+ GET /help?lang=ar 200 in 541ms
+ GET /help/faqs?lang=ar 200 in 440ms
+ GET /help/guides?lang=ar 200 in 391ms
+ GET /help/contact?lang=ar 200 in 381ms
+ GET /support?lang=ar 200 in 403ms
+ GET /support/customer?lang=ar 200 in 363ms
+ GET /support/technical?lang=ar 200 in 424ms
+ GET /support/callback?lang=ar 200 in 356ms
+ GET /support/report?lang=ar 200 in 346ms
+ ✓ Compiled in 2.6s (1673 modules)
+ GET /support/report?lang=ar 200 in 287ms
+ ✓ Compiled in 850ms (809 modules)
+ GET /support/report?lang=ar 200 in 71ms
+ ✓ Compiled in 928ms (809 modules)
+ GET /support/report?lang=ar 200 in 69ms
+ ✓ Compiled in 1304ms (809 modules)
+ GET /support/report?lang=ar 200 in 79ms
+ ✓ Compiled in 907ms (809 modules)
+ GET /support/report?lang=ar 200 in 64ms
+ ✓ Compiled in 1185ms (808 modules)
+ GET /support/report?lang=ar 200 in 59ms
+ ✓ Compiled in 2s (1673 modules)
+ GET /support/report?lang=ar 200 in 281ms
+ ✓ Compiled in 1877ms (1673 modules)
+ GET /support/report?lang=ar 200 in 277ms
+ ✓ Compiled in 1861ms (1673 modules)
+ GET /support/report?lang=ar 200 in 198ms
+ ✓ Compiled in 1828ms (1672 modules)
+ GET /support/report?lang=ar 200 in 165ms
+ ✓ Compiled in 1780ms (1672 modules)
+ GET /support/report?lang=ar 200 in 194ms
+ ✓ Compiled in 2.4s (807 modules)
+ GET /support/report?lang=ar 200 in 95ms
+ ✓ Compiled in 1596ms (807 modules)
+ GET /support/report?lang=ar 200 in 53ms
+ ✓ Compiled in 1306ms (807 modules)
+ GET /support/report?lang=ar 200 in 74ms
+ ✓ Compiled in 1631ms (807 modules)
+ GET /support/report?lang=ar 200 in 71ms
+ ○ Compiling /help ...
+ ✓ Compiled /help in 1993ms (883 modules)
+ GET /help?lang=en 200 in 3400ms
+ ○ Compiling /help/faqs ...
+ ✓ Compiled /help/faqs in 1083ms (880 modules)
+ GET /help/faqs?lang=en 200 in 2360ms
+ ○ Compiling /help/guides ...
+ ✓ Compiled /help/guides in 1243ms (896 modules)
+ GET /help/guides?lang=en 200 in 2213ms
+ ○ Compiling /help/contact ...
+ ✓ Compiled /help/contact in 753ms (867 modules)
+ GET /help/contact?lang=en 200 in 1699ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 70s (1663 modules)
+ GET /support/callback?lang=en 404 in 5850ms
+ GET /support/technical?lang=en 404 in 5858ms
+ GET /support/report?lang=en 404 in 5866ms
+ GET /support?lang=en 404 in 5858ms
+ GET /support/report?lang=ar 200 in 697ms
+ GET /support/report?lang=en 200 in 739ms
+ GET /support/report?lang=ar 200 in 336ms
+ ✓ Compiled in 1801ms (1649 modules)
+ GET /support/report?lang=ar 200 in 378ms
+ ○ Compiling /support/callback ...
+ ✓ Compiled /support/callback in 1754ms (871 modules)
+ ✓ Compiled (906 modules)
+ GET /support/report?lang=ar 200 in 3554ms
+ GET /support?lang=en 200 in 3572ms
+ GET /support/callback?lang=en 200 in 3576ms
+ GET /support/technical?lang=en 200 in 3580ms
+ GET /help?lang=en 200 in 969ms
+ GET /help/faqs?lang=en 200 in 487ms
+ GET /help/guides?lang=en 200 in 564ms
+ GET /support/technical?lang=en 200 in 623ms
+ GET /help/contact?lang=en 200 in 580ms
+ GET /support?lang=en 200 in 690ms
+ GET /support/technical?lang=ar 200 in 602ms
+ GET /support/callback?lang=en 200 in 1055ms
+ ○ Compiling /support/customer ...
+ ✓ Compiled /support/customer in 1551ms (919 modules)
+ GET /support/customer?lang=en 200 in 2961ms
+ GET /support/technical?lang=en 200 in 509ms
+ GET /support/callback?lang=ar 200 in 579ms
+ GET /support/callback?lang=en 200 in 529ms
+ GET /support/report?lang=en 200 in 499ms
+ GET /help?lang=ar 200 in 745ms
+ GET /help/faqs?lang=ar 200 in 531ms
+ ✓ Compiled in 4s (1711 modules)
+ GET /support/callback?lang=ar 200 in 501ms
+ GET /support/technical?lang=en 200 in 509ms
+ GET /support/technical?lang=ar 200 in 500ms
+ GET /support/callback?lang=en 200 in 513ms
+ GET /support/report?lang=ar 200 in 520ms
+ GET /support?lang=en 200 in 527ms
+ GET /help/faqs?lang=ar 200 in 166ms
+ GET /support/report?lang=ar 200 in 157ms
+ ○ Compiling /help/guides ...
+ ✓ Compiled /help/guides in 1133ms (909 modules)
+ GET /help/guides?lang=ar 200 in 2412ms
+ ○ Compiling /help/contact ...
+ ✓ Compiled /help/contact in 697ms (919 modules)
+ GET /help/contact?lang=ar 200 in 1773ms
+ GET /support?lang=ar 200 in 484ms
+ GET /support/customer?lang=ar 200 in 458ms
+ ✓ Compiled in 3s (1710 modules)
+ GET /support/customer?lang=ar 200 in 843ms
+ GET /support/technical?lang=ar 200 in 1057ms
+ GET /support/callback?lang=ar 200 in 1136ms
+ GET /support/report?lang=ar 200 in 335ms
+ GET /support/technical?lang=ar 200 in 317ms
+ GET /support/technical?lang=en 200 in 318ms
+ GET /support?lang=en 200 in 325ms
+ GET /support/callback?lang=en 200 in 171ms
+ GET /support/report?lang=ar 200 in 145ms
+ ✓ Compiled in 2.5s (1684 modules)
+ GET /support/callback?lang=ar 200 in 189ms
+ GET /support/callback?lang=en 200 in 692ms
+ GET /support/report?lang=ar 200 in 751ms
+ GET /support/technical?lang=ar 200 in 755ms
+ GET /support/technical?lang=en 200 in 760ms
+ GET /support/callback?lang=ar 200 in 767ms
+ GET /support?lang=en 200 in 787ms
+ GET /support/report?lang=ar 200 in 125ms
+ GET /support/report?lang=ar 200 in 459ms
+ ○ Compiling /help ...
+ ✓ Compiled /help in 950ms (883 modules)
+ GET /help?lang=en 200 in 1641ms
+ ○ Compiling /help/faqs ...
+ ✓ Compiled /help/faqs in 677ms (894 modules)
+ GET /help/faqs?lang=en 200 in 1478ms
+ ○ Compiling /help/guides ...
+ ✓ Compiled /help/guides in 634ms (895 modules)
+ GET /help/guides?lang=en 200 in 1502ms
+ ○ Compiling /help/contact ...
+ ✓ Compiled /help/contact in 656ms (905 modules)
+ GET /help/contact?lang=en 200 in 1480ms
+ GET /support?lang=en 200 in 741ms
+ ○ Compiling /support/customer ...
+ ✓ Compiled /support/customer in 547ms (919 modules)
+ GET /support/customer?lang=en 200 in 1218ms
+ ✓ Compiled in 3.1s (1726 modules)
+ GET /support/customer?lang=en 200 in 349ms
+ GET /support?lang=en 200 in 351ms
+ GET /support/callback?lang=ar 200 in 355ms
+ GET /support/technical?lang=ar 200 in 353ms
+ GET /support/report?lang=ar 200 in 358ms
+ GET /support/callback?lang=en 200 in 360ms
+ GET /support/technical?lang=en 200 in 129ms
+ GET /support/report?lang=ar 200 in 145ms
+ GET /support/report?lang=ar 200 in 89ms
+ GET /help?lang=ar 200 in 870ms
+ GET /help/faqs?lang=ar 200 in 447ms
+ GET /help/guides?lang=ar 200 in 412ms
+ GET /help/contact?lang=ar 200 in 409ms
+ GET /support?lang=ar 200 in 461ms
+ GET /support/customer?lang=ar 200 in 579ms
+ GET /support/technical?lang=ar 200 in 552ms
+ GET /support/callback?lang=ar 200 in 1499ms
+ GET /support/report?lang=ar 200 in 430ms
+ ✓ Compiled in 3.4s (1726 modules)
+ GET /support/report?lang=ar 200 in 456ms
+ GET /support?lang=en 200 in 464ms
+ GET /support/customer?lang=en 200 in 474ms
+ GET /support/technical?lang=ar 200 in 475ms
+ GET /support/callback?lang=en 200 in 465ms
+ GET /support/callback?lang=ar 200 in 480ms
+ GET /support/technical?lang=en 200 in 150ms
+ GET /support/report?lang=ar 200 in 149ms
+ GET /support/report?lang=ar 200 in 105ms
+ GET /support/report?lang=ar 200 in 78ms
+ GET /help?lang=en 200 in 1008ms
+ GET /help/faqs?lang=en 200 in 672ms
+ GET /help/guides?lang=en 200 in 697ms
+ GET /help/contact?lang=en 200 in 708ms
+ GET /support?lang=en 200 in 730ms
+ GET /support/customer?lang=en 200 in 1730ms
+ GET /support/technical?lang=en 200 in 618ms
+ GET /support/callback?lang=en 200 in 473ms
+ GET /support/report?lang=en 200 in 580ms
+ GET /help/contact 200 in 545ms
+ GET /help 200 in 778ms
+ GET /support/callback 200 in 392ms
+ GET /help/faqs 200 in 628ms
+ GET /support 200 in 754ms
+ GET /support/customer 200 in 672ms
+ GET /support/technical 200 in 704ms
+ GET /support/report 200 in 464ms
+ ✓ Compiled in 6.4s (1726 modules)
+ GET /support/report?lang=en 200 in 274ms
+ GET /support/technical?lang=en 200 in 284ms
+ GET /support/report?lang=ar 200 in 285ms
+ GET /support/callback?lang=ar 200 in 339ms
+ GET /support/customer?lang=en 200 in 352ms
+ GET /support/callback?lang=en 200 in 356ms
+ GET /support?lang=en 200 in 357ms
+ GET /support/technical?lang=ar 200 in 147ms
+ GET /support/report?lang=ar 200 in 153ms
+ GET /support/report?lang=ar 200 in 99ms
+ GET /support/report?lang=ar 200 in 70ms
+ GET /help?lang=ar 200 in 2279ms
+ ○ Compiling /help/faqs ...
+ ✓ Compiled /help/faqs in 84s (1701 modules)
+ GET /help/faqs?lang=ar 200 in 8071ms
+ GET /support/callback?lang=en 200 in 396ms
+ GET /support/callback?lang=ar 200 in 398ms
+ GET /support/customer?lang=en 200 in 399ms
+ GET /support/report?lang=ar 200 in 402ms
+ GET /support/technical?lang=en 200 in 384ms
+ GET /support?lang=en 200 in 224ms
+ GET /support/technical?lang=ar 200 in 233ms
+ GET /support/report?lang=en 200 in 225ms
+ GET /support/report?lang=ar 200 in 217ms
+ GET /support/report?lang=ar 200 in 85ms
+ GET /support/report?lang=ar 200 in 81ms
+ ○ Compiling /help/guides ...
+ ✓ Compiled /help/guides in 513ms (909 modules)
+ GET /help/guides?lang=ar 200 in 1325ms
+ ○ Compiling /help/contact ...
+ ✓ Compiled /help/contact in 533ms (919 modules)
+ GET /help/contact?lang=ar 200 in 1240ms
+ GET /help?lang=en 200 in 870ms
+ GET /help/faqs?lang=en 200 in 916ms
+ GET /help/guides?lang=en 200 in 807ms
+ GET /help/contact?lang=en 200 in 457ms
+ GET /help 200 in 5406ms
+ GET /help/guides 200 in 5431ms
+ GET /support 200 in 5434ms
+ GET /help/contact 200 in 5437ms
+ GET /help/faqs 200 in 5444ms
+ GET /support/customer 200 in 5445ms
+ GET /support/callback 200 in 5450ms
+ GET /support/technical 200 in 5453ms
+ GET /support/report 200 in 5459ms
+ ✓ Compiled in 2.7s (1726 modules)
+ GET /help/contact?lang=en 200 in 262ms
+ GET /support/report?lang=ar 200 in 719ms
+ GET /support/technical?lang=ar 200 in 718ms
+ GET /support?lang=en 200 in 722ms
+ GET /support/callback?lang=ar 200 in 726ms
+ GET /support/customer?lang=en 200 in 720ms
+ GET /support/technical?lang=en 200 in 208ms
+ GET /support/callback?lang=en 200 in 217ms
+ GET /support/report?lang=en 200 in 212ms
+ GET /support/report?lang=ar 200 in 216ms
+ GET /support/report?lang=ar 200 in 126ms
+ GET /support/report?lang=ar 200 in 93ms
+ ✓ Compiled in 4.5s (1684 modules)
+ GET /help/contact?lang=en 200 in 217ms
+ GET /support/callback?lang=ar 200 in 354ms
+ GET /support/report?lang=en 200 in 347ms
+ GET /support/report?lang=ar 200 in 353ms
+ GET /support?lang=en 200 in 244ms
+ GET /support/callback?lang=en 200 in 251ms
+ GET /support/technical?lang=en 200 in 229ms
+ GET /support/technical?lang=ar 200 in 221ms
+ GET /support/customer?lang=en 200 in 235ms
+ GET /support/report?lang=ar 200 in 224ms
+ GET /support/report?lang=ar 200 in 95ms
+ GET /support/report?lang=ar 200 in 84ms
+ ○ Compiling /help/guides ...
+ ✓ Compiled /help/guides in 1658ms (892 modules)
+ GET /help/guides?lang=ar 200 in 2614ms
+ GET /help/guides?lang=en 200 in 667ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 79s (1678 modules)
+ GET /help 404 in 9381ms
+ GET /help/guides 404 in 9380ms
+ GET /help/faqs 404 in 9384ms
+ GET /support/technical 404 in 9379ms
+ GET /support/callback 404 in 9380ms
+ GET /support 404 in 9384ms
+ GET /help/contact 404 in 9386ms
+ GET /support/report 404 in 9381ms
+ GET /support/customer 404 in 9387ms

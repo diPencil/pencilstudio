@@ -1,0 +1,18 @@
+verify-project.py — RUN 1 (captured 2026-11-21, immediately after authoring the gate)
+=====================================================================================
+Command: python docs/scripts/verify-project.py
+Outcome: RESULT: RED — 3 failure(s), 133 pass(es)
+
+All FAIL lines (verbatim):
+  [FAIL] docs/tooling/skills.md: link target exists -> ../AGENTS.md
+  [FAIL] docs/workflow.md: link target exists -> tasks/<task-name>/report.md
+  [FAIL] docs/workflow.md: link target exists -> tasks/governance-foundation/report.md
+
+Notes:
+- skills.md used ../AGENTS.md instead of ../../AGENTS.md (wrong depth).
+- workflow.md contained a markdown-link-shaped inline template that the link
+  checker rightly refused to resolve as a real file.
+- report.md did not exist yet at run time (written afterwards, same task).
+
+Section [4] English-only checks: all 13 governance markdown files passed
+(no Arabic codepoints) on this run as well.

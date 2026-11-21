@@ -1,0 +1,4 @@
+check-ui-controls: raw browser controls in app/ routes
+============================================================
+  No native <select> dropdowns found in app/ routes.
+RESULT: clean

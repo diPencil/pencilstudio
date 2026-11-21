@@ -1,0 +1,210 @@
+import { createPackageVerifierCommands } from "./lib/verify-package-commands.mjs";
+import { withVerifierCleanup } from "./lib/verifier-cleanup.mjs";
+import { readFile, writeFile } from "node:fs/promises";
+import { delimiter, join } from "node:path";
+import { pathToFileURL } from "node:url";
+
+import { lt, prerelease, rcompare, valid } from "semver";
+import { readNpmRelease, stableUpdateVersion } from "./ci/npm-release.mjs";
+
+import {
+  installCanaryPackage,
+  verifyInstalledCanaryPackage,
+} from "./lib/release-package-canary.mjs";
+import { completeVerifierRun, createVerifierRun } from "./lib/verifier-run.mjs";
+import { VerifierFixture } from "./lib/verifier-fixture.mjs";
+
+const verifierRun = createVerifierRun();
+
+const version = process.argv[2];
+if (
+  typeof version !== "string" ||
+  valid(version) !== version ||
+  process.argv.length !== 3
+)
+  throw new Error("Usage: node scripts/verify-published-package.mjs <version>");
+
+// npm and the package's children write beneath the root, as under the former mkdtemp.
+const fixture = await VerifierFixture.open({
+  prefix: "rea-published-canary-",
+  private: false,
+});
+const canaryRoot = fixture.path;
+const serverEnvironment = {
+  ...process.env,
+  npm_config_cache: join(canaryRoot, "npm-cache"),
+};
+delete serverEnvironment.HOPPER_TARGET_PATH;
+const commands = await createPackageVerifierCommands({
+  // The package command owner releases the fixture after its commands close.
+  workspace: { path: canaryRoot, close: () => fixture.release() },
+});
+let surface;
+let update;
+await withVerifierCleanup(async () => {
+  const publishedRoot = await installCanaryPackage(
+    `rea-agents@${version}`,
+    canaryRoot,
+    serverEnvironment,
+    commands,
+  );
+  surface = await verifyInstalledCanaryPackage(
+    publishedRoot,
+    version,
+    canaryRoot,
+    { environment: serverEnvironment, commands },
+  );
+  update = await verifyPublishedUpdate({
+    version,
+    canaryRoot,
+    updaterRoot: publishedRoot,
+  });
+}, [() => commands.close()]);
+process.stdout.write(
+  `${JSON.stringify({ verifier_run: await completeVerifierRun(verifierRun), package: "rea-agents", version, ...surface, update })}\n`,
+);
+
+async function verifyPublishedUpdate({
+  version: targetVersion,
+  canaryRoot,
+  updaterRoot,
+}) {
+  const updateVersion = stableUpdateVersion(
+    targetVersion,
+    await readNpmRelease(targetVersion),
+  );
+  const prefix = join(canaryRoot, "update-prefix");
+  const home = join(canaryRoot, "update-home");
+  const environment = {
+    ...process.env,
+    HOME: home,
+    USERPROFILE: home,
+    APPDATA: join(home, "AppData", "Roaming"),
+    LOCALAPPDATA: join(home, "AppData", "Local"),
+    CLAUDE_CONFIG_DIR: home,
+    CODEX_HOME: join(home, ".codex"),
+    COPILOT_HOME: join(home, ".copilot"),
+    GROK_HOME: join(home, ".grok"),
+    SAND_DATA_ROOT: join(home, ".grokbot"),
+    OMP_PROFILE: undefined,
+    PI_CODING_AGENT_DIR: undefined,
+    PI_CONFIG_DIR: undefined,
+    PI_PROFILE: undefined,
+    XDG_CONFIG_HOME: join(home, ".config"),
+    OPENCODE_CONFIG: join(home, ".config", "opencode", "opencode.json"),
+    npm_config_cache: join(canaryRoot, "npm-cache"),
+    npm_config_prefix: prefix,
+    PATH: `${join(prefix, "bin")}${delimiter}${process.env.PATH ?? ""}`,
+  };
+  const previousVersion = await findPreviousPublishedVersion(
+    updateVersion,
+    canaryRoot,
+    environment,
+  );
+
+  await commands.execNpm(
+    [
+      "install",
+      "--global",
+      "--ignore-scripts",
+      "--prefix",
+      prefix,
+      `rea-agents@${previousVersion}`,
+    ],
+    {
+      cwd: canaryRoot,
+      env: environment,
+      timeout: 600000,
+      maxBuffer: 16 * 1024 * 1024,
+    },
+  );
+
+  const npmRoot = (
+    await commands.execNpm(["root", "--global"], {
+      cwd: canaryRoot,
+      env: environment,
+      timeout: 30000,
+      maxBuffer: 16 * 1024 * 1024,
+    })
+  ).stdout.trim();
+  // Older releases may predate the update command. Exercise the new published
+  // updater's production workflow against that real previous installation.
+  const harness = join(canaryRoot, "update.mjs");
+  await writeFile(
+    harness,
+    `
+import { runUpdate } from ${JSON.stringify(pathToFileURL(join(updaterRoot, "dist/application/Update.js")).href)};
+import { systemUpdateHost } from ${JSON.stringify(pathToFileURL(join(updaterRoot, "dist/application/UpdateRuntime.js")).href)};
+const result = await runUpdate(${JSON.stringify(previousVersion)}, systemUpdateHost(${JSON.stringify(join(npmRoot, "rea-agents"))}, ${JSON.stringify(home)}), "structured");
+process.stdout.write(JSON.stringify(result));
+if (result.status === "failed") process.exitCode = 1;
+`,
+  );
+  const { stdout } = await commands.exec(process.execPath, [harness], {
+    cwd: canaryRoot,
+    env: environment,
+    timeout: 600000,
+    maxBuffer: 16 * 1024 * 1024,
+  });
+  const result = JSON.parse(stdout);
+  if (
+    result.status !== "updated" ||
+    result.previousVersion !== previousVersion ||
+    result.latestVersion !== updateVersion ||
+    result.installedVersion !== updateVersion ||
+    result.command.at(-1) !== `rea-agents@${updateVersion}`
+  )
+    throw new Error(
+      `Published REA updater did not update ${previousVersion} to stable ${updateVersion}: ${stdout}`,
+    );
+
+  const installed = JSON.parse(
+    await readFile(join(npmRoot, "rea-agents", "package.json"), "utf8"),
+  );
+  if (installed.version !== updateVersion)
+    throw new Error(
+      `REA update installed ${installed.version}, expected stable ${updateVersion}`,
+    );
+
+  const help = (
+    await commands.exec(join(prefix, "bin", "rea-agents"), ["--help"], {
+      cwd: canaryRoot,
+      env: environment,
+      timeout: 30000,
+      maxBuffer: 16 * 1024 * 1024,
+    })
+  ).stdout;
+  if (!/^\s{2}update\s/mu.test(help) || /^\s{2}upgrade\s/mu.test(help))
+    throw new Error(
+      "the updated executable did not expose only the update command",
+    );
+
+  return {
+    status: result.status,
+    previousVersion,
+    latestVersion: result.latestVersion,
+    installedVersion: installed.version,
+  };
+}
+
+async function findPreviousPublishedVersion(targetVersion, cwd, environment) {
+  const { stdout } = await commands.execNpm(
+    ["view", "rea-agents", "versions", "--json"],
+    { cwd, env: environment, timeout: 30000, maxBuffer: 16 * 1024 * 1024 },
+  );
+  const versions = JSON.parse(stdout);
+  const previous = versions
+    .filter(
+      (candidate) =>
+        typeof candidate === "string" &&
+        valid(candidate) === candidate &&
+        prerelease(candidate) === null &&
+        lt(candidate, targetVersion),
+    )
+    .sort(rcompare)[0];
+  if (previous === undefined)
+    throw new Error(
+      `No published rea-agents version precedes ${targetVersion}`,
+    );
+  return previous;
+}

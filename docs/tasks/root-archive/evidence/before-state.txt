@@ -1,0 +1,59 @@
+=== ROOT LISTING (before) — 2026-11-21 ===
+.agent
+.agents
+.freebuff
+.git
+.gitattributes
+.gitignore
+.npmrc
+.vscode
+AGENTS.md
+README.md
+app
+build.log
+components
+components.json
+dev-3003.log
+dev-callback-preview-error.log
+dev-callback-preview.log
+dev-ecosystem-preview-error.log
+dev-ecosystem-preview.log
+dev-server.log
+dev.log
+docs
+eslint.config.mjs
+hooks
+lib
+next-env.d.ts
+next.config.mjs
+package.json
+pnpm-lock.yaml
+postcss.config.mjs
+project_overview.md
+public
+scratch
+tsconfig.json
+tsconfig.tsbuildinfo
+
+=== GIT STATUS (before) ===
+ M README.md
+ M app/globals.css
+ M app/services/page.tsx
+ M app/work/[slug]/page.tsx
+ M components/about/about-curated-gallery.tsx
+ M components/about/about-lets-talk.tsx
+ M components/about/about-section.tsx
+ M components/about/about-superfeliz.tsx
+ M components/auth/pro-auth-modal.tsx
+ M components/contact/contact-page.tsx
+ M components/editorial/page-hero.tsx
+ M components/enterprise/enterprise-governance-section.tsx
+ M components/enterprise/enterprise-page.tsx
+ M components/enterprise/enterprise-section.tsx
+ M components/help/center/help-editorial-page.tsx
+ M components/help/center/studio-help-pages.tsx
+ M components/help/contact/pencil-contact-editorial.tsx
+ M components/help/faqs/pencil-faq-editorial.tsx
+ M components/help/guides/pencil-guides-editorial.tsx
+ M components/home/business-features-section.tsx
+... (203 total entries)

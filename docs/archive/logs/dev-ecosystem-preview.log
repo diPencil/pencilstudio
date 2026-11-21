@@ -1,0 +1,17 @@
+   ▲ Next.js 15.2.6
+   - Local:        http://127.0.0.1:3003
+   - Network:      http://127.0.0.1:3003
+
+ ✓ Starting...
+ ✓ Ready in 5.1s
+ ○ Compiling /help/contact ...
+ ✓ Compiled /help/contact in 17.2s (1726 modules)
+ GET /support 200 in 23566ms
+ GET /help 200 in 23592ms
+ GET /support/callback 200 in 23582ms
+ GET /help/guides 200 in 23587ms
+ GET /support/customer 200 in 23589ms
+ GET /help/faqs 200 in 23594ms
+ GET /help/contact 200 in 23595ms
+ GET /support/technical 200 in 23597ms
+ GET /support/report 200 in 23601ms

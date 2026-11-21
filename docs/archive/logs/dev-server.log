@@ -1,0 +1,18 @@
+
+> pencil-studio@0.1.0 dev D:\Development\pencil\dipencilcom\pencilnew
+> next dev --turbo -H 127.0.0.1 -p 3000
+
+   ▲ Next.js 15.2.6 (Turbopack)
+   - Local:        http://127.0.0.1:3000
+   - Network:      http://127.0.0.1:3000
+
+ ✓ Starting...
+[node.js fs] rename failed after 569 retries with error: Error: EPERM: operation not permitted, rename 'D:\Development\pencil\dipencilcom\pencilnew\.next\server\server-reference-manifest.json.tmp.knvlkjz5u2' -> 'D:\Development\pencil\dipencilcom\pencilnew\.next\server\server-reference-manifest.json'
+[Error: EPERM: operation not permitted, rename 'D:\Development\pencil\dipencilcom\pencilnew\.next\server\server-reference-manifest.json.tmp.knvlkjz5u2' -> 'D:\Development\pencil\dipencilcom\pencilnew\.next\server\server-reference-manifest.json'] {
+  errno: -4048,
+  code: 'EPERM',
+  syscall: 'rename',
+  path: 'D:\\Development\\pencil\\dipencilcom\\pencilnew\\.next\\server\\server-reference-manifest.json.tmp.knvlkjz5u2',
+  dest: 'D:\\Development\\pencil\\dipencilcom\\pencilnew\\.next\\server\\server-reference-manifest.json'
+}
+[?25h

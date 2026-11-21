@@ -1,0 +1,28 @@
+=== PRE-FLIGHT 2026-11-21 ===
+--- remote URL:
+https://github.com/diPencil/pencilstudio.git
+--- identity (name / email):
+diPencil
+dipencilcom@gmail.com
+--- branches:
+  backup/pre-components-refactor
+  backup/pre-lib-refactor
+* design-unify
+  main
+  remotes/origin/HEAD -> origin/main
+  remotes/origin/design-unify
+  remotes/origin/main
+--- last commits:
+4490924 chore: complete lib structural refactor
+e9c1491 chore: complete components structural refactor
+78cebaf chore: save state before components refactor
+9503491 feat(solutions): enlarge Feliz star icon in buttons, set black for standard folders and white for SuperFeliz
+31a7423 feat(solutions): update SuperFeliz to royal blue, use Feliz icon for key button, and refine folder proportions
+--- tracked files:
+443
+--- status entries:
+243
+--- .next-bak tracked?:
+0
+--- commit count:
+15

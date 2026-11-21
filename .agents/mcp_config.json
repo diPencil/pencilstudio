@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "rea": {
+      "command": "cmd.exe",
+      "args": ["/d", "/c", "npx", "-y", "rea-agents@6.7.0", "mcp"],
+      "env": {
+        "npm_config_omit": "optional"
+      },
+      "timeoutSeconds": 600
+    }
+  }
+}
